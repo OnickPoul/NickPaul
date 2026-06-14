@@ -7,100 +7,223 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
 
     <style>
-        /* Базовые настройки и центрирование текста */
+        /* * Если Germanie — это файл (например, germanie.ttf), раскомментируй код ниже 
+         * и положи файл шрифта в папку с сайтом:
+         *
+         * @font-face {
+         * font-family: 'Germanie';
+         * src: url('germanie.ttf') format('truetype');
+         * }
+         */
+
+        /* Переменные для светлой темы (по умолчанию) */
+        :root {
+            --bg-color: #f4f5f7;
+            --text-color: #2d3436;
+            --header-bg: #ffffff;
+            --header-shadow: rgba(0, 0, 0, 0.05);
+            --btn-bg: #6200ea;
+            --btn-hover: #3700b3;
+            --btn-text: #ffffff;
+            --card-bg: #ffffff;
+        }
+
+        /* Переменные для темной темы */
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --header-bg: #1e1e1e;
+            --header-shadow: rgba(0, 0, 0, 0.3);
+            --btn-bg: #bb86fc;
+            --btn-hover: #9965f4;
+            --btn-text: #000000;
+            --card-bg: #242424;
+        }
+
+        /* Базовые настройки с выравниванием по левому краю */
         body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
-            text-align: center; /* Центрируем весь текст */
+            font-family: 'Manrope', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
-            padding: 40px 20px;
+            padding: 0;
+            text-align: left; /* Убрали центрирование */
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Контейнер для ограничения ширины контента */
+        /* Заголовки */
+        h1, h2, h3 {
+            font-family: 'Germanie', serif; /* Используем Germanie */
+            margin-top: 0;
+            color: var(--text-color);
+        }
+
+        /* Плавающая шапка */
+        header {
+            position: sticky;
+            top: 0;
+            background-color: var(--header-bg);
+            box-shadow: 0 4px 10px var(--header-shadow);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000; /* Чтобы шапка всегда была поверх контента */
+            transition: background-color 0.3s ease;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'Germanie', serif;
+        }
+
+        /* Кнопка смены темы */
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--text-color);
+            color: var(--text-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        /* Контейнер для контента */
         .container {
-            max-width: 800px;
-            margin: 0 auto;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
-        /* Анимация появления контента (Fade In) */
+        /* Анимация появления */
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .animated-box {
-            animation: fadeIn 1.5s ease-out forwards;
+            animation: fadeIn 1s ease-out forwards;
         }
 
-        /* Стилизация кнопок */
+        /* Кнопки (теперь выстроены в ряд слева) */
         .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
             margin: 30px 0;
         }
 
         .btn {
-            display: inline-block;
-            background-color: #6200ea;
-            color: #ffffff;
+            background-color: var(--btn-bg);
+            color: var(--btn-text);
             text-decoration: none;
             padding: 12px 24px;
-            margin: 0 10px;
             border-radius: 8px;
             font-weight: 600;
-            transition: all 0.3s ease; /* Плавный переход для анимации наведения */
+            transition: all 0.3s ease;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        /* Анимация кнопок при наведении */
         .btn:hover {
-            background-color: #3700b3;
+            background-color: var(--btn-hover);
             transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         }
 
-        /* Контейнеры для адаптивного видео */
+        /* Секция с видео (блоки-карточки) */
         .video-wrapper {
-            margin: 40px 0;
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px var(--header-shadow);
+            transition: background-color 0.3s ease;
         }
 
-        iframe {
-            border-radius: 12px;
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-            max-width: 100%;
+        /* Адаптивный контейнер для плееров (пропорции 16:9) */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
         }
     </style>
 </head>
 <body>
 
+    <header>
+        <div class="logo">Мой Сайт</div>
+        <button class="theme-toggle" id="themeToggle">Темная тема</button>
+    </header>
+
     <div class="container animated-box">
-        <h1>Добро пожаловать на мой сайт</h1>
-        <p>Это тестовая страница. Текст отцентрирован, используется кастомный шрифт Montserrat, а элементы плавно появляются при загрузке.</p>
+        <h1>Nick Paul</h1>
+        <p>Technical Sound Designer</p>
 
         <div class="button-group">
-            <a href="about.html" class="btn">О нас</a>
-            <a href="contact.html" class="btn">Контакты</a>
-            <a href="https://github.com" class="btn" target="_blank">Мой GitHub</a>
+            <a href="about.html" class="btn">About</a>
         </div>
 
         <div class="video-wrapper">
             <h2>Видео с YouTube</h2>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
         </div>
 
         <div class="video-wrapper">
             <h2>Видео с Vimeo</h2>
-            <iframe src="https://player.vimeo.com/video/76979871?h=8272103f6e" width="560" height="315" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            <div class="video-container">
+                <iframe src="https://player.vimeo.com/video/76979871?h=8272103f6e" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            </div>
         </div>
     </div>
+
+    <script>
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // При загрузке проверяем, выбирал ли пользователь темную тему ранее
+        const currentTheme = localStorage.getItem('theme');
+        if (currentTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            themeToggleBtn.textContent = 'Светлая тема';
+        }
+
+        // Логика переключения по клику
+        themeToggleBtn.addEventListener('click', () => {
+            if (body.hasAttribute('data-theme')) {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light'); // Сохраняем в память браузера
+                themeToggleBtn.textContent = 'Темная тема';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.textContent = 'Светлая тема';
+            }
+        });
+    </script>
 
 </body>
 </html>

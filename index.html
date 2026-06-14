@@ -268,9 +268,15 @@
             align-items: center;
         }
         
+        .nowrap {
+    white-space: nowrap;
+}
+        
      .social-links {
+        color: var(--text-color) !important; /* !important перекроет случайные стили браузера */
+        text-decoration: none;
         display: flex;
-        gap: 20px;
+        gap: 15px;
         align-items: center;
         justify-content: center;
     }

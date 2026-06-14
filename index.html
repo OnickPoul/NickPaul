@@ -256,30 +256,27 @@
         footer {
         border-top: 1px solid var(--border-color);
         margin-top: 60px;
-        padding: 40px 0; /* Вместо фиксированной высоты используем отступы */
+        padding: 20px 0; /* Вместо фиксированной высоты используем отступы */
         display: flex;
         align-items: center;
         justify-content: center;
     }
         
-        .social-links {
+           .social-links {
             display: flex;
-            gap: 30px; /* Расстояние между иконками */
+            gap: 20px;
             align-items: center;
+            justify-content: center;
         }
-        
-        .nowrap {
-    white-space: nowrap;
-}
-        
-     .social-links {
-        color: var(--text-color) !important; /* !important перекроет случайные стили браузера */
-        text-decoration: none;
-        display: flex;
-        gap: 15px;
-        align-items: center;
-        justify-content: center;
-    }
+
+        /* Исправление цвета иконок: теперь применяем цвет к ссылкам, а не к контейнеру */
+        .social-links a {
+            color: var(--text-color) !important; 
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
         
         .social-links a:hover {
             transform: translateY(-3px);
@@ -289,7 +286,7 @@
         .social-links svg {
             width: 28px;
             height: 28px;
-            fill: currentColor;
+            fill: currentColor; /* Иконки будут брать цвет текста (черный/белый) */
         }
     </style>
 </head>

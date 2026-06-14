@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой сайт на GitHub Pages</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Базовые настройки и центрирование текста */
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            text-align: center; /* Центрируем весь текст */
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        /* Контейнер для ограничения ширины контента */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Анимация появления контента (Fade In) */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated-box {
+            animation: fadeIn 1.5s ease-out forwards;
+        }
+
+        /* Стилизация кнопок */
+        .button-group {
+            margin: 30px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #6200ea;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 12px 24px;
+            margin: 0 10px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease; /* Плавный переход для анимации наведения */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Анимация кнопок при наведении */
+        .btn:hover {
+            background-color: #3700b3;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+
+        /* Контейнеры для адаптивного видео */
+        .video-wrapper {
+            margin: 40px 0;
+        }
+
+        iframe {
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container animated-box">
+        <h1>Добро пожаловать на мой сайт</h1>
+        <p>Это тестовая страница. Текст отцентрирован, используется кастомный шрифт Montserrat, а элементы плавно появляются при загрузке.</p>
+
+        <div class="button-group">
+            <a href="about.html" class="btn">О нас</a>
+            <a href="contact.html" class="btn">Контакты</a>
+            <a href="https://github.com" class="btn" target="_blank">Мой GitHub</a>
+        </div>
+
+        <div class="video-wrapper">
+            <h2>Видео с YouTube</h2>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="video-wrapper">
+            <h2>Видео с Vimeo</h2>
+            <iframe src="https://player.vimeo.com/video/76979871?h=8272103f6e" width="560" height="315" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+
+</body>
+</html>

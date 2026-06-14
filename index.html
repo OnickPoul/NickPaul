@@ -77,22 +77,21 @@
             padding: 0 20px;
         }
 
-        /* --- ШАПКА --- */
-        header {
-            position: sticky;
-            top: 0;
-            background-color: var(--header-bg);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
-
-        .header-inner {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            align-items: center;
-            height: 90px; /* Увеличена высота шапки */
-        }
+  /* Улучшенная шапка */
+    header {
+        position: sticky;
+        top: 0;
+        background-color: var(--header-bg);
+        border-bottom: 1px solid var(--border-color);
+        z-index: 1000;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+     .header-inner {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr; /* Левая, центральная, правая часть */
+        align-items: center;
+        height: 70px; /* Немного уменьшили высоту, чтобы выглядело компактнее */
+    }
 
         .header-left {
             justify-self: start;
@@ -103,10 +102,11 @@
             display: block;
         }
 
-        .header-center {
-            text-align: center;
-            justify-self: center;
-        }
+      .header-center {
+        text-align: center;
+        justify-self: center;
+        white-space: nowrap; /* Запрещает тексту переноситься на новую строку */
+    }
         
         .header-center h1 {
             font-size: 1.6rem;
@@ -124,21 +124,22 @@
             justify-self: end;
             display: flex;
             align-items: center;
-            gap: 20px; /* Увеличено расстояние между кнопками */
+            gap: 14px; /* Увеличено расстояние между кнопками */
         }
 
-        .nav-btn {
-            font-family: 'Manrope', sans-serif;
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--btn-text);
-            background-color: var(--btn-bg);
-            text-decoration: none;
-            padding: 8px 16px; /* Кнопки стали просторнее */
-            border: 1px solid var(--btn-border);
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
+    /* Компактные кнопки навигации */
+    .nav-btn {
+        font-family: 'Manrope', sans-serif;
+        font-weight: 600;
+        font-size: 12px; /* Чуть уменьшили шрифт */
+        color: var(--btn-text);
+        background-color: var(--btn-bg);
+        text-decoration: none;
+        padding: 5px 10px; /* Уменьшили отступы внутри кнопок */
+        border: 1px solid var(--btn-border);
+        border-radius: 4px;
+        transition: all 0.2s ease;
+    }
 
         .nav-btn:hover, .nav-btn.active {
             background-color: var(--btn-active-bg);
@@ -253,13 +254,13 @@
 
         /* --- ПОДВАЛ (Footer) --- */
         footer {
-            border-top: 1px solid var(--border-color);
-            margin-top: 80px;
-            height: 120px; /* Фиксированная высота для идеального центрирования */
-            display: flex;
-            align-items: center; /* Центрирует иконки по вертикали */
-            justify-content: center; /* Центрирует иконки по горизонтали */
-        }
+        border-top: 1px solid var(--border-color);
+        margin-top: 60px;
+        padding: 40px 0; /* Вместо фиксированной высоты используем отступы */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
         
         .social-links {
             display: flex;
@@ -267,11 +268,12 @@
             align-items: center;
         }
         
-        .social-links a {
-            color: var(--text-color);
-            transition: transform 0.2s ease, opacity 0.2s ease;
-            display: flex; /* Помогает выровнять сами SVG внутри ссылок */
-        }
+     .social-links {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        justify-content: center;
+    }
         
         .social-links a:hover {
             transform: translateY(-3px);

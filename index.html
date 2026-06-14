@@ -77,6 +77,16 @@
             padding: 0 20px;
         }
 
+        /* Базовое состояние (для светлой темы) */
+    .logo img {
+         transition: filter 0.3s ease; /* Плавный переход при смене темы */
+}
+
+/* Состояние в темной теме */
+    [data-theme="dark"] .logo img {
+        filter: invert(1); /* Инвертирует цвета: черный станет белым, белый — черным */
+}
+
   /* Улучшенная шапка */
     header {
         position: sticky;
@@ -296,7 +306,7 @@
         <div class="container header-inner">
             <div class="header-left" <div class="header-left" style="display: flex; align-items: center; gap: 15px;">
                 <!-- Вставь свой логотип -->
-                <a href="#" class="logo"><img src="NickPaulLogo.png" alt="Logo" id="siteLogo"></a>
+                <a href="#" class="logo"><img src="NickPaulLogoAlpha.png" alt="Logo" id="siteLogo"></a>
                 <a href="#hero" class="nav-btn" data-ru="Деморил" data-en="Demo Reel">Demo Reel</a>
             </div>
 

@@ -127,14 +127,9 @@
             .header-center p { font-size: 0.7rem; }
             .logo img { height: 30px; }
 
-            /* Исправление центрирования кнопок через GRID */
             .mobile-nav-row { grid-column: 1 / -1; width: 100%; display: flex; justify-content: center; }
             .mobile-nav-row .nav-group { 
-                display: grid; 
-                grid-template-columns: 1fr auto 1fr; 
-                gap: 10px; 
-                width: 100%; 
-                align-items: center;
+                display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; width: 100%; align-items: center;
             }
             .mobile-nav-row .nav-group > a:nth-child(1) { justify-self: end; }
             .mobile-nav-row .nav-group > a:nth-child(2) { justify-self: center; }
@@ -145,14 +140,12 @@
         section { scroll-margin-top: 120px; margin-bottom: 80px; }
         .hero-section { margin-top: 50px; }
         
-        /* Карточки видео */
         .video-card { width: 100%; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; margin-bottom: 40px; }
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; width: 100%; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
         .video-description { padding: 20px 25px; border-top: 1px solid var(--border-color); }
         .video-description h4 { font-size: 1.2rem; }
 
-        /* Hero (Demo Reel) адаптация */
         .hero-section .video-card { box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 0; }
         
         .page-header-wrapper { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); margin-bottom: 30px; padding-bottom: 15px; }
@@ -168,22 +161,44 @@
         .about-grid { display: flex; gap: 50px; align-items: flex-start; width: 100%; }
         .about-text-col { flex: 1; }
         .about-photo-col { flex-shrink: 0; width: 300px; }
-        .photo-placeholder { width: 100%; aspect-ratio: 4 / 5; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 0.9rem; overflow: hidden; }
-        .photo-placeholder img { width: 100%; height: 100%; object-fit: cover; display: none; }
-        .about-text { font-size: 1.15rem; line-height: 1.8; color: var(--text-color); margin-bottom: 30px; }
+        
+        .photo-placeholder { width: 100%; aspect-ratio: 4 / 5; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .photo-placeholder::after { content: "Add Photo Here"; color: var(--text-muted); position: absolute; z-index: 0; font-size: 0.9rem; }
+        .real-photo { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1; display: block; }
+        
+        .about-text { font-size: 1.05rem; line-height: 1.8; color: var(--text-color); margin-bottom: 15px; }
+
+        .inline-link { color: var(--text-color); font-weight: 600; text-decoration: underline; transition: opacity 0.2s ease; }
+        .inline-link:hover { opacity: 0.7; }
+
+        /* Блоки с кнопками в About */
+        .about-action-row { display: flex; justify-content: space-between; align-items: center; gap: 20px; background-color: var(--card-bg); padding: 15px 20px; border-radius: 8px; border: 1px solid var(--border-color); margin: 20px 0; }
+        .about-action-row p { margin: 0; flex: 1; font-size: 1.05rem; line-height: 1.6; }
+        
+        .action-btn { background-color: transparent; color: var(--text-color); border: 1px solid var(--border-color); padding: 10px 16px; border-radius: 6px; font-family: 'Manrope', sans-serif; font-weight: 600; cursor: pointer; transition: all 0.3s ease; white-space: nowrap; flex-shrink: 0; font-size: 0.9rem; }
+        .action-btn:hover { background-color: var(--text-color); color: var(--bg-color); }
+
+        /* Шторка (Accordion) */
+        .about-spoiler { margin-top: 25px; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px 20px; }
+        .about-spoiler summary { cursor: pointer; font-weight: 500; color: var(--text-muted); outline: none; list-style-position: inside; transition: color 0.3s ease; font-size: 1.05rem; }
+        .about-spoiler summary:hover { color: var(--text-color); }
+        .about-spoiler .spoiler-content { margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-color); color: var(--text-color); line-height: 1.8; font-size: 1.05rem; }
 
         @media (max-width: 768px) {
             .about-grid { flex-direction: column-reverse; gap: 30px; }
             .about-photo-col { width: 100%; max-width: 100%; }
-            .hero-section { margin-top: 30px; }
+            .about-action-row { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .action-btn { width: 100%; text-align: center; }
         }
 
-        .more-links-wrapper { display: flex; flex-direction: column; gap: 15px; }
-        .more-link { display: inline-flex; justify-content: space-between; align-items: center; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 1rem; color: var(--text-color); text-decoration: none; border: 1px solid var(--border-color); padding: 12px 20px; border-radius: 8px; width: fit-content; min-width: 250px; transition: all 0.3s ease; }
-        .more-link:hover { background-color: var(--text-color); color: var(--bg-color); }
-        .more-link:hover .more-icon { transform: translateX(5px); }
-        .more-link.contact-link:hover .more-icon { transform: translateY(4px) translateX(0); }
-        .more-icon { transition: transform 0.3s ease; margin-left: 15px; }
+        /* ОТЗЫВЫ (TESTIMONIALS) */
+        .testimonial-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 40px; margin-top: 20px; }
+        .testimonial-text { font-size: 1.1rem; line-height: 1.8; font-style: italic; margin-bottom: 30px; color: var(--text-color); }
+        .testimonial-author { display: flex; align-items: center; gap: 15px; }
+        .author-photo-placeholder { width: 60px; height: 60px; border-radius: 50%; background-color: var(--border-color); overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; position: relative; }
+        .author-photo-placeholder::after { content: "Photo"; color: var(--text-muted); font-size: 0.6rem; position: absolute; z-index: 0; }
+        .author-photo-placeholder img { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1; }
+        .author-name { font-weight: 600; font-size: 1rem; color: var(--text-color); }
 
         /* Аудио */
         .media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; }
@@ -200,16 +215,30 @@
         .tab-content.active { display: block; opacity: 1; }
 
         /* ПОДВАЛ */
-        footer { border-top: 1px solid var(--border-color); margin-top: 60px; padding: 30px 0; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s ease; }
+        footer { border-top: 1px solid var(--border-color); margin-top: 60px; padding: 30px 0; transition: opacity 0.3s ease; }
         body.is-subpage footer { display: none; }
 
-        .social-links { display: flex; gap: 30px; align-items: center; justify-content: center; }
+        .footer-container { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; width: 100%; }
+        .footer-left { justify-self: start; font-weight: 600; font-size: 1.1rem; }
+        .footer-center { justify-self: center; display: flex; gap: 30px; align-items: center; }
+        .footer-right { justify-self: end; }
+
         .social-link { color: var(--text-color) !important; display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s ease; perspective: 1000px; }
         .social-link:hover { opacity: 0.7; }
         .social-link svg { width: 32px; height: 32px; fill: currentColor; }
 
+        .up-arrow-btn { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; font-size: 1.2rem; font-family: 'Manrope', sans-serif; }
+        .up-arrow-btn:hover { background: var(--text-color); color: var(--bg-color); }
+
         @keyframes mirrorFlip { 0% { transform: rotateY(0deg); } 50% { transform: rotateY(180deg) scale(1.1); } 100% { transform: rotateY(360deg); } }
         .animate-flip { animation: mirrorFlip 0.8s ease-in-out; }
+
+        @media (max-width: 768px) {
+            .footer-container { grid-template-columns: 1fr 1fr; gap: 30px; }
+            .footer-center { grid-column: 1 / -1; order: -1; justify-content: center; }
+            .footer-left { justify-self: start; }
+            .footer-right { justify-self: end; }
+        }
     </style>
 </head>
 <body>
@@ -261,7 +290,6 @@
         <main id="view-home" class="container page-view active">
             
             <section class="hero-section" id="hero">
-                <!-- Описание для Vimeo добавлено сюда -->
                 <div class="video-card hero-video">
                     <div class="video-container">
                         <iframe src="https://player.vimeo.com/video/76979871?h=8272103f6e" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
@@ -277,29 +305,65 @@
                 
                 <div class="about-grid">
                     <div class="about-text-col">
-                        <p class="about-text" data-ru="Здесь будет ваша биография." data-en="Here you can write your professional bio.">
-                            Here you can write your professional bio and detail your experience in sound design.
+                        <p class="about-text" data-ru="Привет, я Никита Матвиенко, саунд дизайнер именуемый как Nick Paul. Я начал увлекаться звуком ещё с ранних лет впервые услышав изумительный Skrillex - First Of The Year (Equinox) на подаренном плеере Texet(мало кому известный), а первая игра, которую я запустил была Grand Theft Auto: Vice City, на тот момент мне было всего 4 года( до сих пор не могу себе представить). Именно с этой игры началась моя любовь к видеиграм." data-en="Hi, I'm Nikita Matvienko, a sound designer working under the moniker Nick Paul. My passion for audio began at an early age when I first heard the mind-blowing 'First Of The Year (Equinox)' by Skrillex on an obscure Texet MP3 player I received as a gift. The first game I ever booted up was Grand Theft Auto: Vice City when I was just 4 years old (I still can't quite wrap my head around that). That very game sparked my lifelong love for video games.">
+                            Hi, I'm Nikita Matvienko, a sound designer working under the moniker Nick Paul. My passion for audio began at an early age when I first heard the mind-blowing 'First Of The Year (Equinox)' by Skrillex on an obscure Texet MP3 player I received as a gift. The first game I ever booted up was Grand Theft Auto: Vice City when I was just 4 years old (I still can't quite wrap my head around that). That very game sparked my lifelong love for video games.
+                        </p>
+                        
+                        <p class="about-text" data-ru="Спустя годы я начал заниматься электронной музыкой и пройдя через множество игр, такие как Nier: Automata, Rise of the Tomb Rider, Assassins Creed: Ezio Trilogy, Uncharted 4: A Thief’s End, Cyberpunk 2077, Prey, игры серии Dishonored и многих других я понял, что хочу управлять не только эмоциями слушателя, для которого я делаю музыку, но и опытом, восприятием и эстетическим удовольствием, который в последствии получает уже игрок." data-en="Years later, I started producing electronic music. After experiencing countless titles like NieR: Automata, Rise of the Tomb Raider, Assassin's Creed: The Ezio Collection, Uncharted 4: A Thief’s End, Cyberpunk 2077, Prey, the Dishonored series, and many others, I realized something crucial. I wanted to shape not just the emotions of a music listener, but the entire experience, perception, and aesthetic pleasure that a player ultimately receives.">
+                            Years later, I started producing electronic music. After experiencing countless titles like NieR: Automata, Rise of the Tomb Raider, Assassin's Creed: The Ezio Collection, Uncharted 4: A Thief’s End, Cyberpunk 2077, Prey, the Dishonored series, and many others, I realized something crucial. I wanted to shape not just the emotions of a music listener, but the entire experience, perception, and aesthetic pleasure that a player ultimately receives.
                         </p>
 
-                        <div class="more-links-wrapper">
-                            <a href="#" onclick="switchView('music'); return false;" class="more-link">
-                                <span data-ru="Мой музыкальный бэкграунд" data-en="My musical background">My musical background</span>
-                                <span class="more-icon">→</span>
-                            </a>
-                            <a href="#" onclick="switchView('sound-design'); return false;" class="more-link">
-                                <span data-ru="Подробнее о саунд-дизайне" data-en="More about sound design">More about sound design</span>
-                                <span class="more-icon">→</span>
-                            </a>
-                            <a href="#" id="scrollToContacts" class="more-link contact-link">
-                                <span data-ru="Связаться со мной" data-en="Contacts">Contacts</span>
-                                <span class="more-icon">↓</span>
-                            </a>
+                        <p class="about-text" data-ru="Параллельно с этим я занимался 3D моделированием, успел поработать художником по транспорту, изучил весь игровой пайплайн, но понимал, что совмещать оба направления невозможно и нужно выбрать что-то одно, и я выбрал звук. Если бы не глубокая любовь к аудио, то получилось ли бы достичь того, что есть сейчас?" data-en="Alongside this, I delved into 3D modeling and even worked as a vehicle artist, learning the complete game development pipeline. However, I realized that combining both paths was impossible and I had to choose one—so I chose sound. If it weren't for my deep, enduring love for audio, would I have been able to achieve what I have today?">
+                            Alongside this, I delved into 3D modeling and even worked as a vehicle artist, learning the complete game development pipeline. However, I realized that combining both paths was impossible and I had to choose one—so I chose sound. If it weren't for my deep, enduring love for audio, would I have been able to achieve what I have today?
+                        </p>
+
+                        <div class="about-action-row">
+                            <p data-ru="На данный момент я работаю дизайнером линейного звука как аутсорс сотрудник в игровой инди компании." data-en="Currently, I work as an outsource linear sound designer for an indie game company.">
+                                Currently, I work as an outsource linear sound designer for an indie game company.
+                            </p>
+                            <button onclick="switchView('sound-design'); return false;" class="action-btn">
+                                <span data-ru="Интересен дизайн звука?" data-en="Interested in sound design?">Interested in sound design?</span> →
+                            </button>
                         </div>
+
+                        <div class="about-action-row">
+                            <p>
+                                <span data-ru="Так же выпустил множество песен под всевдонимом " data-en="I have also released numerous tracks under the alias ">I have also released numerous tracks under the alias </span>
+                                <a href="#" class="inline-link">Oni Nillsen</a> 
+                                <span data-ru=" успев поработать с такими лейблами как ALL41Records и NightBlue Music." data-en=", having worked with labels such as ALL41Records and NightBlue Music.">, having worked with labels such as ALL41Records and NightBlue Music.</span>
+                            </p>
+                            <button onclick="switchView('music'); return false;" class="action-btn">
+                                <span data-ru="Хотите узнать больше?" data-en="Want to know more?">Want to know more?</span> →
+                            </button>
+                        </div>
+
+                        <div class="about-action-row">
+                            <p data-ru="Если вы ещё читаете это, значит вам стало интересно, так давайте поработаем вместе?" data-en="If you're still reading this, it means I've caught your attention. Shall we work together?">
+                                If you're still reading this, it means I've caught your attention. Shall we work together?
+                            </p>
+                            <button onclick="document.getElementById('footer').scrollIntoView({ behavior: 'smooth' });" class="action-btn contact-btn">
+                                <span data-ru="Контакты" data-en="Contacts">Contacts</span> ↓
+                            </button>
+                        </div>
+
+                        <p class="about-text" data-ru="В свободное занимаюсь полевой записью звука, читаю игровую журналистику, занимаюсь риппингом(извлечением файлов) игр, играю на midi-клавиатуре." data-en="In my spare time, I do field recording, read game journalism, practice audio ripping to study game files, and play the MIDI keyboard.">
+                            In my spare time, I do field recording, read game journalism, practice audio ripping to study game files, and play the MIDI keyboard.
+                        </p>
+
+                        <details class="about-spoiler">
+                            <summary data-ru="Интерактивное аудио позволяет мне раскрыть себя как визионера, который способен управлять вниманием игрока через звук..." data-en="Interactive audio allows me to reveal myself as a visionary capable of guiding the player's attention through sound...">
+                                Interactive audio allows me to reveal myself as a visionary capable of guiding the player's attention through sound...
+                            </summary>
+                            <div class="spoiler-content" data-ru="...не позиционировать себя как исключительно Саунд Дизайнера, который безусловно задаёт характер звучания и идентичность, но и почувствовать себя будущим полноправным участником проекта на равне с другими разработчиками занимаясь имплементацией, оптимизацией и интеграцией." data-en="...positioning myself not just as a Sound Designer who undeniably sets the sonic identity, but feeling like a full-fledged participant in the project alongside other developers, actively handling implementation, optimization, and integration.">
+                                ...positioning myself not just as a Sound Designer who undeniably sets the sonic identity, but feeling like a full-fledged participant in the project alongside other developers, actively handling implementation, optimization, and integration.
+                            </div>
+                        </details>
                     </div>
 
                     <div class="about-photo-col">
                         <div class="photo-placeholder">
-                            <span data-ru="Фото" data-en="Photo">Photo Placeholder</span>
+                            <!-- Вставь сюда название файла со своей фотографией вместо "your-photo.jpg" -->
+                            <img src="your-photo.jpg" alt="Nick Paul" class="real-photo">
                         </div>
                     </div>
                 </div>
@@ -330,6 +394,27 @@
                     <div class="video-description"><h4 data-ru="Название проекта 2" data-en="Project Title 2">Project Title 2</h4></div>
                 </div>
             </section>
+
+            <!-- СЕКЦИЯ ОТЗЫВОВ -->
+            <section id="testimonials">
+                <h2 class="section-title" data-ru="Отзывы" data-en="Testimonials">Testimonials</h2>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-text" data-ru="«Никита работал с нашей командой над проектами «Шана, Жрица Тоны» и «Астра - страстное шоу», где занимался озвучкой сцен и саунд-дизайном. За время совместной работы он проявил себя как надёжный сотрудник, внимательно относящийся к поставленным задачам и качеству своей работы. Он профессиональный специалист в области саунд-дизайна и озвучки сцен. Отдельно хочу отметить, что на начальном этапе сотрудничества Никита пошёл нам навстречу по условиям оплаты и согласился работать за более низкий прайс, чем мы изначально могли предложить. При этом качество выполненной им работы оставалось на высоком уровне и полностью нас удовлетворяло. Никита показал себя как ответственный и добросовестный специалист. За время нашей работы с ним не возникало ситуаций, связанных со срывом сроков, нарушением дедлайнов или безответственным отношением к обязанностям. Все задачи выполнялись стабильно, качественно и в согласованные сроки. Мы благодарны Никите за его профессиональный и ответственный подход к работе. С уверенностью могу рекомендовать его как специалиста, который умеет качественно выполнять свои задачи, работать в команде и ответственно относиться к рабочему процессу.»" data-en="«Nikita worked with our team on the projects 'Shana, Priestess of Tona' and 'Astra - Passionate Show', where he was responsible for scene voiceovers and sound design. During our collaboration, he proved to be a reliable partner, paying close attention to the assigned tasks and the quality of his output. He is a true professional in the field of sound design and scene audio. I would specifically like to note that at the beginning of our cooperation, Nikita accommodated our budget constraints and agreed to work for a lower rate than we could initially offer. Despite this, the quality of his work remained exceptional and fully met our expectations. Nikita has proven to be a responsible and conscientious specialist. Throughout our time working together, there were absolutely no issues with missed deadlines or an irresponsible attitude towards his duties. All tasks were completed consistently, to a high standard, and strictly on schedule. We are immensely grateful to Nikita for his professional and dedicated approach. I can confidently recommend him as a specialist who knows how to deliver top-tier results, work seamlessly within a team, and take the production process seriously.»">
+                        «Nikita worked with our team on the projects 'Shana, Priestess of Tona' and 'Astra - Passionate Show', where he was responsible for scene voiceovers and sound design. During our collaboration, he proved to be a reliable partner, paying close attention to the assigned tasks and the quality of his output. He is a true professional in the field of sound design and scene audio. I would specifically like to note that at the beginning of our cooperation, Nikita accommodated our budget constraints and agreed to work for a lower rate than we could initially offer. Despite this, the quality of his work remained exceptional and fully met our expectations. Nikita has proven to be a responsible and conscientious specialist. Throughout our time working together, there were absolutely no issues with missed deadlines or an irresponsible attitude towards his duties. All tasks were completed consistently, to a high standard, and strictly on schedule. We are immensely grateful to Nikita for his professional and dedicated approach. I can confidently recommend him as a specialist who knows how to deliver top-tier results, work seamlessly within a team, and take the production process seriously.»
+                    </div>
+                    
+                    <div class="testimonial-author">
+                        <div class="author-photo-placeholder">
+                            <!-- Вставь сюда название файла с фото Назара -->
+                            <img src="nazar-photo.jpg" alt="Nazar">
+                        </div>
+                        <div class="author-name" data-ru="Назар, руководитель команды Lustration Team" data-en="Nazar, Team Lead at Lustration Team">
+                            Nazar, Team Lead at Lustration Team
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
 
         <!-- ================= СТРАНИЦА МУЗЫКИ ================= -->
@@ -337,7 +422,6 @@
             <section style="margin-top: 50px;">
                 <div class="page-header-wrapper">
                     <h2 class="section-title" data-ru="Музыка" data-en="Music Background">Music Background</h2>
-                    <!-- Обновленная кнопка назад -->
                     <button class="title-back-btn" onclick="switchView('home', 'about')" data-ru="Назад" data-en="Back">Back</button>
                 </div>
                 
@@ -353,12 +437,6 @@
                                 <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/34019569&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
                             </div>
                             <div class="video-description"><h4>Track Title 1</h4></div>
-                        </div>
-                        <div class="video-card">
-                            <div class="audio-container">
-                                <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/34019569&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe>
-                            </div>
-                            <div class="video-description"><h4>Track Title 2</h4></div>
                         </div>
                     </div>
                 </div>
@@ -381,7 +459,6 @@
             <section style="margin-top: 50px;">
                 <div class="page-header-wrapper">
                     <h2 class="section-title" data-ru="Саунд Дизайн" data-en="Sound Design">Sound Design</h2>
-                    <!-- Обновленная кнопка назад -->
                     <button class="title-back-btn" onclick="switchView('home', 'about')" data-ru="Назад" data-en="Back">Back</button>
                 </div>
 
@@ -391,10 +468,6 @@
                         <div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
                         <div class="video-description"><h4>Description 1</h4></div>
                     </div>
-                    <div class="video-card">
-                        <div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
-                        <div class="video-description"><h4>Description 2</h4></div>
-                    </div>
                 </div>
 
                 <h3 class="subsection-title">Sample manipulation</h3>
@@ -402,10 +475,6 @@
                     <div class="video-card">
                         <div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
                         <div class="video-description"><h4>Description 1</h4></div>
-                    </div>
-                    <div class="video-card">
-                        <div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
-                        <div class="video-description"><h4>Description 2</h4></div>
                     </div>
                 </div>
             </section>
@@ -415,16 +484,26 @@
 
     <!-- ПОДВАЛ -->
     <footer id="footer">
-        <div class="container social-links">
-            <a href="#" target="_blank" aria-label="LinkedIn" class="social-link">
-                <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-            </a>
-            <a href="mailto:твой@email.com" aria-label="Email" class="social-link">
-                <svg viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.866l5.6-6.812zm9.201-1.476l4.623-3.747v9.476l-4.623-5.729z"/></svg>
-            </a>
-            <a href="#" target="_blank" aria-label="Telegram" class="social-link">
-                <svg viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.458c.538-.196 1.006.128.832.941z"/></svg>
-            </a>
+        <div class="container footer-container">
+            <div class="footer-left">
+                <span data-ru="Найми меня" data-en="Hire me">Hire me</span>
+            </div>
+
+            <div class="footer-center social-links">
+                <a href="#" target="_blank" aria-label="LinkedIn" class="social-link">
+                    <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </a>
+                <a href="mailto:твой@email.com" aria-label="Email" class="social-link">
+                    <svg viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.866l5.6-6.812zm9.201-1.476l4.623-3.747v9.476l-4.623-5.729z"/></svg>
+                </a>
+                <a href="#" target="_blank" aria-label="Telegram" class="social-link">
+                    <svg viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.458c.538-.196 1.006.128.832.941z"/></svg>
+                </a>
+            </div>
+
+            <div class="footer-right">
+                <button class="up-arrow-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Scroll to top">↑</button>
+            </div>
         </div>
     </footer>
 
@@ -449,7 +528,7 @@
         function setLanguage(lang) {
             document.querySelectorAll('[data-ru], [data-en]').forEach(el => {
                 if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = el.getAttribute(`data-${lang}`);
-                else el.textContent = el.getAttribute(`data-${lang}`);
+                else el.innerHTML = el.getAttribute(`data-${lang}`);
             });
             langToggle.textContent = lang.toUpperCase();
             localStorage.setItem('lang', lang);
@@ -467,7 +546,6 @@
 
             if (currentView === targetView) return;
 
-            // Мгновенный сброс классов перед переключением
             if (viewId === 'home') {
                 document.querySelectorAll('.home-only .nav-btn[href^="#"]').forEach(link => link.classList.remove('active'));
                 
@@ -484,15 +562,11 @@
             setTimeout(() => {
                 if (currentView) { currentView.style.display = 'none'; currentView.classList.remove('active'); }
 
-                if (viewId === 'home') {
-                    document.body.classList.remove('is-subpage');
-                } else {
-                    document.body.classList.add('is-subpage');
-                }
+                if (viewId === 'home') { document.body.classList.remove('is-subpage'); } 
+                else { document.body.classList.add('is-subpage'); }
 
                 targetView.style.display = 'block';
 
-                // Логика прокрутки: Возвращаемся в About или на самый верх
                 if (viewId === 'home' && returnTargetId) {
                     const targetEl = document.getElementById(returnTargetId);
                     if (targetEl) { targetEl.scrollIntoView(); }
@@ -506,23 +580,7 @@
             }, 300);
         }
 
-        // СКРОЛЛ К КОНТАКТАМ
-        document.getElementById('scrollToContacts').addEventListener('click', function(e) {
-            e.preventDefault();
-            const footer = document.getElementById('footer');
-            footer.scrollIntoView({ behavior: 'smooth' });
-            
-            setTimeout(() => {
-                const icons = document.querySelectorAll('.social-link');
-                icons.forEach(icon => {
-                    icon.classList.remove('animate-flip');
-                    void icon.offsetWidth;
-                    icon.classList.add('animate-flip');
-                });
-            }, 600);
-        });
-
-        // ВКЛАДКИ
+        // ВКЛАДКИ ДЛЯ МУЗЫКИ
         function switchTab(tabId) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => { content.style.display = 'none'; content.classList.remove('active'); });
@@ -540,7 +598,7 @@
             }
         }
 
-        // СКРОЛЛ-ШПИОН ДЛЯ ПОДСВЕТКИ
+        // СКРОЛЛ-ШПИОН ДЛЯ ПОДСВЕТКИ В МЕНЮ
         const sections = document.querySelectorAll('#view-home section[id]');
         const navLinks = document.querySelectorAll('.home-only .nav-btn[href^="#"]');
         let isClickScrolling = false;

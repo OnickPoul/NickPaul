@@ -157,38 +157,47 @@
 
         .subsection-title { font-size: 1.5rem; margin: 40px 0 20px 0; color: var(--text-color); }
 
-        /* ОБО МНЕ */
-        .about-grid { display: flex; gap: 50px; align-items: flex-start; width: 100%; margin-bottom: 15px; }
-        .about-text-col { flex: 1; }
-        .about-photo-col { flex-shrink: 0; width: 300px; }
+        /* --- ОБО МНЕ (С обтеканием) --- */
+        .about-content::after { content: ""; display: table; clear: both; } /* Clearfix для контейнера */
+        
+        .about-photo-right { float: right; width: 300px; margin: 0 0 20px 40px; }
         
         .photo-placeholder { width: 100%; aspect-ratio: 4 / 5; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
         .photo-placeholder::after { content: "Add Photo Here"; color: var(--text-muted); position: absolute; z-index: 0; font-size: 0.9rem; }
         .real-photo { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1; display: block; }
         
-        .about-text { font-size: 1.05rem; line-height: 1.8; color: var(--text-color); margin-bottom: 15px; }
+        .about-text { font-size: 1.05rem; line-height: 1.8; color: var(--text-color); margin-bottom: 25px; }
 
-        .inline-link { color: var(--text-color); font-weight: 600; text-decoration: underline; transition: opacity 0.2s ease; cursor: pointer; }
+        /* Внутристрочные ссылки (Oni Nillsen) */
+        .inline-link { color: var(--text-color); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; transition: opacity 0.2s ease; cursor: pointer; }
         .inline-link:hover { opacity: 0.7; }
 
-        /* Блоки с кнопками в About - БЕЗ РАМОК, КНОПКА СПРАВА */
-        .about-action-row { display: flex; justify-content: space-between; align-items: center; gap: 30px; margin-bottom: 15px; width: 100%; }
-        .about-action-row p { margin: 0; flex: 1; font-size: 1.05rem; line-height: 1.8; color: var(--text-color); }
-        
-        .action-btn { background-color: transparent; color: var(--text-color); border: 1px solid var(--border-color); padding: 10px 16px; border-radius: 6px; font-family: 'Manrope', sans-serif; font-weight: 600; cursor: pointer; transition: all 0.3s ease; white-space: nowrap; flex-shrink: 0; font-size: 0.9rem; }
-        .action-btn:hover { background-color: var(--text-color); color: var(--bg-color); }
+        /* Внутристрочные кнопки в конце абзацев */
+        .inline-action-link {
+            color: var(--text-color); font-weight: 600; text-decoration: underline; text-underline-offset: 4px;
+            cursor: pointer; transition: opacity 0.2s ease; white-space: nowrap; margin-left: 5px;
+        }
+        .inline-action-link:hover { opacity: 0.7; }
 
-        /* Шторка (Accordion) */
-        .about-spoiler { margin-top: 25px; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px 20px; width: 100%; }
-        .about-spoiler summary { cursor: pointer; font-weight: 500; color: var(--text-muted); outline: none; list-style-position: inside; transition: color 0.3s ease; font-size: 1.05rem; }
-        .about-spoiler summary:hover { color: var(--text-color); }
-        .about-spoiler .spoiler-content { margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border-color); color: var(--text-color); line-height: 1.8; font-size: 1.05rem; }
+        /* Шторка (Accordion) - Бесшовная интеграция текста */
+        .about-spoiler { margin-top: 35px; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; width: 100%; clear: both; }
+        .about-spoiler summary {
+            cursor: pointer; font-weight: 500; color: var(--text-muted); outline: none; list-style: none;
+            display: inline; /* Делает summary строчным элементом */
+            transition: color 0.3s ease; font-size: 1.05rem; line-height: 1.8;
+        }
+        .about-spoiler summary::-webkit-details-marker { display: none; }
+        .about-spoiler summary::before { content: '▶'; display: inline-block; margin-right: 8px; font-size: 0.8em; transition: transform 0.3s ease; }
+        .about-spoiler[open] summary::before { transform: rotate(90deg); }
+        .about-spoiler[open] summary { color: var(--text-color); }
+        .about-spoiler .spoiler-content { 
+            display: inline; /* Продолжает текст в ту же строку */
+            color: var(--text-color); font-size: 1.05rem; line-height: 1.8;
+            border: none; padding: 0; margin: 0;
+        }
 
         @media (max-width: 768px) {
-            .about-grid { flex-direction: column-reverse; gap: 30px; }
-            .about-photo-col { width: 100%; max-width: 100%; }
-            .about-action-row { flex-direction: column; align-items: flex-start; gap: 15px; }
-            .action-btn { width: 100%; text-align: center; }
+            .about-photo-right { float: none; width: 100%; margin: 0 0 30px 0; }
         }
 
         /* ОТЗЫВЫ (TESTIMONIALS) */
@@ -303,71 +312,59 @@
             <section id="about">
                 <h2 class="section-title" data-ru="Обо мне" data-en="About Me">About Me</h2>
                 
-                <!-- БЛОК С ФОТО И ТЕКСТОМ СЛЕВА (Сетка) -->
-                <div class="about-grid">
-                    <div class="about-text-col">
-                        <p class="about-text" data-ru="Привет, я Никита Матвиенко, саунд дизайнер именуемый как Nick Paul. Я начал увлекаться звуком ещё с ранних лет впервые услышав изумительный Skrillex - First Of The Year (Equinox) на подаренном плеере Texet(мало кому известный), а первая игра, которую я запустил была Grand Theft Auto: Vice City, на тот момент мне было всего 4 года( до сих пор не могу себе представить). Именно с этой игры началась моя любовь к видеиграм." data-en="Hi, I'm Nikita Matvienko, a sound designer working under the moniker Nick Paul. My passion for audio began at an early age when I first heard the mind-blowing 'First Of The Year (Equinox)' by Skrillex on an obscure Texet MP3 player I received as a gift. The first game I ever booted up was Grand Theft Auto: Vice City when I was just 4 years old (I still can't quite wrap my head around that). That very game sparked my lifelong love for video games.">
-                            Hi, I'm Nikita Matvienko, a sound designer working under the moniker Nick Paul. My passion for audio began at an early age when I first heard the mind-blowing 'First Of The Year (Equinox)' by Skrillex on an obscure Texet MP3 player I received as a gift. The first game I ever booted up was Grand Theft Auto: Vice City when I was just 4 years old (I still can't quite wrap my head around that). That very game sparked my lifelong love for video games.
-                        </p>
-                        
-                        <p class="about-text" data-ru="Спустя годы я начал заниматься электронной музыкой и пройдя через множество игр, такие как Nier: Automata, Rise of the Tomb Rider, Assassins Creed: Ezio Trilogy, Uncharted 4: A Thief’s End, Cyberpunk 2077, Prey, игры серии Dishonored и многих других я понял, что хочу управлять не только эмоциями слушателя, для которого я делаю музыку, но и опытом, восприятием и эстетическим удовольствием, который в последствии получает уже игрок." data-en="Years later, I started producing electronic music. After experiencing countless titles like NieR: Automata, Rise of the Tomb Raider, Assassin's Creed: The Ezio Collection, Uncharted 4: A Thief’s End, Cyberpunk 2077, Prey, the Dishonored series, and many others, I realized something crucial. I wanted to shape not just the emotions of a music listener, but the entire experience, perception, and aesthetic pleasure that a player ultimately receives.">
-                            Years later, I started producing electronic music. After experiencing countless titles like NieR: Automata, Rise of the Tomb Raider, Assassin's Creed: The Ezio Collection, Uncharted 4: A Thief’s End, Cyberpunk 2077, Prey, the Dishonored series, and many others, I realized something crucial. I wanted to shape not just the emotions of a music listener, but the entire experience, perception, and aesthetic pleasure that a player ultimately receives.
-                        </p>
-
-                        <p class="about-text" data-ru="Параллельно с этим я занимался 3D моделированием, успел поработать художником по транспорту, изучил весь игровой пайплайн, но понимал, что совмещать оба направления невозможно и нужно выбрать что-то одно, и я выбрал звук. Если бы не глубокая любовь к аудио, то получилось ли бы достичь того, что есть сейчас?" data-en="Alongside this, I delved into 3D modeling and even worked as a vehicle artist, learning the complete game development pipeline. However, I realized that combining both paths was impossible and I had to choose one—so I chose sound. If it weren't for my deep, enduring love for audio, would I have been able to achieve what I have today?">
-                            Alongside this, I delved into 3D modeling and even worked as a vehicle artist, learning the complete game development pipeline. However, I realized that combining both paths was impossible and I had to choose one—so I chose sound. If it weren't for my deep, enduring love for audio, would I have been able to achieve what I have today?
-                        </p>
-                    </div>
-
-                    <div class="about-photo-col">
+                <!-- БЛОК С ОБТЕКАНИЕМ ФОТО ТЕКСТОМ -->
+                <div class="about-content">
+                    
+                    <!-- Фото уплывает вправо -->
+                    <div class="about-photo-right">
                         <div class="photo-placeholder">
                             <img src="your-photo.jpg" alt="Nick Paul" class="real-photo">
                         </div>
                     </div>
-                </div>
 
-                <!-- БЛОКИ НА ВСЮ ШИРИНУ ЭКРАНА (Растянуты до правой границы) -->
-                <div class="about-action-row">
-                    <p data-ru="На данный момент я работаю дизайнером линейного звука как аутсорс сотрудник в игровой инди компании." data-en="Currently, I work as an outsource linear sound designer for an indie game company.">
-                        Currently, I work as an outsource linear sound designer for an indie game company.
+                    <!-- Тексты слева, которые будут обтекать фото снизу до самого правого края -->
+                    <p class="about-text" data-ru="Привет, я Никита Матвиенко, саунд дизайнер именуемый как Nick Paul. Я начал увлекаться звуком ещё с ранних лет впервые услышав изумительный Skrillex - First Of The Year (Equinox) на подаренном плеере Texet(мало кому известный), а первая игра, которую я запустил была Grand Theft Auto: Vice City, на тот момент мне было всего 4 года( до сих пор не могу себе представить). Именно с этой игры началась моя любовь к видеиграм." data-en="Hi, I'm Nikita Matvienko, a sound designer working under the moniker Nick Paul. My passion for audio began at an early age when I first heard the mind-blowing 'First Of The Year (Equinox)' by Skrillex on an obscure Texet MP3 player I received as a gift. The first game I ever booted up was Grand Theft Auto: Vice City when I was just 4 years old (I still can't quite wrap my head around that). That very game sparked my lifelong love for video games.">
+                        Hi, I'm Nikita Matvienko, a sound designer working under the moniker Nick Paul. My passion for audio began at an early age when I first heard the mind-blowing 'First Of The Year (Equinox)' by Skrillex on an obscure Texet MP3 player I received as a gift. The first game I ever booted up was Grand Theft Auto: Vice City when I was just 4 years old (I still can't quite wrap my head around that). That very game sparked my lifelong love for video games.
                     </p>
-                    <button onclick="switchView('sound-design'); return false;" class="action-btn">
-                        <span data-ru="Интересен дизайн звука?" data-en="Interested in sound design?">Interested in sound design?</span> →
-                    </button>
-                </div>
-
-                <div class="about-action-row">
-                    <p>
-                        <span data-ru="Так же выпустил множество песен под всевдонимом " data-en="I have also released numerous tracks under the alias ">I have also released numerous tracks under the alias </span>
-                        <a onclick="switchView('music'); return false;" class="inline-link">Oni Nillsen</a> 
-                        <span data-ru=" успев поработать с такими лейблами как ALL41Records и NightBlue Music." data-en=", having worked with labels such as ALL41Records and NightBlue Music.">, having worked with labels such as ALL41Records and NightBlue Music.</span>
+                    
+                    <p class="about-text" data-ru="Спустя годы я начал заниматься электронной музыкой и пройдя через множество игр, такие как Nier: Automata, Rise of the Tomb Rider, Assassins Creed: Ezio Trilogy, Uncharted 4: A Thief’s End, Cyberpunk 2077, Prey, игры серии Dishonored и многих других я понял, что хочу управлять не только эмоциями слушателя, для которого я делаю музыку, но и опытом, восприятием и эстетическим удовольствием, который в последствии получает уже игрок." data-en="Years later, I started producing electronic music. After experiencing countless titles like NieR: Automata, Rise of the Tomb Raider, Assassin's Creed: The Ezio Collection, Uncharted 4: A Thief’s End, Cyberpunk 2077, Prey, the Dishonored series, and many others, I realized something crucial. I wanted to shape not just the emotions of a music listener, but the entire experience, perception, and aesthetic pleasure that a player ultimately receives.">
+                        Years later, I started producing electronic music. After experiencing countless titles like NieR: Automata, Rise of the Tomb Raider, Assassin's Creed: The Ezio Collection, Uncharted 4: A Thief’s End, Cyberpunk 2077, Prey, the Dishonored series, and many others, I realized something crucial. I wanted to shape not just the emotions of a music listener, but the entire experience, perception, and aesthetic pleasure that a player ultimately receives.
                     </p>
-                    <button onclick="switchView('music'); return false;" class="action-btn">
-                        <span data-ru="Хотите узнать больше?" data-en="Want to know more?">Want to know more?</span> →
-                    </button>
-                </div>
 
-                <div class="about-action-row">
-                    <p data-ru="Если вы ещё читаете это, значит вам стало интересно, так давайте поработаем вместе?" data-en="If you're still reading this, it means I've caught your attention. Shall we work together?">
-                        If you're still reading this, it means I've caught your attention. Shall we work together?
+                    <p class="about-text" data-ru="Параллельно с этим я занимался 3D моделированием, успел поработать художником по транспорту, изучил весь игровой пайплайн, но понимал, что совмещать оба направления невозможно и нужно выбрать что-то одно, и я выбрал звук. Если бы не глубокая любовь к аудио, то получилось ли бы достичь того, что есть сейчас?" data-en="Alongside this, I delved into 3D modeling and even worked as a vehicle artist, learning the complete game development pipeline. However, I realized that combining both paths was impossible and I had to choose one—so I chose sound. If it weren't for my deep, enduring love for audio, would I have been able to achieve what I have today?">
+                        Alongside this, I delved into 3D modeling and even worked as a vehicle artist, learning the complete game development pipeline. However, I realized that combining both paths was impossible and I had to choose one—so I chose sound. If it weren't for my deep, enduring love for audio, would I have been able to achieve what I have today?
                     </p>
-                    <button onclick="scrollToContacts(); return false;" class="action-btn contact-btn">
-                        <span data-ru="Контакты" data-en="Contacts">Contacts</span> ↓
-                    </button>
-                </div>
 
-                <p class="about-text" data-ru="В свободное занимаюсь полевой записью звука, читаю игровую журналистику, занимаюсь риппингом(извлечением файлов) игр, играю на midi-клавиатуре." data-en="In my spare time, I do field recording, read game journalism, practice audio ripping to study game files, and play the MIDI keyboard.">
-                    In my spare time, I do field recording, read game journalism, practice audio ripping to study game files, and play the MIDI keyboard.
-                </p>
+                    <!-- Абзацы с интегрированными кнопками-ссылками в конце -->
+                    <p class="about-text">
+                        <span data-ru="На данный момент я работаю дизайнером линейного звука как аутсорс сотрудник в игровой инди компании." data-en="Currently, I work as an outsource linear sound designer for an indie game company.">Currently, I work as an outsource linear sound designer for an indie game company.</span>
+                        <a href="#" onclick="switchView('sound-design'); return false;" class="inline-action-link" data-ru="Интересен дизайн звука? &rarr;" data-en="Interested in sound design? &rarr;">Interested in sound design? &rarr;</a>
+                    </p>
 
-                <details class="about-spoiler">
-                    <summary data-ru="Интерактивное аудио позволяет мне раскрыть себя как визионера, который способен управлять вниманием игрока через звук..." data-en="Interactive audio allows me to reveal myself as a visionary capable of guiding the player's attention through sound...">
-                        Interactive audio allows me to reveal myself as a visionary capable of guiding the player's attention through sound...
-                    </summary>
-                    <div class="spoiler-content" data-ru="...не позиционировать себя как исключительно Саунд Дизайнера, который безусловно задаёт характер звучания и идентичность, но и почувствовать себя будущим полноправным участником проекта на равне с другими разработчиками занимаясь имплементацией, оптимизацией и интеграцией." data-en="...positioning myself not just as a Sound Designer who undeniably sets the sonic identity, but feeling like a full-fledged participant in the project alongside other developers, actively handling implementation, optimization, and integration.">
-                        ...positioning myself not just as a Sound Designer who undeniably sets the sonic identity, but feeling like a full-fledged participant in the project alongside other developers, actively handling implementation, optimization, and integration.
-                    </div>
-                </details>
+                    <p class="about-text">
+                        <span data-ru="Так же выпустил множество песен под псевдонимом " data-en="I have also released numerous tracks under the alias ">I have also released numerous tracks under the alias </span>
+                        <!-- СЮДА ВСТАВЬ СВОЮ ССЫЛКУ -->
+                        <a href="https://example.com" target="_blank" class="inline-link">Oni Nillsen</a><span data-ru=", успев поработать с такими лейблами как ALL41Records и NightBlue Music." data-en=", having worked with labels such as ALL41Records and NightBlue Music.">, having worked with labels such as ALL41Records and NightBlue Music.</span>
+                        <a href="#" onclick="switchView('music'); return false;" class="inline-action-link" data-ru="Хотите узнать больше? &rarr;" data-en="Want to know more? &rarr;">Want to know more? &rarr;</a>
+                    </p>
+
+                    <p class="about-text">
+                        <span data-ru="Если вы ещё читаете это, значит вам стало интересно, так давайте поработаем вместе?" data-en="If you're still reading this, it means I've caught your attention. Shall we work together?">If you're still reading this, it means I've caught your attention. Shall we work together?</span>
+                        <a href="#" onclick="scrollToContacts(); return false;" class="inline-action-link" data-ru="Контакты &darr;" data-en="Contacts &darr;">Contacts &darr;</a>
+                    </p>
+
+                    <p class="about-text" data-ru="В свободное время занимаюсь полевой записью звука, читаю игровую журналистику, занимаюсь риппингом(извлечением файлов) игр, играю на midi-клавиатуре." data-en="In my spare time, I do field recording, read game journalism, practice audio ripping to study game files, and play the MIDI keyboard.">
+                        In my spare time, I do field recording, read game journalism, practice audio ripping to study game files, and play the MIDI keyboard.
+                    </p>
+
+                    <!-- ШТОРКА (Inline текст) -->
+                    <details class="about-spoiler">
+                        <summary>
+                            <span data-ru="Интерактивное аудио позволяет мне раскрыть себя как визионера, который способен управлять вниманием игрока..." data-en="Interactive audio allows me to reveal myself as a visionary capable of guiding the player's attention...">Interactive audio allows me to reveal myself as a visionary capable of guiding the player's attention...</span>
+                        </summary>
+                        <span class="spoiler-content" data-ru=" через звук, не позиционировать себя как исключительно Саунд Дизайнера, который безусловно задаёт характер звучания и идентичность, но и почувствовать себя будущим полноправным участником проекта на равне с другими разработчиками занимаясь имплементацией, оптимизацией и интеграцией." data-en=" through sound, positioning myself not just as a Sound Designer who undeniably sets the sonic identity, but feeling like a full-fledged participant in the project alongside other developers, actively handling implementation, optimization, and integration."> through sound, positioning myself not just as a Sound Designer who undeniably sets the sonic identity, but feeling like a full-fledged participant in the project alongside other developers, actively handling implementation, optimization, and integration.</span>
+                    </details>
+                </div> <!-- /about-content (clearfix) -->
             </section>
 
             <section id="works">
@@ -432,7 +429,6 @@
 
                 <div id="tab-soundcloud" class="tab-content active">
                     <div class="media-grid">
-                        <!-- 9 SoundCloud Плееров -->
                         <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/34019569&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe></div><div class="video-description"><h4>Track 1</h4></div></div>
                         <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/34019569&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe></div><div class="video-description"><h4>Track 2</h4></div></div>
                         <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/34019569&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe></div><div class="video-description"><h4>Track 3</h4></div></div>
@@ -447,7 +443,6 @@
 
                 <div id="tab-spotify" class="tab-content">
                     <div class="media-grid">
-                        <!-- 8 Spotify Плееров -->
                         <div class="video-card"><div class="audio-container spotify"><iframe style="border-radius:0px" src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 1</h4></div></div>
                         <div class="video-card"><div class="audio-container spotify"><iframe style="border-radius:0px" src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 2</h4></div></div>
                         <div class="video-card"><div class="audio-container spotify"><iframe style="border-radius:0px" src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 3</h4></div></div>
@@ -475,7 +470,6 @@
                         <div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
                         <div class="video-description"><h4>Description 1</h4></div>
                     </div>
-                    <!-- Добавлен второй плеер -->
                     <div class="video-card">
                         <div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
                         <div class="video-description"><h4>Description 2</h4></div>
@@ -488,7 +482,6 @@
                         <div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
                         <div class="video-description"><h4>Description 1</h4></div>
                     </div>
-                    <!-- Добавлен второй плеер -->
                     <div class="video-card">
                         <div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
                         <div class="video-description"><h4>Description 2</h4></div>
@@ -618,7 +611,6 @@
         // ПЛАВНЫЙ СКРОЛЛ ВНИЗ И АНИМАЦИЯ ИКОНОК "CONTACTS"
         function scrollToContacts() {
             document.getElementById('footer').scrollIntoView({ behavior: 'smooth' });
-            // Задержка 800мс, чтобы скролл успел доехать до низа перед анимацией
             setTimeout(() => {
                 const socialLinks = document.querySelectorAll('.social-link');
                 socialLinks.forEach(link => {

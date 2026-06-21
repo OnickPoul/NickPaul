@@ -311,11 +311,10 @@
         <div class="container">
             <div class="header-grid">
                 <div class="header-left">
-                    <a href="#" class="logo" onclick="switchView('home', 'hero'); return false;">
+                    <a href="#hero" class="logo" onclick="switchView('home', 'hero'); return false;">
                         <img src="NickPaulLogoAlpha.png" alt="Logo" id="siteLogo">
                     </a>
                     <div class="desktop-only btn-group">
-                        <a href="#" onclick="switchView('home', 'hero'); return false;" class="nav-btn">Showreel</a>
                         <a href="#" class="nav-btn contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
                     </div>
                 </div>
@@ -327,6 +326,7 @@
 
                 <div class="header-right">
                     <div class="desktop-only btn-group home-only-group">
+                        <a href="#hero" class="nav-btn" data-ru="Шоурил" data-en="Showreel">Showreel</a>
                         <a href="#about" class="nav-btn" data-ru="Обо мне" data-en="About">About</a>
                         <a href="#works" class="nav-btn" data-ru="Работы" data-en="Works">Works</a>
                     </div>
@@ -340,10 +340,12 @@
 
                 <div class="mobile-only mobile-nav-row">
                     <div class="btn-group">
-                        <a href="#" onclick="switchView('home', 'hero'); return false;" class="nav-btn">Showreel</a>
                         <a href="#" class="nav-btn contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
-                        <a href="#works" class="nav-btn home-only-group" data-ru="Работы" data-en="Works">Works</a>
-                        <a href="#about" class="nav-btn home-only-group" data-ru="Обо мне" data-en="About">About</a>
+                        <div class="home-only-group" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+                            <a href="#hero" class="nav-btn" data-ru="Шоурил" data-en="Showreel">Showreel</a>
+                            <a href="#about" class="nav-btn" data-ru="Обо мне" data-en="About">About</a>
+                            <a href="#works" class="nav-btn" data-ru="Работы" data-en="Works">Works</a>
+                        </div>
                     </div>
                 </div>
             </div>

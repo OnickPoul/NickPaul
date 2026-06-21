@@ -199,8 +199,11 @@
         .custom-accordion.open .accordion-header::before { transform: rotate(90deg); }
         .custom-accordion.open .accordion-header { color: var(--text-color); }
         
-        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out; }
-        .accordion-content { color: var(--text-color); font-size: 1.05rem; line-height: 1.8; padding-top: 10px; }
+        .acc-dots { display: inline; transition: opacity 0.2s ease; }
+        .custom-accordion.open .acc-dots { opacity: 0; display: none; }
+        
+        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; }
+        .accordion-content { color: var(--text-color); font-size: 1.05rem; line-height: 1.8; padding-top: 0; }
 
         @media (max-width: 768px) {
             .about-photo-right { float: none; width: 100%; margin: 0 0 30px 0; }
@@ -426,12 +429,20 @@
             <section id="works">
                 <h2 class="section-title" data-ru="Мои работы" data-en="Selected Works">Selected Works</h2>
 
-                <h3 class="subsection-title" data-ru="Технический разбор" data-en="Technical Breakdown">Technical Breakdown</h3>
-                <div class="video-card">
-                    <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                <h3 class="subsection-title" data-ru="Разбор реализации" data-en="Implementation Breakdown">Implementation Breakdown</h3>
+                <div class="media-grid">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-description"><h4 data-ru="Название проекта" data-en="Project Title Here">Project Title Here</h4></div>
                     </div>
-                    <div class="video-description"><h4 data-ru="Название проекта" data-en="Project Title Here">Project Title Here</h4></div>
+                    <div class="video-card">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-description"><h4 data-ru="Название проекта 2" data-en="Project Title 2">Project Title 2</h4></div>
+                    </div>
                 </div>
 
                 <h3 class="subsection-title" data-ru="Кинематографичный редизайн" data-en="Cinematic Redesigns">Cinematic Redesigns</h3>
@@ -681,10 +692,7 @@
 
                 if (viewId === 'home') {
                     if (returnTargetId) {
-                        setTimeout(() => scrollToTarget(returnTargetId), 50); // Ждем рендера
-                    } else {
                         window.scrollTo({ top: savedScrollPosition, behavior: 'instant' });
-                    }
                 } else {
                     window.scrollTo({ top: 0, behavior: 'instant' });
                 }

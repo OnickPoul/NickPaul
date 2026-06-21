@@ -823,7 +823,7 @@
         });
 
         // Отслеживаем скролл для автоматической подсветки
-        const observerOptions = { root: null, rootMargin: '-110px 0px -40% 0px', threshold: 0 };
+        const observerOptions = { root: null, rootMargin: '-120px 0px -60% 0px', threshold: 0 };
         const observer = new IntersectionObserver((entries) => {
             if (isClickScrolling || document.body.classList.contains('is-subpage')) return; 
 
@@ -831,7 +831,7 @@
                 if (entry.isIntersecting) {
                     const id = entry.target.getAttribute('id');
                     navLinks.forEach(link => link.classList.remove('active'));
-                    document.querySelectorAll(`.nav-btn[href="#${id}"]`).forEach(activeLink => {
+                    document.querySelectorAll(`.home-only-group .nav-btn[href="#${id}"]`).forEach(activeLink => {
                         activeLink.classList.add('active');
                     });
                 }

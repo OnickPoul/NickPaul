@@ -45,10 +45,17 @@
             --btn-active-text: #000000;
         }
 
-        /* 1. БАЗОВЫЕ ПЕРЕХОДЫ (Жестко 300мс для всех элементов, чтобы не было рассинхронов) */
-        body, header, footer, main, section, div, h1, h2, h3, h4, p, span, a, button, input, textarea, svg, path, circle, line {
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, fill 0.3s ease, stroke 0.3s ease, box-shadow 0.3s ease;
+        /* Единое правило синхронизации цвета для ВСЕХ элементов на 0.3s */
+        body, header, footer, main, section, div, h1, h2, h3, h4, p, span, a, button, input, textarea, svg, path, circle, line, iframe, hr {
+            transition-property: background-color, color, border-color, fill, stroke;
+            transition-duration: 0.3s;
+            transition-timing-function: ease;
         }
+
+        /* Переопределяем отдельные анимации макета, чтобы они не конфликтовали с цветом */
+        .page-view { transition-property: opacity, background-color, color; }
+        .home-only { transition-property: opacity, visibility, background-color, color, border-color; }
+        .accordion-body { transition-property: max-height; }
 
         * { 
             box-sizing: border-box; 
@@ -58,7 +65,7 @@
         }
         
         html { 
-            scroll-behavior: auto; 
+            scroll-behavior: auto; /* Работаем через JS для точного отступа */
             overflow-y: scroll; 
         }
 
@@ -76,7 +83,7 @@
 
         .container { max-width: 900px; width: 100%; margin: 0 auto; padding: 0 20px; }
 
-        /* 2. LAYOUT-ПЕРЕХОДЫ (Прописываются отдельно, чтобы не сбивать цвета) */
+        /* --- SPA --- */
         .page-view { display: none; opacity: 0; transition: opacity 0.3s ease; }
         .page-view.active { display: block; opacity: 1; }
 
@@ -102,34 +109,31 @@
         .logo img { height: 40px; display: block; transition: filter 0.3s ease; }
         [data-theme="dark"] .logo img { filter: invert(1); }
 
-        /* Унифицированные кнопки шапки */
+        /* Возвращенные оригинальные размеры кнопок */
         .nav-btn {
             font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 13px;
             color: var(--btn-text); background-color: var(--btn-bg); text-decoration: none;
-            padding: 0 16px; height: 36px; border: 1px solid var(--btn-border); border-radius: 4px;
+            padding: 8px 16px; border: 1px solid var(--btn-border); border-radius: 4px;
             cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
-            box-sizing: border-box; white-space: nowrap;
+            white-space: nowrap;
         }
         .nav-btn:hover, .nav-btn.active { background-color: var(--btn-active-bg); color: var(--btn-active-text); border-color: var(--btn-active-bg); }
 
         .icon-btn {
             background: none; border: none; color: var(--text-color); font-weight: 600; font-size: 16px; cursor: pointer;
             display: inline-flex; align-items: center; justify-content: center; padding: 0; height: 24px;
-            transition: transform 0.2s ease, color 0.3s ease;
+            transition: transform 0.2s ease;
         }
         .icon-btn:hover { transform: scale(1.1); }
         .icon-btn svg { width: 24px; height: 24px; fill: currentColor; }
         
-        .icon-moon { display: block; } 
+        .icon-moon { display: block; fill: currentColor; } 
         .icon-sun { display: none; fill: none !important; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         [data-theme="dark"] .icon-moon { display: none; }
         [data-theme="dark"] .icon-sun { display: block; }
 
-        .btn-group { display: flex; gap: 14px; }
-        
-        .home-only-group { transition: opacity 0.3s ease, visibility 0.3s ease; opacity: 1; visibility: visible; }
-        body.is-subpage .home-only-group { opacity: 0; visibility: hidden; pointer-events: none; }
+        .home-only { opacity: 1; visibility: visible; transition: opacity 0.3s ease, visibility 0.3s ease; }
+        body.is-subpage .home-only { opacity: 0; visibility: hidden; pointer-events: none; }
         
         .mobile-only { display: none; }
 
@@ -148,7 +152,7 @@
             .logo img { height: 30px; }
 
             .mobile-nav-row { grid-column: 1 / -1; width: 100%; display: flex; justify-content: center; }
-            .mobile-nav-row .btn-group { display: flex; gap: 10px; width: 100%; justify-content: center; flex-wrap: wrap; }
+            .mobile-nav-row .nav-group { display: flex; gap: 10px; width: 100%; justify-content: center; flex-wrap: wrap; }
         }
 
         /* --- КОНТЕНТ --- */
@@ -166,7 +170,7 @@
         .page-header-wrapper .section-title { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
         .section-title { font-size: 2.2rem; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; width: 100%; }
         
-        .title-back-btn { background-color: transparent; color: var(--text-color); border: 1px solid var(--border-color); font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 1rem; padding: 8px 16px; border-radius: 6px; cursor: pointer; transition: background-color 0.3s, color 0.3s; }
+        .title-back-btn { background-color: transparent; color: var(--text-color); border: 1px solid var(--border-color); font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 1rem; padding: 8px 16px; border-radius: 6px; cursor: pointer; }
         .title-back-btn:hover { background-color: var(--text-color); color: var(--bg-color); }
 
         .subsection-title { font-size: 1.5rem; margin: 40px 0 20px 0; color: var(--text-color); }
@@ -199,7 +203,7 @@
         .acc-dots { display: inline; transition: opacity 0.2s ease; }
         .custom-accordion.open .acc-dots { opacity: 0; display: none; }
         
-        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out; }
+        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; }
         .accordion-content { color: var(--text-color); font-size: 1.05rem; line-height: 1.8; padding-top: 0; }
 
         @media (max-width: 768px) {
@@ -229,7 +233,7 @@
         .tab-content.active { display: block; opacity: 1; }
 
         /* ПОДВАЛ */
-        footer { border-top: 1px solid var(--border-color); margin-top: 60px; padding: 30px 0; transition: opacity 0.3s ease; }
+        footer { border-top: 1px solid var(--border-color); margin-top: 60px; padding: 30px 0; }
         body.is-subpage footer { display: none; }
 
         .footer-container { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; width: 100%; }
@@ -241,7 +245,7 @@
         .social-link:hover { opacity: 0.7; }
         .social-link svg { width: 32px; height: 32px; fill: currentColor; }
 
-        .up-arrow-btn { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background-color 0.3s, color 0.3s; font-size: 1.2rem; font-family: 'Manrope', sans-serif; }
+        .up-arrow-btn { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; font-family: 'Manrope', sans-serif; }
         .up-arrow-btn:hover { background: var(--text-color); color: var(--bg-color); }
 
         @media (max-width: 768px) {
@@ -250,16 +254,13 @@
             .social-link svg { width: 28px; height: 28px; }
         }
 
-        /* МОДАЛЬНОЕ ОКНО CONTACTS */
+        /* МОДАЛЬНОЕ ОКНО CONTACTS (Надежное закрытие без призраков) */
         .modal {
-            position: fixed; z-index: -1; left: 0; top: 0; width: 100%; height: 100%;
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px);
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; transition: opacity 0.3s ease, z-index 0s linear 0.3s;
+            justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease;
         }
-        .modal.show { 
-            opacity: 1; z-index: 2000; transition: opacity 0.3s ease, z-index 0s; 
-        }
+        .modal.show { display: flex; opacity: 1; }
         .modal-content {
             background: var(--bg-color); padding: 40px; border-radius: 12px; width: 90%; max-width: 700px;
             position: relative; border: 1px solid var(--border-color);
@@ -308,12 +309,11 @@
         <div class="container">
             <div class="header-grid">
                 <div class="header-left">
-                    <a href="#hero" class="logo" onclick="switchView('home'); return false;">
+                    <a href="#hero" class="logo" onclick="switchView('home', 'hero'); return false;">
                         <img src="NickPaulLogoAlpha.png" alt="Logo" id="siteLogo">
                     </a>
-                    <div class="desktop-only btn-group">
-                        <a href="#hero" class="nav-btn showreel-btn home-only-group">Showreel</a>
-                        <a href="#" class="nav-btn contact-btn contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
+                    <div class="desktop-only">
+                        <a href="#" class="nav-btn contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
                     </div>
                 </div>
 
@@ -323,7 +323,8 @@
                 </div>
 
                 <div class="header-right">
-                    <div class="desktop-only btn-group home-only-group">
+                    <div class="desktop-only home-only" style="display: flex; gap: 14px;">
+                        <a href="#hero" class="nav-btn" data-ru="Шоурил" data-en="Showreel">Showreel</a>
                         <a href="#about" class="nav-btn" data-ru="Обо мне" data-en="About">About</a>
                         <a href="#works" class="nav-btn" data-ru="Работы" data-en="Works">Works</a>
                     </div>
@@ -336,11 +337,11 @@
                 </div>
 
                 <div class="mobile-only mobile-nav-row">
-                    <div class="btn-group">
-                        <a href="#hero" class="nav-btn showreel-btn home-only-group">Showreel</a>
-                        <a href="#" class="nav-btn contact-btn contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
-                        <a href="#works" class="nav-btn home-only-group" data-ru="Работы" data-en="Works">Works</a>
-                        <a href="#about" class="nav-btn home-only-group" data-ru="Обо мне" data-en="About">About</a>
+                    <div class="nav-group">
+                        <a href="#" class="nav-btn contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
+                        <a href="#hero" class="nav-btn home-only" data-ru="Шоурил" data-en="Showreel">Showreel</a>
+                        <a href="#about" class="nav-btn home-only" data-ru="Обо мне" data-en="About">About</a>
+                        <a href="#works" class="nav-btn home-only" data-ru="Работы" data-en="Works">Works</a>
                     </div>
                 </div>
             </div>
@@ -387,13 +388,13 @@
 
                     <p class="about-text">
                         <span data-ru="На данный момент я работаю дизайнером линейного звука как аутсорс сотрудник в игровой инди компании." data-en="Currently, I work as an outsource linear sound designer for an indie game company.">Currently, I work as an outsource linear sound designer for an indie game company.</span>
-                        <a href="#" onclick="switchView('sound-design'); return false;" class="inline-action-link" data-ru="Как я создаю звук →" data-en="How i design →">How i design →</a>
+                        <a href="#" onclick="switchView('sound-design', 'about-how-design'); return false;" class="inline-action-link" id="about-how-design" data-ru="Как я создаю звук →" data-en="How i design →">How i design →</a>
                     </p>
 
                     <p class="about-text">
                         <span data-ru="Так же выпустил множество песен под псевдонимом " data-en="I have also released numerous tracks under the alias ">I have also released numerous tracks under the alias </span>
                         <a href="https://open.spotify.com/artist/37frRQWtfnzsQ0rsPtPTrK?si=Yw8jd1PrTMyBaevbpv-Urw" target="_blank" class="inline-link">Oni Nillsen</a><span data-ru=", успев поработать с такими лейблами как ALL41Records и NightBlue Music." data-en=", having worked with labels such as ALL41Records and NightBlue Music.">, having worked with labels such as ALL41Records and NightBlue Music.</span>
-                        <a href="#" onclick="switchView('music'); return false;" class="inline-action-link" data-ru="Хотите узнать больше? →" data-en="Want to know more? →">Want to know more? →</a>
+                        <a href="#" onclick="switchView('music', 'about-want-more'); return false;" class="inline-action-link" id="about-want-more" data-ru="Хотите узнать больше? →" data-en="Want to know more? →">Want to know more? →</a>
                     </p>
 
                     <p class="about-text" data-ru="В свободное время занимаюсь полевой записью звука, читаю игровую журналистику, занимаюсь риппингом(извлечением файлов) игр, играю на midi-клавиатуре." data-en="In my spare time, I do field recording, read game journalism, practice audio ripping to study game files, and play the MIDI keyboard.">
@@ -424,12 +425,20 @@
             <section id="works">
                 <h2 class="section-title" data-ru="Мои работы" data-en="Selected Works">Selected Works</h2>
 
-                <h3 class="subsection-title" data-ru="Технический разбор" data-en="Technical Breakdown">Technical Breakdown</h3>
-                <div class="video-card">
-                    <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                <h3 class="subsection-title" data-ru="Разбор реализации" data-en="Implementation Breakdown">Implementation Breakdown</h3>
+                <div class="media-grid">
+                    <div class="video-card">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-description"><h4 data-ru="Название проекта" data-en="Project Title Here">Project Title Here</h4></div>
                     </div>
-                    <div class="video-description"><h4 data-ru="Название проекта" data-en="Project Title Here">Project Title Here</h4></div>
+                    <div class="video-card">
+                        <div class="video-container">
+                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-description"><h4 data-ru="Название проекта 2" data-en="Project Title 2">Project Title 2</h4></div>
+                    </div>
                 </div>
 
                 <h3 class="subsection-title" data-ru="Кинематографичный редизайн" data-en="Cinematic Redesigns">Cinematic Redesigns</h3>
@@ -471,7 +480,7 @@
             <section style="margin-top: 50px;">
                 <div class="page-header-wrapper">
                     <h2 class="section-title" data-ru="Музыка" data-en="Music Background">Music Background</h2>
-                    <button class="title-back-btn" onclick="switchView('home')" data-ru="Назад" data-en="Back">Back</button>
+                    <button class="title-back-btn" onclick="goBackToHome()" data-ru="Назад" data-en="Back">Back</button>
                 </div>
                 
                 <div class="tabs-container">
@@ -481,14 +490,14 @@
 
                 <div id="tab-soundcloud" class="tab-content active">
                     <div class="media-grid">
-                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1863434040&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
-                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2022944900&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
-                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1938138563&color=%23160504&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
-                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1898808423&color=%233e2b31&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
-                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2117727474&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
-                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A1996243647%3Fsecret_token%3Ds-EOyHbtxiN0Q&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
-                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2014169807%3Fsecret_token%3Ds-7F2kbWbyFOm&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
-                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2000369099%3Fsecret_token%3Ds-VChpslzOyE5&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
+                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1863434040&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
+                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2022944900&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
+                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1938138563&color=%23160504&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
+                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1898808423&color=%233e2b31&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
+                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2117727474&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
+                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1996243647%3Fsecret_token%3Ds-EOyHbtxiN0Q&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
+                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2014169807%3Fsecret_token%3Ds-7F2kbWbyFOm&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
+                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2000369099%3Fsecret_token%3Ds-VChpslzOyE5&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
                     </div>
                 </div>
 
@@ -511,18 +520,16 @@
             <section style="margin-top: 50px;">
                 <div class="page-header-wrapper">
                     <h2 class="section-title" data-ru="Саунд Дизайн" data-en="Sound Design">Sound Design</h2>
-                    <button class="title-back-btn" onclick="switchView('home')" data-ru="Назад" data-en="Back">Back</button>
+                    <button class="title-back-btn" onclick="goBackToHome()" data-ru="Назад" data-en="Back">Back</button>
                 </div>
 
                 <h3 class="subsection-title" style="margin-top: 0;">SFX from scratch</h3>
                 <div class="media-grid">
                     <div class="video-card">
                         <div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
-                        <div class="video-description"><h4>Description 1</h4></div>
                     </div>
                     <div class="video-card">
                         <div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
-                        <div class="video-description"><h4>Description 2</h4></div>
                     </div>
                 </div>
             </section>
@@ -639,16 +646,17 @@
         // ПАМЯТЬ СКРОЛЛА И ЛОГИКА SPA 
         let savedScrollPosition = 0;
         let isClickScrolling = false;
+        let lastClickedTargetId = null;
 
-        function switchView(viewId) {
+        function switchView(viewId, returnTargetId = null) {
             const currentView = document.querySelector('.page-view.active');
             const targetView = document.getElementById('view-' + viewId);
 
             if (currentView === targetView) return;
 
-            // Если уходим с главной, запоминаем где были
+            // Если уходим с главной страницы, запоминаем якорь для возврата
             if (currentView.id === 'view-home') {
-                savedScrollPosition = window.scrollY;
+                lastClickedTargetId = returnTargetId;
             }
 
             if (currentView) currentView.style.opacity = '0';
@@ -662,13 +670,35 @@
                 targetView.style.display = 'block';
 
                 if (viewId === 'home') {
-                    // Возвращаемся ровно на то же место
-                    window.scrollTo({ top: savedScrollPosition, behavior: 'instant' });
+                    window.scrollTo({ top: 0, behavior: 'instant' });
                 } else {
                     window.scrollTo({ top: 0, behavior: 'instant' });
                 }
 
                 setTimeout(() => { targetView.style.opacity = '1'; targetView.classList.add('active'); }, 50);
+            }, 300);
+        }
+
+        // Логика кнопки "Назад" с точным возвратом к месту клика
+        function goBackToHome() {
+            const currentView = document.querySelector('.page-view.active');
+            const homeView = document.getElementById('view-home');
+            
+            if (currentView) currentView.style.opacity = '0';
+
+            setTimeout(() => {
+                if (currentView) { currentView.style.display = 'none'; currentView.classList.remove('active'); }
+                document.body.classList.remove('is-subpage');
+                homeView.style.display = 'block';
+
+                if (lastClickedTargetId) {
+                    scrollToTarget(lastClickedTargetId);
+                    lastClickedTargetId = null; 
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'instant' });
+                }
+
+                setTimeout(() => { homeView.style.opacity = '1'; homeView.classList.add('active'); }, 50);
             }, 300);
         }
 
@@ -705,12 +735,14 @@
         modalTriggers.forEach(trigger => {
             trigger.addEventListener('click', (e) => {
                 e.preventDefault();
-                modal.classList.add('show');
+                modal.style.display = 'flex';
+                setTimeout(() => modal.style.opacity = '1', 10);
             });
         });
 
         function closeBtn() {
-            modal.classList.remove('show');
+            modal.style.opacity = '0';
+            setTimeout(() => modal.style.display = 'none', 300);
         }
 
         closeModal.addEventListener('click', closeBtn);
@@ -779,8 +811,8 @@
             }
         }
 
-        // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ (Фикс активации кнопок и низа страницы)
-      const sections = document.querySelectorAll('#view-home section[id]');
+        // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ
+        const sections = document.querySelectorAll('#view-home section[id]');
         const navLinks = document.querySelectorAll('.home-only-group .nav-btn[href^="#"]');
 
         navLinks.forEach(link => {
@@ -812,7 +844,7 @@
 
         sections.forEach(section => observer.observe(section));
 
-        // Дополнительная проверка: если долистали до самого низа, принудительно зажечь "Works"
+        // Дополнительная проверка для конца страницы (чтобы зажечь "Works")
         window.addEventListener('scroll', () => {
             if (isClickScrolling || document.body.classList.contains('is-subpage')) return;
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {

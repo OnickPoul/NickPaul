@@ -780,21 +780,22 @@
         }
 
         // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ (Фикс активации кнопок и низа страницы)
-       const sections = document.querySelectorAll('#view-home section[id]');
-        const navLinks = document.querySelectorAll('.home-only .nav-btn[href^="#"]');
-        let isClickScrolling = false;
+      const sections = document.querySelectorAll('#view-home section[id]');
+        const navLinks = document.querySelectorAll('.home-only-group .nav-btn[href^="#"]');
 
         navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                isClickScrolling = true;
-                navLinks.forEach(l => l.classList.remove('active'));
+            link.addEventListener('click', (e) => {
                 const targetHref = link.getAttribute('href');
-                document.querySelectorAll(`.home-only .nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active'));
-                setTimeout(() => { isClickScrolling = false; }, 800);
+                if(targetHref.startsWith('#')) {
+                    e.preventDefault();
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    document.querySelectorAll(`.home-only-group .nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active'));
+                    scrollToTarget(targetHref.substring(1));
+                }
             });
         });
 
-        const observerOptions = { root: null, rootMargin: '-40% 0px -60% 0px', threshold: 0 };
+        const observerOptions = { root: null, rootMargin: '-100px 0px -40% 0px', threshold: 0 };
         const observer = new IntersectionObserver((entries) => {
             if (isClickScrolling || document.body.classList.contains('is-subpage')) return; 
 
@@ -802,7 +803,7 @@
                 if (entry.isIntersecting) {
                     const id = entry.target.getAttribute('id');
                     navLinks.forEach(link => link.classList.remove('active'));
-                    document.querySelectorAll(`.home-only .nav-btn[href="#${id}"]`).forEach(activeLink => {
+                    document.querySelectorAll(`.home-only-group .nav-btn[href="#${id}"]`).forEach(activeLink => {
                         activeLink.classList.add('active');
                     });
                 }

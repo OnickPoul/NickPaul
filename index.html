@@ -46,16 +46,15 @@
         }
 
         /* Единое правило синхронизации цвета для ВСЕХ элементов на 0.3s */
-        body, header, footer, main, section, div, h1, h2, h3, h4, p, span, a, button, input, textarea, svg, path, circle, line, iframe, hr {
-            transition-property: background-color, color, border-color, fill, stroke;
-            transition-duration: 0.3s;
-            transition-timing-function: ease;
-        }
+        *, *::before, *::after {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, fill 0.3s ease, stroke 0.3s ease;
+}
 
         /* Переопределяем отдельные анимации макета, чтобы они не конфликтовали с цветом */
-        .page-view { transition-property: opacity, background-color, color; }
-        .home-only { transition-property: opacity, visibility, background-color, color, border-color; }
-        .accordion-body { transition-property: max-height; }
+        .page-view { transition: opacity 0.3s ease; }
+            .accordion-body { transition: max-height 0.4s ease-in-out; }
+            .modal { transition: opacity 0.3s ease, z-index 0s linear 0.3s; }
+            .modal.show { transition: opacity 0.3s ease, z-index 0s; }
 
         * { 
             box-sizing: border-box; 
@@ -305,17 +304,15 @@
 </head>
 <body>
 
-    <header id="mainHeader">
-        <div class="container">
-            <div class="header-grid">
-                <div class="header-left">
-                    <a href="#hero" class="logo" onclick="switchView('home', 'hero'); return false;">
-                        <img src="NickPaulLogoAlpha.png" alt="Logo" id="siteLogo">
-                    </a>
-                    <div class="desktop-only">
-                        <a href="#" class="nav-btn contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
-                    </div>
-                </div>
+    <div class="header-left">
+    <a href="#hero" class="logo" onclick="switchView('home', 'hero'); return false;">
+        <img src="NickPaulLogoAlpha.png" alt="Logo" id="siteLogo">
+    </a>
+    <div class="desktop-only btn-group">
+        <a href="#" class="nav-btn contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
+        <a href="#hero" class="nav-btn showreel-btn home-only-group" data-ru="Шоурил" data-en="Showreel">Showreel</a>
+    </div>
+</div>
 
                 <div class="header-center">
                     <h1>Nick Paul</h1>
@@ -703,15 +700,19 @@
         }
 
         function scrollToTarget(targetId) {
-            const el = document.getElementById(targetId);
-            if (el) {
-                isClickScrolling = true;
-                const headerOffset = 100;
-                const y = el.getBoundingClientRect().top + window.scrollY - headerOffset;
-                window.scrollTo({ top: y, behavior: 'smooth' });
-                setTimeout(() => { isClickScrolling = false; }, 800);
-            }
-        }
+    const el = document.getElementById(targetId);
+    if (el) {
+        isClickScrolling = true;
+        // Отступ сверху. 80px — высота шапки + 20px зазор
+        const headerOffset = 100; 
+        const y = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+        
+        // ВОТ ЗДЕСЬ ВОЗВРАЩАЕМ ПЛАВНОСТЬ (smooth)
+        window.scrollTo({ top: y, behavior: 'smooth' }); 
+        
+        setTimeout(() => { isClickScrolling = false; }, 800);
+    }
+}
 
         // ПЛАВНАЯ ШТОРКА (Accordion)
         const accordion = document.querySelector('.custom-accordion');
@@ -812,20 +813,24 @@
         }
 
         // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ
-        const sections = document.querySelectorAll('#view-home section[id]');
-        const navLinks = document.querySelectorAll('.home-only-group .nav-btn[href^="#"]');
+        const navLinks = document.querySelectorAll('.home-only-group .nav-btn[href^="#"], .header-left .nav-btn[href^="#"]');
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                const targetHref = link.getAttribute('href');
-                if(targetHref.startsWith('#')) {
-                    e.preventDefault();
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    document.querySelectorAll(`.home-only-group .nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active'));
-                    scrollToTarget(targetHref.substring(1));
-                }
-            });
-        });
+navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        const targetHref = link.getAttribute('href');
+        if(targetHref.startsWith('#')) {
+            e.preventDefault();
+            
+            // Убираем подсветку со всех кнопок
+            navLinks.forEach(l => l.classList.remove('active'));
+            // Вешаем подсветку на ту, которую нажали
+            document.querySelectorAll(`.nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active'));
+            
+            // Вызываем наш плавный скролл
+            scrollToTarget(targetHref.substring(1));
+        }
+    });
+});
 
         const observerOptions = { root: null, rootMargin: '-100px 0px -40% 0px', threshold: 0 };
         const observer = new IntersectionObserver((entries) => {

@@ -656,18 +656,20 @@
 
         // ПАМЯТЬ СКРОЛЛА И ЛОГИКА SPA 
        let savedScrollPosition = 0;
-        let isClickScrolling = false;
 
         function switchView(viewId, returnTargetId = null) {
             const currentView = document.querySelector('.page-view.active');
             const targetView = document.getElementById('view-' + viewId);
 
-            if (currentView === targetView) {
-                // Если мы уже на домашней странице и нажали Showreel, просто скроллим
-                if (viewId === 'home' && returnTargetId) {
-                    scrollToTarget(returnTargetId);
-                }
-                return;
+            if (currentView === targetView) return;
+
+            if (currentView.id === 'view-home') {
+                savedScrollPosition = window.scrollY;
+            }
+
+            if (viewId === 'home') {
+                document.querySelectorAll('.home-only .nav-btn[href^="#"]').forEach(link => link.classList.remove('active'));
+                isClickScrolling = true; 
             }
 
             if (currentView) currentView.style.opacity = '0';

@@ -29,6 +29,8 @@
             --btn-border: #cccccc;
             --btn-active-bg: #000000;
             --btn-active-text: #ffffff;
+            /* Единый тайминг для всех цветовых переходов 300ms */
+            --theme-transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, fill 0.3s ease, stroke 0.3s ease, box-shadow 0.3s ease;
         }
 
         [data-theme="dark"] {
@@ -45,16 +47,10 @@
             --btn-active-text: #000000;
         }
 
-        /* Единое правило синхронизации цвета для ВСЕХ элементов на 0.3s */
-        *, *::before, *::after {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, fill 0.3s ease, stroke 0.3s ease;
-}
-
-        /* Переопределяем отдельные анимации макета, чтобы они не конфликтовали с цветом */
-        .page-view { transition: opacity 0.3s ease; }
-            .accordion-body { transition: max-height 0.4s ease-in-out; }
-            .modal { transition: opacity 0.3s ease, z-index 0s linear 0.3s; }
-            .modal.show { transition: opacity 0.3s ease, z-index 0s; }
+        /* Жестко применяем цветовые переходы ко всем элементам, чтобы избежать "мерцаний" рамок и сплиттеров */
+        body, header, footer, main, section, div, span, h1, h2, h3, h4, p, a, button, input, textarea, svg, path, circle, line {
+            transition: var(--theme-transition);
+        }
 
         * { 
             box-sizing: border-box; 
@@ -64,7 +60,7 @@
         }
         
         html { 
-            scroll-behavior: auto; /* Работаем через JS для точного отступа */
+            scroll-behavior: auto; /* Контролируем плавный скролл через JS для точного отступа */
             overflow-y: scroll; 
         }
 
@@ -108,31 +104,34 @@
         .logo img { height: 40px; display: block; transition: filter 0.3s ease; }
         [data-theme="dark"] .logo img { filter: invert(1); }
 
-        /* Возвращенные оригинальные размеры кнопок */
+        /* Унифицированные кнопки шапки - теперь одинакового размера */
         .nav-btn {
             font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 13px;
             color: var(--btn-text); background-color: var(--btn-bg); text-decoration: none;
-            padding: 8px 16px; border: 1px solid var(--btn-border); border-radius: 4px;
+            padding: 0 16px; height: 36px; border: 1px solid var(--btn-border); border-radius: 4px;
             cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
-            white-space: nowrap;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+            box-sizing: border-box; white-space: nowrap;
         }
         .nav-btn:hover, .nav-btn.active { background-color: var(--btn-active-bg); color: var(--btn-active-text); border-color: var(--btn-active-bg); }
 
         .icon-btn {
             background: none; border: none; color: var(--text-color); font-weight: 600; font-size: 16px; cursor: pointer;
             display: inline-flex; align-items: center; justify-content: center; padding: 0; height: 24px;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, color 0.3s ease;
         }
         .icon-btn:hover { transform: scale(1.1); }
-        .icon-btn svg { width: 24px; height: 24px; fill: currentColor; }
+        .icon-btn svg { width: 24px; height: 24px; }
         
         .icon-moon { display: block; fill: currentColor; } 
-        .icon-sun { display: none; fill: none !important; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .icon-sun { display: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         [data-theme="dark"] .icon-moon { display: none; }
         [data-theme="dark"] .icon-sun { display: block; }
 
-        .home-only { opacity: 1; visibility: visible; transition: opacity 0.3s ease, visibility 0.3s ease; }
-        body.is-subpage .home-only { opacity: 0; visibility: hidden; pointer-events: none; }
+        .btn-group { display: flex; gap: 14px; }
+        
+        .home-only-group { transition: opacity 0.3s ease, visibility 0.3s ease; opacity: 1; visibility: visible; }
+        body.is-subpage .home-only-group { opacity: 0; visibility: hidden; pointer-events: none; }
         
         .mobile-only { display: none; }
 
@@ -151,7 +150,7 @@
             .logo img { height: 30px; }
 
             .mobile-nav-row { grid-column: 1 / -1; width: 100%; display: flex; justify-content: center; }
-            .mobile-nav-row .nav-group { display: flex; gap: 10px; width: 100%; justify-content: center; flex-wrap: wrap; }
+            .mobile-nav-row .btn-group { display: flex; gap: 10px; width: 100%; justify-content: center; flex-wrap: wrap; }
         }
 
         /* --- КОНТЕНТ --- */
@@ -159,6 +158,7 @@
         .hero-section { margin-top: 50px; }
         
         .video-card { width: 100%; background-color: #000000; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; margin-bottom: 40px; }
+        /* Фон черный, чтобы не было белой полосы */
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; width: 100%; background-color: #000000; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: block; }
         .video-description { padding: 20px 25px; border-top: 1px solid var(--border-color); background-color: var(--card-bg); }
@@ -169,7 +169,7 @@
         .page-header-wrapper .section-title { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
         .section-title { font-size: 2.2rem; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; width: 100%; }
         
-        .title-back-btn { background-color: transparent; color: var(--text-color); border: 1px solid var(--border-color); font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 1rem; padding: 8px 16px; border-radius: 6px; cursor: pointer; }
+        .title-back-btn { background-color: transparent; color: var(--text-color); border: 1px solid var(--border-color); font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 1rem; padding: 8px 16px; border-radius: 6px; cursor: pointer; transition: background-color 0.3s, color 0.3s; }
         .title-back-btn:hover { background-color: var(--text-color); color: var(--bg-color); }
 
         .subsection-title { font-size: 1.5rem; margin: 40px 0 20px 0; color: var(--text-color); }
@@ -199,11 +199,8 @@
         .custom-accordion.open .accordion-header::before { transform: rotate(90deg); }
         .custom-accordion.open .accordion-header { color: var(--text-color); }
         
-        .acc-dots { display: inline; transition: opacity 0.2s ease; }
-        .custom-accordion.open .acc-dots { opacity: 0; display: none; }
-        
-        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; }
-        .accordion-content { color: var(--text-color); font-size: 1.05rem; line-height: 1.8; padding-top: 0; }
+        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-in-out; }
+        .accordion-content { color: var(--text-color); font-size: 1.05rem; line-height: 1.8; padding-top: 10px; }
 
         @media (max-width: 768px) {
             .about-photo-right { float: none; width: 100%; margin: 0 0 30px 0; }
@@ -223,7 +220,7 @@
         
         .audio-container { width: 100%; height: 166px; }
         .audio-container.spotify iframe { width: 100% !important; height: 152px !important; border-radius: 12px; border: none; display: block; }
-        .audio-container iframe { width: 100%; height: 100%; border: none; display: block; }
+        .audio-container iframe { width: 100%; height: 100%; border: none; }
 
         .tabs-container { display: flex; gap: 20px; margin-bottom: 30px; }
         .tab-btn { background: none; border: none; font-family: 'Manrope', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--text-muted); cursor: pointer; padding: 5px 10px; }
@@ -232,7 +229,7 @@
         .tab-content.active { display: block; opacity: 1; }
 
         /* ПОДВАЛ */
-        footer { border-top: 1px solid var(--border-color); margin-top: 60px; padding: 30px 0; }
+        footer { border-top: 1px solid var(--border-color); margin-top: 60px; padding: 30px 0; transition: opacity 0.3s ease; }
         body.is-subpage footer { display: none; }
 
         .footer-container { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; width: 100%; }
@@ -242,9 +239,9 @@
 
         .social-link { color: var(--text-color) !important; display: flex; align-items: center; text-decoration: none; transition: opacity 0.2s ease; }
         .social-link:hover { opacity: 0.7; }
-        .social-link svg { width: 32px; height: 32px; fill: currentColor; }
+        .social-link svg { width: 32px; height: 32px; }
 
-        .up-arrow-btn { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; font-family: 'Manrope', sans-serif; }
+        .up-arrow-btn { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background-color 0.3s, color 0.3s; font-size: 1.2rem; font-family: 'Manrope', sans-serif; }
         .up-arrow-btn:hover { background: var(--text-color); color: var(--bg-color); }
 
         @media (max-width: 768px) {
@@ -253,30 +250,35 @@
             .social-link svg { width: 28px; height: 28px; }
         }
 
-        /* МОДАЛЬНОЕ ОКНО CONTACTS (Надежное закрытие без призраков) */
+        /* МОДАЛЬНОЕ ОКНО CONTACTS (Полностью переписано позиционирование) */
         .modal {
-            display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;
+            position: fixed; z-index: -1; left: 0; top: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px);
-            justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s ease, z-index 0s linear 0.3s;
         }
-        .modal.show { display: flex; opacity: 1; }
+        .modal.show { 
+            opacity: 1; z-index: 2000; transition: opacity 0.3s ease, z-index 0s; 
+        }
         .modal-content {
             background: var(--bg-color); padding: 40px; border-radius: 12px; width: 90%; max-width: 700px;
             position: relative; border: 1px solid var(--border-color);
         }
+        /* Фикс крестика: правильные отступы чтобы не налезал на иконки */
         .close-modal { 
             position: absolute; top: 15px; right: 15px; font-size: 32px; cursor: pointer; 
             color: var(--text-color); transition: opacity 0.2s ease; line-height: 1; z-index: 10;
             width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
         }
         .close-modal:hover { opacity: 0.6; }
+        /* Отступ справа чтобы не пересекаться с крестиком */
         .modal-header { 
             display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; 
             border-bottom: 1px solid var(--border-color); padding-bottom: 15px; padding-right: 25px; 
         }
         .modal-header h2 { font-size: 1.8rem; margin: 0; }
         .modal-socials { display: flex; gap: 15px; }
-        .modal-socials .social-link svg { width: 24px; height: 24px; fill: currentColor; }
+        .modal-socials .social-link svg { width: 24px; height: 24px; }
         
         .form-row { display: flex; gap: 20px; margin-bottom: 15px; }
         .form-group { flex: 1; display: flex; flex-direction: column; }
@@ -304,15 +306,18 @@
 </head>
 <body>
 
-    <div class="header-left">
-    <a href="#hero" class="logo" onclick="switchView('home', 'hero'); return false;">
-        <img src="NickPaulLogoAlpha.png" alt="Logo" id="siteLogo">
-    </a>
-    <div class="desktop-only btn-group">
-        <a href="#" class="nav-btn contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
-        <a href="#hero" class="nav-btn showreel-btn home-only-group" data-ru="Шоурил" data-en="Showreel">Showreel</a>
-    </div>
-</div>
+    <header id="mainHeader">
+        <div class="container">
+            <div class="header-grid">
+                <div class="header-left">
+                    <a href="#" class="logo" onclick="switchView('home', 'hero'); return false;">
+                        <img src="NickPaulLogoAlpha.png" alt="Logo" id="siteLogo">
+                    </a>
+                    <div class="desktop-only btn-group">
+                        <a href="#" onclick="switchView('home', 'hero'); return false;" class="nav-btn">Showreel</a>
+                        <a href="#" class="nav-btn contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
+                    </div>
+                </div>
 
                 <div class="header-center">
                     <h1>Nick Paul</h1>
@@ -320,8 +325,7 @@
                 </div>
 
                 <div class="header-right">
-                    <div class="desktop-only home-only" style="display: flex; gap: 14px;">
-                        <a href="#hero" class="nav-btn" data-ru="Шоурил" data-en="Showreel">Showreel</a>
+                    <div class="desktop-only btn-group home-only-group">
                         <a href="#about" class="nav-btn" data-ru="Обо мне" data-en="About">About</a>
                         <a href="#works" class="nav-btn" data-ru="Работы" data-en="Works">Works</a>
                     </div>
@@ -334,11 +338,11 @@
                 </div>
 
                 <div class="mobile-only mobile-nav-row">
-                    <div class="nav-group">
+                    <div class="btn-group">
+                        <a href="#" onclick="switchView('home', 'hero'); return false;" class="nav-btn">Showreel</a>
                         <a href="#" class="nav-btn contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
-                        <a href="#hero" class="nav-btn home-only" data-ru="Шоурил" data-en="Showreel">Showreel</a>
-                        <a href="#about" class="nav-btn home-only" data-ru="Обо мне" data-en="About">About</a>
-                        <a href="#works" class="nav-btn home-only" data-ru="Работы" data-en="Works">Works</a>
+                        <a href="#works" class="nav-btn home-only-group" data-ru="Работы" data-en="Works">Works</a>
+                        <a href="#about" class="nav-btn home-only-group" data-ru="Обо мне" data-en="About">About</a>
                     </div>
                 </div>
             </div>
@@ -347,6 +351,7 @@
 
     <div class="main-wrapper">
         
+        <!-- ================= ГЛАВНАЯ СТРАНИЦА ================= -->
         <main id="view-home" class="container page-view active">
             
             <section class="hero-section" id="hero">
@@ -385,13 +390,13 @@
 
                     <p class="about-text">
                         <span data-ru="На данный момент я работаю дизайнером линейного звука как аутсорс сотрудник в игровой инди компании." data-en="Currently, I work as an outsource linear sound designer for an indie game company.">Currently, I work as an outsource linear sound designer for an indie game company.</span>
-                        <a href="#" onclick="switchView('sound-design', 'about-how-design'); return false;" class="inline-action-link" id="about-how-design" data-ru="Как я создаю звук →" data-en="How i design →">How i design →</a>
+                        <a href="#" onclick="switchView('sound-design'); return false;" class="inline-action-link" data-ru="Как я создаю звук →" data-en="How i design →">How i design →</a>
                     </p>
 
                     <p class="about-text">
                         <span data-ru="Так же выпустил множество песен под псевдонимом " data-en="I have also released numerous tracks under the alias ">I have also released numerous tracks under the alias </span>
                         <a href="https://open.spotify.com/artist/37frRQWtfnzsQ0rsPtPTrK?si=Yw8jd1PrTMyBaevbpv-Urw" target="_blank" class="inline-link">Oni Nillsen</a><span data-ru=", успев поработать с такими лейблами как ALL41Records и NightBlue Music." data-en=", having worked with labels such as ALL41Records and NightBlue Music.">, having worked with labels such as ALL41Records and NightBlue Music.</span>
-                        <a href="#" onclick="switchView('music', 'about-want-more'); return false;" class="inline-action-link" id="about-want-more" data-ru="Хотите узнать больше? →" data-en="Want to know more? →">Want to know more? →</a>
+                        <a href="#" onclick="switchView('music'); return false;" class="inline-action-link" data-ru="Хотите узнать больше? →" data-en="Want to know more? →">Want to know more? →</a>
                     </p>
 
                     <p class="about-text" data-ru="В свободное время занимаюсь полевой записью звука, читаю игровую журналистику, занимаюсь риппингом(извлечением файлов) игр, играю на midi-клавиатуре." data-en="In my spare time, I do field recording, read game journalism, practice audio ripping to study game files, and play the MIDI keyboard.">
@@ -403,15 +408,14 @@
                         <a href="#" class="inline-action-link contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
                     </p>
 
+                    <!-- Плавная шторка -->
                     <div class="custom-accordion">
                         <div class="accordion-header">
-                            <span>
-                                <span data-ru="Интерактивное аудио позволяет мне раскрыть себя как визионера, который способен управлять вниманием игрока" data-en="Interactive audio allows me to reveal myself as a visionary capable of guiding the player's attention">Interactive audio allows me to reveal myself as a visionary capable of guiding the player's attention</span><span class="acc-dots">...</span>
-                            </span>
+                            <span data-ru="Интерактивное аудио позволяет мне раскрыть себя как визионера, который способен управлять вниманием игрока..." data-en="Interactive audio allows me to reveal myself as a visionary capable of guiding the player's attention...">Interactive audio allows me to reveal myself as a visionary capable of guiding the player's attention...</span>
                         </div>
                         <div class="accordion-body">
-                            <div class="accordion-content" data-ru="через звук, не позиционировать себя как исключительно Саунд Дизайнера, который безусловно задаёт характер звучания и идентичность, но и почувствовать себя будущим полноправным участником проекта на равне с другими разработчиками занимаясь имплементацией, оптимизацией и интеграцией." data-en="through sound, positioning myself not just as a Sound Designer who undeniably sets the sonic identity, but feeling like a full-fledged participant in the project alongside other developers, actively handling implementation, optimization, and integration.">
-                                through sound, positioning myself not just as a Sound Designer who undeniably sets the sonic identity, but feeling like a full-fledged participant in the project alongside other developers, actively handling implementation, optimization, and integration.
+                            <div class="accordion-content" data-ru="...через звук, не позиционировать себя как исключительно Саунд Дизайнера, который безусловно задаёт характер звучания и идентичность, но и почувствовать себя будущим полноправным участником проекта на равне с другими разработчиками занимаясь имплементацией, оптимизацией и интеграцией." data-en="...through sound, positioning myself not just as a Sound Designer who undeniably sets the sonic identity, but feeling like a full-fledged participant in the project alongside other developers, actively handling implementation, optimization, and integration.">
+                                ...through sound, positioning myself not just as a Sound Designer who undeniably sets the sonic identity, but feeling like a full-fledged participant in the project alongside other developers, actively handling implementation, optimization, and integration.
                             </div>
                         </div>
                     </div>
@@ -422,20 +426,12 @@
             <section id="works">
                 <h2 class="section-title" data-ru="Мои работы" data-en="Selected Works">Selected Works</h2>
 
-                <h3 class="subsection-title" data-ru="Разбор реализации" data-en="Implementation Breakdown">Implementation Breakdown</h3>
-                <div class="media-grid">
-                    <div class="video-card">
-                        <div class="video-container">
-                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-                        </div>
-                        <div class="video-description"><h4 data-ru="Название проекта" data-en="Project Title Here">Project Title Here</h4></div>
+                <h3 class="subsection-title" data-ru="Технический разбор" data-en="Technical Breakdown">Technical Breakdown</h3>
+                <div class="video-card">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
                     </div>
-                    <div class="video-card">
-                        <div class="video-container">
-                            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-                        </div>
-                        <div class="video-description"><h4 data-ru="Название проекта 2" data-en="Project Title 2">Project Title 2</h4></div>
-                    </div>
+                    <div class="video-description"><h4 data-ru="Название проекта" data-en="Project Title Here">Project Title Here</h4></div>
                 </div>
 
                 <h3 class="subsection-title" data-ru="Кинематографичный редизайн" data-en="Cinematic Redesigns">Cinematic Redesigns</h3>
@@ -453,6 +449,7 @@
                 </div>
             </section>
 
+            <!-- СЕКЦИЯ ОТЗЫВОВ -->
             <section id="testimonials">
                 <h2 class="section-title" data-ru="Рекомендации" data-en="Recommendations">Recommendations</h2>
                 
@@ -473,11 +470,12 @@
             </section>
         </main>
 
+        <!-- ================= СТРАНИЦА МУЗЫКИ ================= -->
         <main id="view-music" class="container page-view">
             <section style="margin-top: 50px;">
                 <div class="page-header-wrapper">
                     <h2 class="section-title" data-ru="Музыка" data-en="Music Background">Music Background</h2>
-                    <button class="title-back-btn" onclick="goBackToHome()" data-ru="Назад" data-en="Back">Back</button>
+                    <button class="title-back-btn" onclick="switchView('home', 'about')" data-ru="Назад" data-en="Back">Back</button>
                 </div>
                 
                 <div class="tabs-container">
@@ -487,46 +485,49 @@
 
                 <div id="tab-soundcloud" class="tab-content active">
                     <div class="media-grid">
-                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1863434040&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
-                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2022944900&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
-                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1938138563&color=%23160504&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
-                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1898808423&color=%233e2b31&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
-                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2117727474&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
-                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1996243647%3Fsecret_token%3Ds-EOyHbtxiN0Q&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
-                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2014169807%3Fsecret_token%3Ds-7F2kbWbyFOm&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
-                        <div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2000369099%3Fsecret_token%3Ds-VChpslzOyE5&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div>
+                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1863434040&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 1</h4></div></div>
+                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2022944900&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 2</h4></div></div>
+                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1938138563&color=%23160504&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 3</h4></div></div>
+                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1898808423&color=%233e2b31&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 4</h4></div></div>
+                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2117727474&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 5</h4></div></div>
+                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A1996243647%3Fsecret_token%3Ds-EOyHbtxiN0Q&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 6</h4></div></div>
+                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2014169807%3Fsecret_token%3Ds-7F2kbWbyFOm&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 7</h4></div></div>
+                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2000369099%3Fsecret_token%3Ds-VChpslzOyE5&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 8</h4></div></div>
                     </div>
                 </div>
 
                 <div id="tab-spotify" class="tab-content">
                     <div class="media-grid">
-                        <div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
-                        <div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
-                        <div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
-                        <div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
-                        <div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
-                        <div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
-                        <div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
-                        <div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 1</h4></div></div>
+                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 2</h4></div></div>
+                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 3</h4></div></div>
+                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 4</h4></div></div>
+                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 5</h4></div></div>
+                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 6</h4></div></div>
+                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 7</h4></div></div>
+                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 8</h4></div></div>
                     </div>
                 </div>
             </section>
         </main>
 
+        <!-- ================= СТРАНИЦА САУНД-ДИЗАЙНА ================= -->
         <main id="view-sound-design" class="container page-view">
             <section style="margin-top: 50px;">
                 <div class="page-header-wrapper">
                     <h2 class="section-title" data-ru="Саунд Дизайн" data-en="Sound Design">Sound Design</h2>
-                    <button class="title-back-btn" onclick="goBackToHome()" data-ru="Назад" data-en="Back">Back</button>
+                    <button class="title-back-btn" onclick="switchView('home', 'about')" data-ru="Назад" data-en="Back">Back</button>
                 </div>
 
                 <h3 class="subsection-title" style="margin-top: 0;">SFX from scratch</h3>
                 <div class="media-grid">
                     <div class="video-card">
                         <div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
+                        <div class="video-description"><h4>Description 1</h4></div>
                     </div>
                     <div class="video-card">
                         <div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
+                        <div class="video-description"><h4>Description 2</h4></div>
                     </div>
                 </div>
             </section>
@@ -534,6 +535,7 @@
 
     </div>
 
+    <!-- ПОДВАЛ -->
     <footer id="footer">
         <div class="container footer-container">
             <div class="footer-left">
@@ -558,6 +560,7 @@
         </div>
     </footer>
 
+    <!-- МОДАЛЬНОЕ ОКНО CONTACTS -->
     <div id="contact-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal">×</span>
@@ -619,6 +622,7 @@
         const langToggle = document.getElementById('langToggle');
         let currentLang = localStorage.getItem('lang') || 'en';
 
+        // Идеальный fade-in / fade-out при смене языка
         function setLanguage(lang) {
             document.body.style.transition = 'opacity 0.3s ease';
             document.body.style.opacity = 0; 
@@ -631,8 +635,9 @@
                 langToggle.textContent = lang.toUpperCase();
                 localStorage.setItem('lang', lang);
                 
+                // Возвращаем видимость после того, как текст поменялся
                 document.body.style.opacity = 1; 
-            }, 300); 
+            }, 300); // Синхронизировано с анимацией в 300ms
         }
 
         setLanguage(currentLang);
@@ -643,17 +648,25 @@
         // ПАМЯТЬ СКРОЛЛА И ЛОГИКА SPA 
         let savedScrollPosition = 0;
         let isClickScrolling = false;
-        let lastClickedTargetId = null;
 
         function switchView(viewId, returnTargetId = null) {
             const currentView = document.querySelector('.page-view.active');
             const targetView = document.getElementById('view-' + viewId);
 
-            if (currentView === targetView) return;
+            if (currentView === targetView) {
+                // Если мы уже на домашней странице и нажали Showreel, просто скроллим
+                if (viewId === 'home' && returnTargetId) {
+                    scrollToTarget(returnTargetId);
+                }
+                return;
+            }
 
-            // Если уходим с главной страницы, запоминаем якорь для возврата
             if (currentView.id === 'view-home') {
-                lastClickedTargetId = returnTargetId;
+                savedScrollPosition = window.scrollY;
+            }
+
+            if (viewId === 'home') {
+                document.querySelectorAll('.home-only .nav-btn[href^="#"]').forEach(link => link.classList.remove('active'));
             }
 
             if (currentView) currentView.style.opacity = '0';
@@ -667,7 +680,11 @@
                 targetView.style.display = 'block';
 
                 if (viewId === 'home') {
-                    window.scrollTo({ top: 0, behavior: 'instant' });
+                    if (returnTargetId) {
+                        setTimeout(() => scrollToTarget(returnTargetId), 50); // Ждем рендера
+                    } else {
+                        window.scrollTo({ top: savedScrollPosition, behavior: 'instant' });
+                    }
                 } else {
                     window.scrollTo({ top: 0, behavior: 'instant' });
                 }
@@ -676,43 +693,17 @@
             }, 300);
         }
 
-        // Логика кнопки "Назад" с точным возвратом к месту клика
-        function goBackToHome() {
-            const currentView = document.querySelector('.page-view.active');
-            const homeView = document.getElementById('view-home');
-            
-            if (currentView) currentView.style.opacity = '0';
-
-            setTimeout(() => {
-                if (currentView) { currentView.style.display = 'none'; currentView.classList.remove('active'); }
-                document.body.classList.remove('is-subpage');
-                homeView.style.display = 'block';
-
-                if (lastClickedTargetId) {
-                    scrollToTarget(lastClickedTargetId);
-                    lastClickedTargetId = null; 
-                } else {
-                    window.scrollTo({ top: 0, behavior: 'instant' });
-                }
-
-                setTimeout(() => { homeView.style.opacity = '1'; homeView.classList.add('active'); }, 50);
-            }, 300);
-        }
-
+        // Централизованная функция для идеального скролла
         function scrollToTarget(targetId) {
-    const el = document.getElementById(targetId);
-    if (el) {
-        isClickScrolling = true;
-        // Отступ сверху. 80px — высота шапки + 20px зазор
-        const headerOffset = 100; 
-        const y = el.getBoundingClientRect().top + window.scrollY - headerOffset;
-        
-        // ВОТ ЗДЕСЬ ВОЗВРАЩАЕМ ПЛАВНОСТЬ (smooth)
-        window.scrollTo({ top: y, behavior: 'smooth' }); 
-        
-        setTimeout(() => { isClickScrolling = false; }, 800);
-    }
-}
+            const el = document.getElementById(targetId);
+            if (el) {
+                isClickScrolling = true;
+                const headerOffset = 100; // Точный отступ шапки для якорей
+                const y = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+                setTimeout(() => { isClickScrolling = false; }, 800);
+            }
+        }
 
         // ПЛАВНАЯ ШТОРКА (Accordion)
         const accordion = document.querySelector('.custom-accordion');
@@ -728,7 +719,7 @@
             }
         });
 
-        // МОДАЛЬНОЕ ОКНО CONTACTS 
+        // МОДАЛЬНОЕ ОКНО CONTACTS (Полностью новая логика)
         const modal = document.getElementById('contact-modal');
         const modalTriggers = document.querySelectorAll('.contact-modal-trigger');
         const closeModal = document.querySelector('.close-modal');
@@ -736,14 +727,12 @@
         modalTriggers.forEach(trigger => {
             trigger.addEventListener('click', (e) => {
                 e.preventDefault();
-                modal.style.display = 'flex';
-                setTimeout(() => modal.style.opacity = '1', 10);
+                modal.classList.add('show');
             });
         });
 
         function closeBtn() {
-            modal.style.opacity = '0';
-            setTimeout(() => modal.style.display = 'none', 300);
+            modal.classList.remove('show');
         }
 
         closeModal.addEventListener('click', closeBtn);
@@ -813,26 +802,22 @@
         }
 
         // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ
-        const navLinks = document.querySelectorAll('.home-only-group .nav-btn[href^="#"], .header-left .nav-btn[href^="#"]');
+        const sections = document.querySelectorAll('#view-home section[id]');
+        const navLinks = document.querySelectorAll('.home-only-group .nav-btn[href^="#"]');
 
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        const targetHref = link.getAttribute('href');
-        if(targetHref.startsWith('#')) {
-            e.preventDefault();
-            
-            // Убираем подсветку со всех кнопок
-            navLinks.forEach(l => l.classList.remove('active'));
-            // Вешаем подсветку на ту, которую нажали
-            document.querySelectorAll(`.nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active'));
-            
-            // Вызываем наш плавный скролл
-            scrollToTarget(targetHref.substring(1));
-        }
-    });
-});
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const targetHref = link.getAttribute('href');
+                if(targetHref.startsWith('#')) {
+                    e.preventDefault();
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    document.querySelectorAll(`.home-only-group .nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active'));
+                    scrollToTarget(targetHref.substring(1));
+                }
+            });
+        });
 
-        const observerOptions = { root: null, rootMargin: '-100px 0px -40% 0px', threshold: 0 };
+        const observerOptions = { root: null, rootMargin: '-120px 0px -60% 0px', threshold: 0 };
         const observer = new IntersectionObserver((entries) => {
             if (isClickScrolling || document.body.classList.contains('is-subpage')) return; 
 
@@ -848,17 +833,6 @@ navLinks.forEach(link => {
         }, observerOptions);
 
         sections.forEach(section => observer.observe(section));
-
-        // Дополнительная проверка для конца страницы (чтобы зажечь "Works")
-        window.addEventListener('scroll', () => {
-            if (isClickScrolling || document.body.classList.contains('is-subpage')) return;
-            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
-                navLinks.forEach(link => link.classList.remove('active'));
-                document.querySelectorAll('.home-only-group .nav-btn[href="#works"]').forEach(activeLink => {
-                    activeLink.classList.add('active');
-                });
-            }
-        });
     </script>
 </body>
 </html>

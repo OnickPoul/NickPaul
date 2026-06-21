@@ -657,27 +657,18 @@
         });
 
         // ПАМЯТЬ СКРОЛЛА И ЛОГИКА SPA 
-        let savedScrollPosition = 0;
+       let savedScrollPosition = 0;
         let isClickScrolling = false;
 
-        function switchView(viewId, returnTargetId = null) {
+        function switchView(viewId) {
             const currentView = document.querySelector('.page-view.active');
             const targetView = document.getElementById('view-' + viewId);
 
-            if (currentView === targetView) {
-                // Если мы уже на домашней странице и нажали Showreel, просто скроллим
-                if (viewId === 'home' && returnTargetId) {
-                    scrollToTarget(returnTargetId);
-                }
-                return;
-            }
+            if (currentView === targetView) return;
 
+            // Если уходим с главной, запоминаем где были
             if (currentView.id === 'view-home') {
                 savedScrollPosition = window.scrollY;
-            }
-
-            if (viewId === 'home') {
-                document.querySelectorAll('.home-only .nav-btn[href^="#"]').forEach(link => link.classList.remove('active'));
             }
 
             if (currentView) currentView.style.opacity = '0';
@@ -691,8 +682,8 @@
                 targetView.style.display = 'block';
 
                 if (viewId === 'home') {
-                    if (returnTargetId) {
-                        window.scrollTo({ top: savedScrollPosition, behavior: 'instant' });
+                    // Возвращаемся ровно на то же место
+                    window.scrollTo({ top: savedScrollPosition, behavior: 'instant' });
                 } else {
                     window.scrollTo({ top: 0, behavior: 'instant' });
                 }
@@ -701,12 +692,11 @@
             }, 300);
         }
 
-        // Централизованная функция для идеального скролла
         function scrollToTarget(targetId) {
             const el = document.getElementById(targetId);
             if (el) {
                 isClickScrolling = true;
-                const headerOffset = 100; // Точный отступ шапки для якорей
+                const headerOffset = 100;
                 const y = el.getBoundingClientRect().top + window.scrollY - headerOffset;
                 window.scrollTo({ top: y, behavior: 'smooth' });
                 setTimeout(() => { isClickScrolling = false; }, 800);

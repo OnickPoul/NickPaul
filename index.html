@@ -29,6 +29,8 @@
             --btn-border: #cccccc;
             --btn-active-bg: #000000;
             --btn-active-text: #ffffff;
+            /* Единый тайминг для плавной смены темы */
+            --theme-transition: background-color 1s ease, color 1s ease, border-color 1s ease, fill 1s ease, stroke 1s ease, box-shadow 1s ease;
         }
 
         [data-theme="dark"] {
@@ -45,22 +47,23 @@
             --btn-active-text: #000000;
         }
 
+        /* Применяем 1-секундный переход ко всем структурным элементам */
+        body, header, footer, main, section, .video-card, .testimonial-card, 
+        .modal-content, input, textarea, .custom-accordion, .accordion-header, hr {
+            transition: var(--theme-transition);
+        }
+
         * { 
             box-sizing: border-box; 
             margin: 0; 
             padding: 0; 
-            -webkit-tap-highlight-color: transparent; /* Убирает синее выделение при клике на телефоне */
+            -webkit-tap-highlight-color: transparent; 
         }
         
         html { 
             scroll-behavior: smooth; 
             overflow-y: scroll; 
-            scroll-padding-top: 100px; /* Чтобы шапка не наезжала на заголовки */
-        }
-
-        /* Плавная смена темы для всех элементов */
-        body, header, .video-card, .about-spoiler, .testimonial-card, input, textarea, .modal-content, hr, iframe {
-            transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, opacity 0.5s ease;
+            scroll-padding-top: 100px;
         }
 
         body {
@@ -78,7 +81,7 @@
         .container { max-width: 900px; width: 100%; margin: 0 auto; padding: 0 20px; }
 
         /* --- SPA --- */
-        .page-view { display: none; opacity: 0; transition: opacity 0.3s ease; }
+        .page-view { display: none; opacity: 0; transition: opacity 0.4s ease; }
         .page-view.active { display: block; opacity: 1; }
 
         /* --- ШАПКА --- */
@@ -94,19 +97,21 @@
 
         .header-left { justify-self: start; display: flex; align-items: center; gap: 20px; }
         .header-right { justify-self: end; display: flex; align-items: center; gap: 20px; }
+        
         .header-center { text-align: center; }
-        .header-center h1 { font-size: 1.8rem; margin-bottom: 2px; } /* Уменьшен отступ между Nick Paul и Sound Designer */
-        .header-center p { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; }
+        .header-center h1 { font-size: 1.8rem; margin-bottom: 2px; }
+        .header-center p { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; transition: color 1s ease; }
 
         .logo { display: flex; align-items: center; }
-        .logo img { height: 40px; display: block; transition: filter 0.5s ease; }
+        .logo img { height: 40px; display: block; transition: filter 1s ease; }
         [data-theme="dark"] .logo img { filter: invert(1); }
 
         .nav-btn {
             font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 13px;
             color: var(--btn-text); background-color: var(--btn-bg); text-decoration: none;
             padding: 8px 16px; border: 1px solid var(--btn-border); border-radius: 4px;
-            transition: all 0.2s ease; cursor: pointer; display: inline-flex; align-items: center;
+            cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, opacity 0.4s ease, visibility 0.4s;
         }
         .nav-btn:hover, .nav-btn.active { background-color: var(--btn-active-bg); color: var(--btn-active-text); border-color: var(--btn-active-bg); }
 
@@ -115,16 +120,24 @@
             display: inline-flex; align-items: center; justify-content: center; padding: 0; transition: transform 0.2s ease; height: 24px;
         }
         .icon-btn:hover { transform: scale(1.1); }
-        .icon-btn svg { width: 24px; height: 24px; transition: fill 0.5s ease, stroke 0.5s ease; }
+        .icon-btn svg { width: 24px; height: 24px; transition: fill 1s ease, stroke 1s ease; }
         
         .icon-moon { display: block; fill: currentColor; } 
         .icon-sun { display: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
         [data-theme="dark"] .icon-moon { display: none; }
         [data-theme="dark"] .icon-sun { display: block; }
 
-        /* Логика исчезновения кнопок */
-        .home-only { transition: opacity 0.3s ease, transform 0.3s ease; opacity: 1; pointer-events: auto; }
-        body.is-subpage .home-only { opacity: 0; pointer-events: none; position: absolute; visibility: hidden; }
+        /* Логика исчезновения/появления кнопок */
+        .swap-container { position: relative; width: 104px; height: 36px; display: flex; align-items: center; }
+        .swap-btn { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        
+        .btn-showreel { opacity: 1; visibility: visible; }
+        .btn-contact { opacity: 0; visibility: hidden; }
+        body.is-subpage .btn-showreel { opacity: 0; visibility: hidden; pointer-events: none; }
+        body.is-subpage .btn-contact { opacity: 1; visibility: visible; pointer-events: auto; }
+
+        .home-only-group { display: flex; gap: 14px; transition: opacity 0.4s ease, visibility 0.4s ease; opacity: 1; visibility: visible; }
+        body.is-subpage .home-only-group { opacity: 0; visibility: hidden; pointer-events: none; }
         
         .mobile-only { display: none; }
 
@@ -146,6 +159,10 @@
             .mobile-nav-row .nav-group { 
                 display: flex; gap: 10px; width: 100%; justify-content: center; flex-wrap: wrap;
             }
+            .mobile-nav-row .swap-container { order: 1; }
+            .mobile-nav-row .mobile-contact-btn { order: 2; }
+            .mobile-nav-row .mobile-works-btn { order: 3; }
+            .mobile-nav-row .mobile-about-btn { order: 4; }
         }
 
         /* --- КОНТЕНТ --- */
@@ -156,7 +173,7 @@
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; width: 100%; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
         .video-description { padding: 20px 25px; border-top: 1px solid var(--border-color); }
-        .video-description h4 { font-size: 1.2rem; }
+        .video-description h4 { font-size: 1.2rem; transition: color 1s ease; }
 
         .hero-section .video-card { box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 0; }
         
@@ -164,17 +181,16 @@
         .page-header-wrapper .section-title { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
         .section-title { font-size: 2.2rem; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; width: 100%; }
         
-        .title-back-btn { background-color: transparent; color: var(--text-color); border: 1px solid var(--border-color); font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 1rem; padding: 8px 16px; border-radius: 6px; cursor: pointer; transition: all 0.3s ease; }
+        .title-back-btn { background-color: transparent; color: var(--text-color); border: 1px solid var(--border-color); font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 1rem; padding: 8px 16px; border-radius: 6px; cursor: pointer; transition: background-color 0.3s, color 0.3s; }
         .title-back-btn:hover { background-color: var(--text-color); color: var(--bg-color); }
 
         .subsection-title { font-size: 1.5rem; margin: 40px 0 20px 0; color: var(--text-color); }
 
-        /* --- ОБО МНЕ (С обтеканием) --- */
+        /* --- ОБО МНЕ --- */
         .about-content::after { content: ""; display: table; clear: both; } 
         
         .about-photo-right { float: right; width: 300px; margin: 0 0 20px 40px; }
         .photo-placeholder { width: 100%; aspect-ratio: 4 / 5; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-        .photo-placeholder::after { content: "Add Photo Here"; color: var(--text-muted); position: absolute; z-index: 0; font-size: 0.9rem; }
         .real-photo { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1; display: block; }
         
         .about-text { font-size: 1.05rem; line-height: 1.8; color: var(--text-color); margin-bottom: 25px; text-align: left; }
@@ -188,30 +204,25 @@
         }
         .inline-action-link:hover { opacity: 0.7; }
 
-        /* Шторка (Accordion) */
-        .about-spoiler { margin-top: 35px; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; width: 100%; clear: both; }
-        .about-spoiler summary {
-            cursor: pointer; font-weight: 500; color: var(--text-muted); outline: none; list-style: none;
-            display: inline; transition: color 0.3s ease; font-size: 1.05rem; line-height: 1.8;
-        }
-        .about-spoiler summary::-webkit-details-marker { display: none; }
-        .about-spoiler summary::before { content: '▶'; display: inline-block; margin-right: 8px; font-size: 0.8em; transition: transform 0.3s ease; }
-        .about-spoiler[open] summary::before { transform: rotate(90deg); }
-        .about-spoiler[open] summary { color: var(--text-color); }
-        .about-spoiler .spoiler-content { 
-            display: inline; color: var(--text-color); font-size: 1.05rem; line-height: 1.8; border: none; padding: 0; margin: 0;
-        }
+        /* Плавная кастомная шторка */
+        .custom-accordion { margin-top: 35px; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; width: 100%; clear: both; }
+        .accordion-header { cursor: pointer; font-weight: 500; color: var(--text-muted); transition: color 0.3s ease; font-size: 1.05rem; line-height: 1.8; display: flex; align-items: flex-start; }
+        .accordion-header::before { content: '▶'; display: inline-block; margin-right: 10px; font-size: 0.8em; transition: transform 0.4s ease; margin-top: 4px; }
+        .custom-accordion.open .accordion-header::before { transform: rotate(90deg); }
+        .custom-accordion.open .accordion-header { color: var(--text-color); }
+        
+        .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; }
+        .accordion-content { color: var(--text-color); font-size: 1.05rem; line-height: 1.8; padding-top: 10px; }
 
         @media (max-width: 768px) {
             .about-photo-right { float: none; width: 100%; margin: 0 0 30px 0; }
         }
 
-        /* ОТЗЫВЫ (TESTIMONIALS) */
+        /* ОТЗЫВЫ */
         .testimonial-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 40px; margin-top: 20px; }
         .testimonial-text { font-size: 1.1rem; line-height: 1.8; font-style: italic; margin-bottom: 30px; color: var(--text-color); }
         .testimonial-author { display: flex; align-items: center; gap: 15px; }
         .author-photo-placeholder { width: 60px; height: 60px; border-radius: 50%; background-color: var(--border-color); overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; position: relative; }
-        .author-photo-placeholder::after { content: "Photo"; color: var(--text-muted); font-size: 0.6rem; position: absolute; z-index: 0; }
         .author-photo-placeholder img { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1; }
         .author-name { font-weight: 600; font-size: 1rem; color: var(--text-color); }
 
@@ -220,18 +231,17 @@
         @media (max-width: 768px) { .media-grid { grid-template-columns: 1fr; } }
         
         .audio-container { width: 100%; height: 166px; }
-        /* Жесткая фиксация высоты Spotify, чтобы не ломался макет */
         .audio-container.spotify iframe { width: 100% !important; height: 152px !important; border-radius: 12px; border: none; display: block; }
         .audio-container iframe { width: 100%; height: 100%; border: none; }
 
         .tabs-container { display: flex; gap: 20px; margin-bottom: 30px; }
         .tab-btn { background: none; border: none; font-family: 'Manrope', sans-serif; font-size: 1.2rem; font-weight: 600; color: var(--text-muted); cursor: pointer; padding: 5px 10px; transition: color 0.3s ease; }
         .tab-btn.active, .tab-btn:hover { color: var(--text-color); }
-        .tab-content { display: none; opacity: 0; transition: opacity 0.3s ease; }
+        .tab-content { display: none; opacity: 0; transition: opacity 0.4s ease; }
         .tab-content.active { display: block; opacity: 1; }
 
         /* ПОДВАЛ */
-        footer { border-top: 1px solid var(--border-color); margin-top: 60px; padding: 30px 0; transition: opacity 0.3s ease; }
+        footer { border-top: 1px solid var(--border-color); margin-top: 60px; padding: 30px 0; transition: opacity 0.4s ease; }
         body.is-subpage footer { display: none; }
 
         .footer-container { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; width: 100%; }
@@ -243,22 +253,23 @@
         .social-link:hover { opacity: 0.7; }
         .social-link svg { width: 32px; height: 32px; fill: currentColor; }
 
-        .up-arrow-btn { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; font-size: 1.2rem; font-family: 'Manrope', sans-serif; }
+        .up-arrow-btn { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background-color 0.3s, color 0.3s; font-size: 1.2rem; font-family: 'Manrope', sans-serif; }
         .up-arrow-btn:hover { background: var(--text-color); color: var(--bg-color); }
 
         @media (max-width: 768px) {
-            .footer-container { grid-template-columns: 1fr 1fr; gap: 20px; }
-            .footer-left { grid-column: 1; justify-self: start; }
-            .footer-right { grid-column: 2; justify-self: end; }
-            .footer-center { grid-column: 1 / -1; justify-self: center; margin-top: 10px; } /* Иконки уходят вниз под текст */
+            .footer-container {
+                display: flex; flex-direction: row; justify-content: space-between; flex-wrap: nowrap;
+            }
+            .footer-center { gap: 20px; }
+            .social-link svg { width: 28px; height: 28px; }
         }
 
         /* МОДАЛЬНОЕ ОКНО CONTACTS */
         .modal {
             display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.4s ease;
+            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); opacity: 0; visibility: hidden; transition: opacity 0.4s ease, visibility 0.4s;
         }
-        .modal.show { display: flex; justify-content: center; align-items: center; opacity: 1; }
+        .modal.show { display: flex; justify-content: center; align-items: center; opacity: 1; visibility: visible; }
         .modal-content {
             background: var(--bg-color); padding: 40px; border-radius: 12px; width: 90%; max-width: 700px;
             position: relative; border: 1px solid var(--border-color);
@@ -284,6 +295,7 @@
             border: none; cursor: pointer; border-radius: 6px; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 1rem; transition: opacity 0.3s ease; width: 100%;
         }
         .submit-btn:hover { opacity: 0.8; }
+        .submit-status { margin-top: 10px; font-size: 0.9rem; font-weight: 600; text-align: center; display: none; }
 
         @media (max-width: 600px) {
             .form-row { flex-direction: column; gap: 15px; }
@@ -300,9 +312,9 @@
                     <a href="#" class="logo" onclick="switchView('home', 'hero'); return false;">
                         <img src="NickPaulLogoAlpha.png" alt="Logo" id="siteLogo">
                     </a>
-                    <div class="desktop-only" style="display: flex; gap: 14px;">
-                        <a href="#hero" class="nav-btn home-only">Showreel</a>
-                        <a href="#" class="nav-btn contact-modal-trigger" data-ru="Контакты" data-en="Contact">Contact</a>
+                    <div class="desktop-only swap-container">
+                        <a href="#hero" class="nav-btn swap-btn btn-showreel">Showreel</a>
+                        <a href="#" class="nav-btn swap-btn btn-contact contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
                     </div>
                 </div>
 
@@ -312,7 +324,7 @@
                 </div>
 
                 <div class="header-right">
-                    <div class="desktop-only home-only" style="display: flex; gap: 14px;">
+                    <div class="desktop-only home-only-group">
                         <a href="#about" class="nav-btn" data-ru="Обо мне" data-en="About">About</a>
                         <a href="#works" class="nav-btn" data-ru="Работы" data-en="Works">Works</a>
                     </div>
@@ -326,10 +338,12 @@
 
                 <div class="mobile-only mobile-nav-row">
                     <div class="nav-group">
-                        <a href="#hero" class="nav-btn home-only">Showreel</a>
-                        <a href="#about" class="nav-btn home-only" data-ru="Обо мне" data-en="About">About</a>
-                        <a href="#works" class="nav-btn home-only" data-ru="Работы" data-en="Works">Works</a>
-                        <a href="#" class="nav-btn contact-modal-trigger" data-ru="Контакты" data-en="Contact">Contact</a>
+                        <div class="swap-container">
+                            <a href="#hero" class="nav-btn swap-btn btn-showreel">Showreel</a>
+                            <a href="#" class="nav-btn swap-btn btn-contact contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
+                        </div>
+                        <a href="#works" class="nav-btn home-only-group mobile-works-btn" data-ru="Работы" data-en="Works">Works</a>
+                        <a href="#about" class="nav-btn home-only-group mobile-about-btn" data-ru="Обо мне" data-en="About">About</a>
                     </div>
                 </div>
             </div>
@@ -343,7 +357,7 @@
             <section class="hero-section" id="hero">
                 <div class="video-card hero-video">
                     <div class="video-container">
-                        <iframe src="https://player.vimeo.com/video/76979871?h=8272103f6e" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+                        <iframe src="https://player.vimeo.com/video/1202829245" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <div class="video-description">
                         <h4 data-ru="Шоурил" data-en="Showreel">Showreel</h4>
@@ -376,12 +390,12 @@
 
                     <p class="about-text">
                         <span data-ru="На данный момент я работаю дизайнером линейного звука как аутсорс сотрудник в игровой инди компании." data-en="Currently, I work as an outsource linear sound designer for an indie game company.">Currently, I work as an outsource linear sound designer for an indie game company.</span>
-                        <a href="#" onclick="switchView('sound-design'); return false;" class="inline-action-link" data-ru="Как я делаю дизайн →" data-en="How i deisgn →">How i deisgn →</a>
+                        <a href="#" onclick="switchView('sound-design'); return false;" class="inline-action-link" data-ru="Как я создаю звук →" data-en="How i design →">How i design →</a>
                     </p>
 
                     <p class="about-text">
                         <span data-ru="Так же выпустил множество песен под псевдонимом " data-en="I have also released numerous tracks under the alias ">I have also released numerous tracks under the alias </span>
-                        <a href="https://soundcloud.com/твоя_ссылка" target="_blank" class="inline-link">Oni Nillsen</a><span data-ru=", успев поработать с такими лейблами как ALL41Records и NightBlue Music." data-en=", having worked with labels such as ALL41Records and NightBlue Music.">, having worked with labels such as ALL41Records and NightBlue Music.</span>
+                        <a href="https://open.spotify.com/artist/37frRQWtfnzsQ0rsPtPTrK?si=19P01HahRoysU6gDq8tsOw" target="_blank" class="inline-link">Oni Nillsen</a><span data-ru=", успев поработать с такими лейблами как ALL41Records и NightBlue Music." data-en=", having worked with labels such as ALL41Records and NightBlue Music.">, having worked with labels such as ALL41Records and NightBlue Music.</span>
                         <a href="#" onclick="switchView('music'); return false;" class="inline-action-link" data-ru="Хотите узнать больше? →" data-en="Want to know more? →">Want to know more? →</a>
                     </p>
 
@@ -391,16 +405,21 @@
 
                     <p class="about-text">
                         <span data-ru="Если вы ещё читаете это, значит вам стало интересно, так давайте поработаем вместе?" data-en="If you're still reading this, it means I've caught your attention. Shall we work together?">If you're still reading this, it means I've caught your attention. Shall we work together?</span>
-                        <a href="#" class="inline-action-link contact-modal-trigger" data-ru="Контакты ↓" data-en="Contacts ↓">Contacts ↓</a>
+                        <a href="#" class="inline-action-link contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
                     </p>
 
-                    <details class="about-spoiler">
-                        <summary>
+                    <div class="custom-accordion">
+                        <div class="accordion-header">
                             <span data-ru="Интерактивное аудио позволяет мне раскрыть себя как визионера, который способен управлять вниманием игрока..." data-en="Interactive audio allows me to reveal myself as a visionary capable of guiding the player's attention...">Interactive audio allows me to reveal myself as a visionary capable of guiding the player's attention...</span>
-                        </summary>
-                        <span class="spoiler-content" data-ru=" через звук, не позиционировать себя как исключительно Саунд Дизайнера, который безусловно задаёт характер звучания и идентичность, но и почувствовать себя будущим полноправным участником проекта на равне с другими разработчиками занимаясь имплементацией, оптимизацией и интеграцией." data-en=" through sound, positioning myself not just as a Sound Designer who undeniably sets the sonic identity, but feeling like a full-fledged participant in the project alongside other developers, actively handling implementation, optimization, and integration."> through sound, positioning myself not just as a Sound Designer who undeniably sets the sonic identity, but feeling like a full-fledged participant in the project alongside other developers, actively handling implementation, optimization, and integration.</span>
-                    </details>
-                </div>
+                        </div>
+                        <div class="accordion-body">
+                            <div class="accordion-content" data-ru="...через звук, не позиционировать себя как исключительно Саунд Дизайнера, который безусловно задаёт характер звучания и идентичность, но и почувствовать себя будущим полноправным участником проекта на равне с другими разработчиками занимаясь имплементацией, оптимизацией и интеграцией." data-en="...through sound, positioning myself not just as a Sound Designer who undeniably sets the sonic identity, but feeling like a full-fledged participant in the project alongside other developers, actively handling implementation, optimization, and integration.">
+                                ...through sound, positioning myself not just as a Sound Designer who undeniably sets the sonic identity, but feeling like a full-fledged participant in the project alongside other developers, actively handling implementation, optimization, and integration.
+                            </div>
+                        </div>
+                    </div>
+
+                </div> 
             </section>
 
             <section id="works">
@@ -430,7 +449,7 @@
             </section>
 
             <section id="testimonials">
-                <h2 class="section-title" data-ru="Отзывы" data-en="Testimonials">Testimonials</h2>
+                <h2 class="section-title" data-ru="Рекомендации" data-en="Recommendations">Recommendations</h2>
                 
                 <div class="testimonial-card">
                     <div class="testimonial-text" data-ru="«Никита работал с нашей командой над проектами «Шана, Жрица Тоны» и «Астра - страстное шоу», где занимался озвучкой сцен и саунд-дизайном. За время совместной работы он проявил себя как надёжный сотрудник, внимательно относящийся к поставленным задачам и качеству своей работы. Он профессиональный специалист в области саунд-дизайна и озвучки сцен. Мы благодарны Никите за его профессиональный и ответственный подход к работе. С уверенностью могу рекомендовать его как специалиста, который умеет качественно выполнять свои задачи, работать в команде и ответственно относиться к рабочему процессу.»" data-en="«Nikita worked with our team on the projects 'Shana, Priestess of Tona' and 'Astra - Passionate Show', where he was responsible for scene voiceovers and sound design. During our collaboration, he proved to be a reliable partner, paying close attention to the assigned tasks and the quality of his output. He is a true professional in the field of sound design and scene audio. We are immensely grateful to Nikita for his professional and dedicated approach. I can confidently recommend him as a specialist who knows how to deliver top-tier results, work seamlessly within a team, and take the production process seriously.»">
@@ -453,7 +472,7 @@
             <section style="margin-top: 50px;">
                 <div class="page-header-wrapper">
                     <h2 class="section-title" data-ru="Музыка" data-en="Music Background">Music Background</h2>
-                    <button class="title-back-btn" onclick="switchView('home')" data-ru="Назад" data-en="Back">Back</button>
+                    <button class="title-back-btn" onclick="switchView('home', 'about')" data-ru="Назад" data-en="Back">Back</button>
                 </div>
                 
                 <div class="tabs-container">
@@ -463,7 +482,7 @@
 
                 <div id="tab-soundcloud" class="tab-content active">
                     <div class="media-grid">
-<div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1863434040&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 1</h4></div></div>
+                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1863434040&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 1</h4></div></div>
                         <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2022944900&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 2</h4></div></div>
                         <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1938138563&color=%23160504&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 3</h4></div></div>
                         <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1898808423&color=%233e2b31&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 4</h4></div></div>
@@ -476,14 +495,14 @@
 
                 <div id="tab-spotify" class="tab-content">
                     <div class="media-grid">
-                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/3n3Ppam7vgaVa1iaRUc9Lp?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 1</h4></div></div>
-                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/3n3Ppam7vgaVa1iaRUc9Lp?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 2</h4></div></div>
-                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/3n3Ppam7vgaVa1iaRUc9Lp?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 3</h4></div></div>
-                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/3n3Ppam7vgaVa1iaRUc9Lp?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 4</h4></div></div>
-                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/3n3Ppam7vgaVa1iaRUc9Lp?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 5</h4></div></div>
-                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/3n3Ppam7vgaVa1iaRUc9Lp?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 6</h4></div></div>
-                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/3n3Ppam7vgaVa1iaRUc9Lp?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 7</h4></div></div>
-                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/3n3Ppam7vgaVa1iaRUc9Lp?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 8</h4></div></div>
+                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 1</h4></div></div>
+                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 2</h4></div></div>
+                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 3</h4></div></div>
+                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 4</h4></div></div>
+                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 5</h4></div></div>
+                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 6</h4></div></div>
+                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 7</h4></div></div>
+                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div><div class="video-description"><h4>Spotify Track 8</h4></div></div>
                     </div>
                 </div>
             </section>
@@ -493,22 +512,10 @@
             <section style="margin-top: 50px;">
                 <div class="page-header-wrapper">
                     <h2 class="section-title" data-ru="Саунд Дизайн" data-en="Sound Design">Sound Design</h2>
-                    <button class="title-back-btn" onclick="switchView('home')" data-ru="Назад" data-en="Back">Back</button>
+                    <button class="title-back-btn" onclick="switchView('home', 'about')" data-ru="Назад" data-en="Back">Back</button>
                 </div>
 
                 <h3 class="subsection-title" style="margin-top: 0;">SFX from scratch</h3>
-                <div class="media-grid">
-                    <div class="video-card">
-                        <div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
-                        <div class="video-description"><h4>Description 1</h4></div>
-                    </div>
-                    <div class="video-card">
-                        <div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
-                        <div class="video-description"><h4>Description 2</h4></div>
-                    </div>
-                </div>
-
-                <h3 class="subsection-title">Sample manipulation</h3>
                 <div class="media-grid">
                     <div class="video-card">
                         <div class="video-container"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe></div>
@@ -531,7 +538,7 @@
             </div>
 
             <div class="footer-center social-links">
-                <a href="www.linkedin.com/in/nickpoul" target="_blank" aria-label="LinkedIn" class="social-link">
+                <a href="https://www.linkedin.com/in/nickpoul" target="_blank" aria-label="LinkedIn" class="social-link">
                     <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                 </a>
                 <a href="mailto:nick.poul8@gmail.com" aria-label="Email" class="social-link">
@@ -550,47 +557,49 @@
 
     <div id="contact-modal" class="modal">
         <div class="modal-content">
-            <span class="close-modal">&times;</span>
+            <span class="close-modal">×</span>
             <div class="modal-header">
-                <h2 data-en="Contact" data-ru="Связаться">Contact</h2>
+                <h2 data-en="Contact" data-ru="Контакт">Contact</h2>
                 <div class="modal-socials">
-                    <a href="www.linkedin.com/in/nickpoul" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
-                    <a href="nick.poul8@gmail.com" class="social-link"><svg viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.866l5.6-6.812zm9.201-1.476l4.623-3.747v9.476l-4.623-5.729z"/></svg></a>
+                    <a href="https://www.linkedin.com/in/nickpoul" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+                    <a href="mailto:nick.poul8@gmail.com" class="social-link"><svg viewBox="0 0 24 24"><path d="M0 3v18h24v-18h-24zm6.623 7.929l-4.623 5.712v-9.458l4.623 3.746zm-4.141-5.929h19.035l-9.517 7.713-9.518-7.713zm5.694 7.188l3.824 3.099 3.83-3.104 5.612 6.817h-18.866l5.6-6.812zm9.201-1.476l4.623-3.747v9.476l-4.623-5.729z"/></svg></a>
                     <a href="https://t.me/OniNillsen" target="_blank" class="social-link"><svg viewBox="0 0 24 24"><path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.458c.538-.196 1.006.128.832.941z"/></svg></a>
                 </div>
             </div>
-            <form id="contact-form">
+            
+            <form id="contact-form" action="https://formspree.io/f/ВАШ_ID_СЮДА" method="POST">
                 <div class="form-row">
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" placeholder="Your Name">
+                        <input type="text" name="name" placeholder="Your Name" required>
                     </div>
                     <div class="form-group">
                         <label>Organization</label>
-                        <input type="text" placeholder="Company">
+                        <input type="text" name="organization" placeholder="Company">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" placeholder="Your Email">
+                        <input type="email" name="email" placeholder="Your Email" required>
                     </div>
                     <div class="form-group">
                         <label>Social Links (optional)</label>
-                        <input type="text" placeholder="Link">
+                        <input type="text" name="social" placeholder="Link">
                     </div>
                 </div>
                 <div class="form-group full-width">
                     <label>Message</label>
-                    <textarea rows="5" placeholder="How can we help?"></textarea>
+                    <textarea name="message" rows="5" placeholder="How can we help?" required></textarea>
                 </div>
                 <button type="submit" class="submit-btn" data-en="Submit" data-ru="Отправить">Submit</button>
+                <div class="submit-status" id="submit-status"></div>
             </form>
         </div>
     </div>
 
     <script>
-        // ТЕМА И ЯЗЫК (С плавным переходом текста)
+        // ТЕМА И ЯЗЫК
         const themeToggleBtn = document.getElementById('themeToggle');
         const body = document.body;
 
@@ -608,7 +617,7 @@
         let currentLang = localStorage.getItem('lang') || 'en';
 
         function setLanguage(lang) {
-            document.body.style.opacity = 0; // Плавное исчезновение при смене языка
+            document.body.style.opacity = 0; 
             setTimeout(() => {
                 document.querySelectorAll('[data-ru], [data-en]').forEach(el => {
                     if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = el.getAttribute(`data-${lang}`);
@@ -616,8 +625,8 @@
                 });
                 langToggle.textContent = lang.toUpperCase();
                 localStorage.setItem('lang', lang);
-                document.body.style.opacity = 1; // Проявление текста
-            }, 300);
+                document.body.style.opacity = 1; 
+            }, 400);
         }
 
         setLanguage(currentLang);
@@ -628,21 +637,19 @@
         // ПАМЯТЬ СКРОЛЛА И ЛОГИКА SPA 
         let savedScrollPosition = 0;
 
-        function switchView(viewId) {
+        function switchView(viewId, returnTargetId = null) {
             const currentView = document.querySelector('.page-view.active');
             const targetView = document.getElementById('view-' + viewId);
 
             if (currentView === targetView) return;
 
-            // Сохраняем позицию скролла, если уходим с главной
             if (currentView.id === 'view-home') {
                 savedScrollPosition = window.scrollY;
             }
 
             if (viewId === 'home') {
-                // Сброс подсветки меню
                 document.querySelectorAll('.home-only .nav-btn[href^="#"]').forEach(link => link.classList.remove('active'));
-                isClickScrolling = false; 
+                isClickScrolling = true; 
             }
 
             if (currentView) currentView.style.opacity = '0';
@@ -656,15 +663,40 @@
                 targetView.style.display = 'block';
 
                 if (viewId === 'home') {
-                    // Возвращаемся ровно на сохраненную позицию
-                    window.scrollTo({ top: savedScrollPosition, behavior: 'instant' });
+                    // Используем смещение, чтобы скролл попадал точно, как на телефоне, так и на ПК
+                    const headerOffset = window.innerWidth < 768 ? 120 : 100;
+                    
+                    if (returnTargetId) {
+                        const el = document.getElementById(returnTargetId);
+                        if (el) {
+                            const y = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+                            window.scrollTo({ top: y, behavior: 'instant' });
+                        }
+                    } else {
+                        window.scrollTo({ top: savedScrollPosition, behavior: 'instant' });
+                    }
+                    setTimeout(() => { isClickScrolling = false; }, 800);
                 } else {
                     window.scrollTo({ top: 0, behavior: 'instant' });
                 }
 
                 setTimeout(() => { targetView.style.opacity = '1'; targetView.classList.add('active'); }, 50);
-            }, 300);
+            }, 400);
         }
+
+        // ПЛАВНАЯ ШТОРКА (Accordion)
+        const accordion = document.querySelector('.custom-accordion');
+        const accHeader = document.querySelector('.accordion-header');
+        const accBody = document.querySelector('.accordion-body');
+        
+        accHeader.addEventListener('click', () => {
+            accordion.classList.toggle('open');
+            if (accordion.classList.contains('open')) {
+                accBody.style.maxHeight = accBody.scrollHeight + "px";
+            } else {
+                accBody.style.maxHeight = 0;
+            }
+        });
 
         // МОДАЛЬНОЕ ОКНО CONTACTS
         const modal = document.getElementById('contact-modal');
@@ -687,6 +719,56 @@
         closeModal.addEventListener('click', closeBtn);
         window.addEventListener('click', (e) => { if (e.target === modal) closeBtn(); });
 
+        // Форма контактов (Имитация или отправка через Formspree)
+        const contactForm = document.getElementById('contact-form');
+        const submitStatus = document.getElementById('submit-status');
+
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const btn = contactForm.querySelector('.submit-btn');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = currentLang === 'en' ? 'Sending...' : 'Отправка...';
+            submitStatus.style.display = 'none';
+
+            // Если ты подключил Formspree:
+            if (contactForm.action.includes('ВАШ_ID')) {
+                // Имитация для тестирования (пока ты не вставил свой ID)
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    submitStatus.style.display = 'block';
+                    submitStatus.style.color = '#4CAF50';
+                    submitStatus.innerText = currentLang === 'en' ? 'Message sent successfully!' : 'Сообщение успешно отправлено!';
+                    contactForm.reset();
+                    setTimeout(closeBtn, 2000);
+                }, 1500);
+            } else {
+                // Реальная отправка
+                try {
+                    const response = await fetch(contactForm.action, {
+                        method: 'POST',
+                        body: new FormData(contactForm),
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    if (response.ok) {
+                        btn.innerHTML = originalText;
+                        submitStatus.style.display = 'block';
+                        submitStatus.style.color = '#4CAF50';
+                        submitStatus.innerText = currentLang === 'en' ? 'Message sent successfully!' : 'Сообщение успешно отправлено!';
+                        contactForm.reset();
+                        setTimeout(closeBtn, 2000);
+                    } else {
+                        throw new Error();
+                    }
+                } catch (error) {
+                    btn.innerHTML = originalText;
+                    submitStatus.style.display = 'block';
+                    submitStatus.style.color = '#F44336';
+                    submitStatus.innerText = currentLang === 'en' ? 'Error sending message.' : 'Ошибка при отправке.';
+                }
+            }
+        });
+
         // ВКЛАДКИ ДЛЯ МУЗЫКИ
         function switchTab(tabId) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -705,22 +787,31 @@
             }
         }
 
-        // СКРОЛЛ-ШПИОН ДЛЯ ПОДСВЕТКИ В МЕНЮ
+        // СКРОЛЛ-ШПИОН
         const sections = document.querySelectorAll('#view-home section[id]');
         const navLinks = document.querySelectorAll('.home-only .nav-btn[href^="#"]');
-        let isClickScrolling = false;
 
         navLinks.forEach(link => {
-            link.addEventListener('click', () => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
                 isClickScrolling = true;
                 navLinks.forEach(l => l.classList.remove('active'));
+                
                 const targetHref = link.getAttribute('href');
                 document.querySelectorAll(`.home-only .nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active'));
+                
+                const headerOffset = window.innerWidth < 768 ? 120 : 100;
+                const targetEl = document.querySelector(targetHref);
+                if(targetEl) {
+                    const y = targetEl.getBoundingClientRect().top + window.scrollY - headerOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+
                 setTimeout(() => { isClickScrolling = false; }, 800);
             });
         });
 
-        const observerOptions = { root: null, rootMargin: '-40% 0px -60% 0px', threshold: 0 };
+        const observerOptions = { root: null, rootMargin: '-120px 0px -60% 0px', threshold: 0 };
         const observer = new IntersectionObserver((entries) => {
             if (isClickScrolling || document.body.classList.contains('is-subpage')) return; 
 

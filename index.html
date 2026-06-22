@@ -822,47 +822,42 @@
         // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ (Теперь видит кнопки в ЛЮБОЙ части шапки)
         const sections = document.querySelectorAll('#view-home section[id]');
         
-        // 1. Ищем ВСЕ nav-btn, кроме тех, что открывают модалку (Contact)
-const navLinks = document.querySelectorAll('header .nav-btn:not(.contact-modal-trigger)');
+        // Убрали жесткую привязку к .home-only-group, теперь ищем все навигационные ссылки
+        const navLinks = document.querySelectorAll('.nav-btn[href^="#"]');
 
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        const targetHref = link.getAttribute('href');
-        if(targetHref.startsWith('#')) {
-            e.preventDefault();
-            
-            // Подсветка
-            navLinks.forEach(l => l.classList.remove('active'));
-            link.classList.add('active');
-            
-            scrollToTarget(targetHref.substring(1));
-        }
-    });
-});
-
-// 2. Наблюдатель
-const sections = document.querySelectorAll('#view-home section[id]');
-const observerOptions = { root: null, rootMargin: '-100px 0px -30% 0px', threshold: 0 };
-
-const observer = new IntersectionObserver((entries) => {
-    // Если мы на саб-странице, ничего не подсвечиваем
-    if (document.body.classList.contains('is-subpage')) return; 
-
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('id');
-            // Убираем у всех, ставим только нужной
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${id}`) {
-                    link.classList.add('active');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                const targetHref = link.getAttribute('href');
+                if(targetHref.startsWith('#')) {
+                    e.preventDefault();
+                    
+                    // Снимаем подсветку со всех кнопок
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    // Вешаем только на активную (где бы она ни находилась)
+                    document.querySelectorAll(`.home-only-group .nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active'));
+                    
+                    scrollToTarget(targetHref.substring(1));
                 }
             });
-        }
-    });
-}, observerOptions);
+        });
 
-sections.forEach(section => observer.observe(section));
+        const observerOptions = { root: null, rootMargin: '-100px 0px -40% 0px', threshold: 0 };
+        const observer = new IntersectionObserver((entries) => {
+            if (isClickScrolling || document.body.classList.contains('is-subpage')) return; 
+
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    
+                    navLinks.forEach(link => link.classList.remove('active'));
+                    document.querySelectorAll(`.nav-btn[href="#${id}"]`).forEach(activeLink => {
+                        activeLink.classList.add('active');
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
     </script>
 </body>
 </html>

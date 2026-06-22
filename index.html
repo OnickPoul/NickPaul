@@ -146,6 +146,15 @@
     border: none !important;
     box-shadow: none !important;
 }
+
+        /* Обрезаем текст в карточке до 2-х строк, чтобы сетка была идеальной */
+.desc-preview {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-top: 5px;
+}
         
         /* Унифицированные кнопки шапки - теперь одинакового размера */
         .nav-btn {
@@ -178,6 +187,19 @@ header .nav-btn[href="#hero"],
 header .nav-btn[href="#about"] {
     margin-right: 15px;
 }
+
+        /* Логика обрезки текста для шторки */
+.text-content.collapsed {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Оставляем только 3 строки */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.read-more-btn {
+    background: none; border: none; color: var(--text-muted); cursor: pointer; 
+    text-decoration: underline; margin-top: 10px; padding: 0; font-size: 1rem;
+}
+.read-more-btn:hover { color: var(--text-color); }
         
         /* --- МАГИЯ ПЛАВНОГО ИСЧЕЗНОВЕНИЯ SHOWREEL --- */
         .showreel-btn {
@@ -546,11 +568,14 @@ header .nav-btn[href="#about"] {
         <!-- ================= СТРАНИЦА МУЗЫКИ ================= -->
         <main id="view-music" class="container page-view">
             <section style="margin-top: 50px;">
-                <div class="music-about-block" style="margin-bottom: 40px; max-width: 800px;">
+                <div class="about-spoiler-block" style="margin-bottom: 40px; max-width: 800px;">
     <h2 style="margin-bottom: 15px; font-size: 2rem; "data-ru="Немного о Oni Nillsen.." data-en="A little bit about Oni Nillsen..">A little bit about Oni Nillsen..</h2>
+                    <div id="music-about-text" class="text-content collapsed">
     <p style="color: var(--text-muted); line-height: 1.6; font-size: 1.1rem;" data-ru="Oni Nillsen - проект, который только только начал набирать небольшие обороты. Был создан в 2019 и долгое время оставался в тени, пока не получил полноценный релиз на лейбле ALL41 Records. Гибридная оркестровая музыка, меланхоличная и душевная -  наверное так можно описать стиль и жанр, который он пишет. Сейчас ему 21 и уже успел получить возможность поработать с Nightblue Music, выпустить EP на ALL41 Records и взыметь поддержку от больших каналов, таких как Bass City, SuicideSheeep, Cloudx Music, Trap Woofer, 8D TUNES и многих других." data-en="Oni Nillsen is an emerging artist and producer whose cinematic approach to electronic music has begun to attract growing attention across the scene. Launched in 2019, the project spent several years developing behind the scenes before making its official label debut with an EP release on ALL41 Records. Combining orchestral textures, atmospheric sound design, and emotionally driven songwriting, Oni Nillsen creates music that balances melancholy, warmth, and cinematic depth. His work has already led to collaborations with Nightblue Music and support from influential music platforms including Bass City, SuicideSheeep, Cloudx Music, Trap Woofer, 8D TUNES, and many others. At just 23 years old, Oni Nillsen continues to refine a distinctive sound that bridges the worlds of orchestral and electronic music, establishing himself as a promising new voice in the genre."
         > Oni Nillsen is an emerging artist and producer whose cinematic approach to electronic music has begun to attract growing attention across the scene. Launched in 2019, the project spent several years developing behind the scenes before making its official label debut with an EP release on ALL41 Records. Combining orchestral textures, atmospheric sound design, and emotionally driven songwriting, Oni Nillsen creates music that balances melancholy, warmth, and cinematic depth. His work has already led to collaborations with Nightblue Music and support from influential music platforms including Bass City, SuicideSheeep, Cloudx Music, Trap Woofer, 8D TUNES, and many others. At just 23 years old, Oni Nillsen continues to refine a distinctive sound that bridges the worlds of orchestral and electronic music, establishing himself as a promising new voice in the genre.
         </p>
+</div>
+                    <button class="read-more-btn" onclick="toggleTextSpoiler('music-about-text', this)">Read more</button>
 </div>
                 <div class="page-header-wrapper">
                     <h2 class="section-title" data-ru="Музыка" data-en="Music Background">Music Background</h2>
@@ -564,10 +589,12 @@ header .nav-btn[href="#about"] {
 
                 <div id="tab-soundcloud" class="tab-content active">
                     <div class="media-grid">
-                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1863434040&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4 
+                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1863434040&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;"><div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;"><h4 
                              data-ru="Что вы почувствовали, когда впервые услышали 4ÆM от Grimes? Впервые я услышал эту песню во время прохождения Cyberpunk 2077 в 2020 году. Сочетание вокала Grimes и инструментала создавало ощущение чего-то возвышенного и почти неземного, словно короткого момента свободы среди хаоса окружающего мира. Именно это чувство стало отправной точкой для моего ремикса. Мне хотелось сохранить эмоциональное ядро оригинала, но взглянуть на него через призму Cyberpunk — мира, в котором за каждым взлётом неизбежно следует падение, а надежда постоянно сталкивается с реальностью. Тяжёлые синтезаторы, искажённые струнные, агрессивные ударные, эксперименты с темпом и смешение жанров стали инструментами для передачи этой идеи. Ремикс постепенно движется от чувства возвышенности к ощущению неизбежности, сохраняя связь с оригинальной композицией, но рассказывая уже собственную историю.Это моя интерпретация 4ÆM — вдохновлённая как самой песней, так и атмосферой Night City, которая ещё долго не отпускает после финальных титров." 
                              data-en="What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk 2077 back in 2020. The combination of Grimes' vocals and the instrumental created a sense of something elevated and almost otherworldly—a brief moment of freedom amidst the chaos of the world around it. That feeling became the starting point for this remix. I wanted to preserve the emotional core of the original while reinterpreting it through the lens of Cyberpunk—a world where every rise is followed by a fall, and hope is constantly confronted by reality. Heavy synthesizers, distorted strings, aggressive drums, tempo shifts, and genre-blending became the tools I used to explore that idea. The remix gradually moves from a sense of transcendence toward a feeling of inevitability, maintaining a connection to the original while telling its own story. This is my interpretation of 4ÆM—inspired both by the song itself and by the atmosphere of Night City, a world that lingers long after the credits roll.">What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk 2077 back in 2020. The combination of Grimes' vocals and the instrumental created a sense of something elevated and almost otherworldly—a brief moment of freedom amidst the chaos of the world around it. That feeling became the starting point for this remix. I wanted to preserve the emotional core of the original while reinterpreting it through the lens of Cyberpunk—a world where every rise is followed by a fall, and hope is constantly confronted by reality. Heavy synthesizers, distorted strings, aggressive drums, tempo shifts, and genre-blending became the tools I used to explore that idea. The remix gradually moves from a sense of transcendence toward a feeling of inevitability, maintaining a connection to the original while telling its own story. This is my interpretation of 4ÆM—inspired both by the song itself and by the atmosphere of Night City, a world that lingers long after the credits roll.
-                </h4></div></div>
+                </h4></div><span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+            </div>
+     </div>
                         
                         <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2022944900&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 2</h4></div></div>
                         
@@ -735,13 +762,23 @@ header .nav-btn[href="#about"] {
        let savedScrollPosition = 0;
 
         function switchView(viewId, returnTargetId = null) {
-            const currentView = document.querySelector('.page-view.active');
-            const targetView = document.getElementById('view-' + viewId);
-            // Остановка всех iframe плееров при смене страницы
-document.querySelectorAll('iframe').forEach(iframe => {
-    const currentSrc = iframe.src;
-    iframe.src = currentSrc; // Эта магия заставляет iframe перезагрузиться и замолчать
-});
+            // Умная остановка аудио БЕЗ лагов и перезагрузок
+const activeView = document.querySelector('.page-view.active');
+if (activeView) {
+    const iframes = activeView.querySelectorAll('iframe');
+    iframes.forEach(iframe => {
+        // Элегантно ставим на паузу SoundCloud и Vimeo (без перезагрузки!)
+        if (iframe.src.includes('soundcloud') || iframe.src.includes('vimeo')) {
+            iframe.contentWindow.postMessage('{"method":"pause"}', '*');
+        } 
+        // Spotify не понимает паузу извне, поэтому мягко перезагружаем ТОЛЬКО его
+        else if (iframe.src.includes('spotify')) {
+            const currentSrc = iframe.src;
+            iframe.src = '';
+            setTimeout(() => { iframe.src = currentSrc; }, 50);
+        }
+    });
+}
 
             if (currentView === targetView) return;
 
@@ -805,6 +842,17 @@ document.querySelectorAll('iframe').forEach(iframe => {
                 accBody.style.maxHeight = 0;
             }
         });
+
+        function toggleTextSpoiler(textId, btn) {
+    const textBlock = document.getElementById(textId);
+    if (textBlock.classList.contains('collapsed')) {
+        textBlock.classList.remove('collapsed');
+        btn.innerText = 'Show less';
+    } else {
+        textBlock.classList.add('collapsed');
+        btn.innerText = 'Read more';
+    }
+}
 
         // МОДАЛЬНОЕ ОКНО CONTACTS (Полностью новая логика)
         const modal = document.getElementById('contact-modal');
@@ -870,6 +918,17 @@ document.querySelectorAll('iframe').forEach(iframe => {
             }
         });
 
+        function openDescModal(element) {
+    const title = element.querySelector('h4').innerText;
+    const fullText = element.querySelector('.desc-preview').innerHTML;
+    document.getElementById('desc-modal-title').innerText = title;
+    document.getElementById('desc-modal-body').innerHTML = fullText;
+    document.getElementById('desc-modal').style.display = 'flex';
+}
+function closeDescModal() {
+    document.getElementById('desc-modal').style.display = 'none';
+}
+
         // ВКЛАДКИ ДЛЯ МУЗЫКИ
         function switchTab(tabId) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -925,4 +984,11 @@ const observer = new IntersectionObserver((entries) => {
 sections.forEach(section => observer.observe(section));
     </script>
 </body>
+                            <div id="desc-modal" class="modal" onclick="closeDescModal()">
+    <div class="modal-content" onclick="event.stopPropagation()" style="max-width: 600px;">
+        <span class="close-modal" onclick="closeDescModal()">&times;</span>
+        <h3 id="desc-modal-title" style="margin-bottom: 15px;"></h3>
+        <div id="desc-modal-body" style="color: var(--text-muted); line-height: 1.6;"></div>
+    </div>
+</div>
 </html>

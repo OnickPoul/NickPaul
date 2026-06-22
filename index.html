@@ -1219,47 +1219,51 @@ if (activeView) {
             }
         }
 
-        function openDescModal(buttonElement) {
-    console.log("1. Клик сработал.");
+        // Слушаем вообще все клики на странице
+document.addEventListener('click', function(event) {
+    
+    // 1. ЛОГИКА ОТКРЫТИЯ ОКНА
+    // Если клик пришелся по элементу с классом 'read-more-btn'
+    if (event.target.classList.contains('read-more-btn')) {
+        console.log("Клик пойман через делегирование!");
 
-    const parentBlock = buttonElement.closest('.video-description');
-    if (!parentBlock) {
-        console.error("ОШИБКА: Не найден родительский блок .video-description");
-        return;
+        // Находим родительский блок конкретно этой карточки
+        const parentBlock = event.target.closest('.video-description');
+        if (!parentBlock) return;
+
+        // Ищем заголовок и скрытый полный текст
+        let titleEl = parentBlock.querySelector('.track-title') || parentBlock.querySelector('h4');
+        const textEl = parentBlock.querySelector('.desc-full');
+
+        if (!titleEl || !textEl) {
+            console.error("Ошибка: Не найден заголовок или блок .desc-full");
+            return;
+        }
+
+        const modal = document.getElementById('desc-modal');
+        if (!modal) {
+            console.error("Ошибка: В HTML нет контейнера #desc-modal");
+            return;
+        }
+
+        // Заполняем модальное окно данными
+        // Берем innerHTML, чтобы подтянулся нужный язык, если он уже переключен
+        document.getElementById('desc-modal-title').innerText = titleEl.innerText;
+        document.getElementById('desc-modal-body').innerHTML = textEl.innerHTML;
+
+        // Показываем окно
+        modal.style.display = 'flex';
     }
 
-    // Умный поиск заголовка: сначала по классу, если нет — по тегу h4
-    let titleEl = parentBlock.querySelector('.track-title');
-    if (!titleEl) titleEl = parentBlock.querySelector('h4');
-    
-    // Поиск полного текста
-    const textEl = parentBlock.querySelector('.desc-full');
-    
-    // Проверяем текстовый элемент
-    if (!textEl) {
-        console.error("ОШИБКА: Внутри карточки не найден скрытый блок .desc-full с полным текстом!");
-        alert("Ошибка разметки: отсутствует блок .desc-full");
-        return;
+    // 2. ЛОГИКА ЗАКРЫТИЯ ОКНА
+    // Если кликнули по крестику ИЛИ по темному фону вокруг самого окна
+    if (event.target.classList.contains('close-modal') || event.target.id === 'desc-modal') {
+        const modal = document.getElementById('desc-modal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
     }
-    
-    const titleText = titleEl ? titleEl.innerText : "Описание трека";
-    console.log("3. Данные успешно собраны:", titleText);
-    
-    // Ищем само модальное окно
-    const modal = document.getElementById('desc-modal');
-    if (!modal) {
-        console.error("ОШИБКА: На странице нет контейнера с id='desc-modal'!");
-        return;
-    }
-
-    // Закидываем данные в модалку
-    document.getElementById('desc-modal-title').innerText = titleText;
-    document.getElementById('desc-modal-body').innerHTML = textEl.innerHTML;
-    
-    // Открываем
-    modal.style.display = 'flex';
-    console.log("4. Окно открыто.");
-}
+});
 
         // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ (Финальный фикс залипания)
 const sections = document.querySelectorAll('#view-home section[id]');

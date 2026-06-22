@@ -155,6 +155,30 @@
     overflow: hidden;
     margin-top: 5px;
 }
+
+        /* Делаем так, чтобы блок с текстом сам заполнял всю пустоту по высоте */
+.video-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Заставляет карточку тянуться */
+}
+
+.video-description {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Этот параметр заставит фон растянуться до самого низа */
+    padding: 15px; /* Убедись, что тут есть отступы */
+}
+
+/* Ограничиваем заголовки ровно в 2 строки для симметрии */
+.video-description h4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-top: 0;
+    margin-bottom: auto; /* Прижимает всё остальное вниз */
+}
         
         /* Унифицированные кнопки шапки - теперь одинакового размера */
         .nav-btn {
@@ -594,7 +618,7 @@ header .nav-btn[href="#about"] {
         <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1863434040&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
     </div>
     <div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;">
-        <h4>Название трека</h4>
+        <h4>Grimes - 4ÆM(Oni Nillsen REMIX)</h4>
         <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;"
             data-ru="Что вы почувствовали, когда впервые услышали 4ÆM от Grimes? Впервые я услышал эту песню во время прохождения Cyberpunk 2077 в 2020 году. Сочетание вокала Grimes и инструментала создавало ощущение чего-то возвышенного и почти неземного, словно короткого момента свободы среди хаоса окружающего мира. Именно это чувство стало отправной точкой для моего ремикса. Мне хотелось сохранить эмоциональное ядро оригинала, но взглянуть на него через призму Cyberpunk — мира, в котором за каждым взлётом неизбежно следует падение, а надежда постоянно сталкивается с реальностью. Тяжёлые синтезаторы, искажённые струнные, агрессивные ударные, эксперименты с темпом и смешение жанров стали инструментами для передачи этой идеи. Ремикс постепенно движется от чувства возвышенности к ощущению неизбежности, сохраняя связь с оригинальной композицией, но рассказывая уже собственную историю.Это моя интерпретация 4ÆM — вдохновлённая как самой песней, так и атмосферой Night City, которая ещё долго не отпускает после финальных титров." 
                              data-en="What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk 2077 back in 2020. The combination of Grimes' vocals and the instrumental created a sense of something elevated and almost otherworldly—a brief moment of freedom amidst the chaos of the world around it. That feeling became the starting point for this remix. I wanted to preserve the emotional core of the original while reinterpreting it through the lens of Cyberpunk—a world where every rise is followed by a fall, and hope is constantly confronted by reality. Heavy synthesizers, distorted strings, aggressive drums, tempo shifts, and genre-blending became the tools I used to explore that idea. The remix gradually moves from a sense of transcendence toward a feeling of inevitability, maintaining a connection to the original while telling its own story. This is my interpretation of 4ÆM—inspired both by the song itself and by the atmosphere of Night City, a world that lingers long after the credits roll.">What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk 2077 back in 2020. The combination of Grimes' vocals and the instrumental created a sense of something elevated and almost otherworldly—a brief moment of freedom amidst the chaos of the world around it. That feeling became the starting point for this remix. I wanted to preserve the emotional core of the original while reinterpreting it through the lens of Cyberpunk—a world where every rise is followed by a fall, and hope is constantly confronted by reality. Heavy synthesizers, distorted strings, aggressive drums, tempo shifts, and genre-blending became the tools I used to explore that idea. The remix gradually moves from a sense of transcendence toward a feeling of inevitability, maintaining a connection to the original while telling its own story. This is my interpretation of 4ÆM—inspired both by the song itself and by the atmosphere of Night City, a world that lingers long after the credits roll.
@@ -603,27 +627,195 @@ header .nav-btn[href="#about"] {
     </div>
 </div> 
                         
-                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2022944900&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 2</h4></div></div>
+                        <div class="video-card">
+    <div class="audio-container">
+        <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2022944900&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+    </div>
+    <div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;">
+        <h4>Oni Nillsen - Hollow Hands(Demo)</h4>
+        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
+            ...
+        </div>
+        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+    </div>
+</div>
                         
-                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1938138563&color=%23160504&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 3</h4></div></div>
-                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1898808423&color=%233e2b31&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 4</h4></div></div>
-                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2117727474&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 5</h4></div></div>
-                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A1996243647%3Fsecret_token%3Ds-EOyHbtxiN0Q&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 6</h4></div></div>
-                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2014169807%3Fsecret_token%3Ds-7F2kbWbyFOm&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 7</h4></div></div>
-                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2000369099%3Fsecret_token%3Ds-VChpslzOyE5&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description"><h4>Track 8</h4></div></div>
+                        <div class="video-card">
+    <div class="audio-container">
+        <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1938138563&color=%23160504&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+    </div>
+    <div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;">
+        <h4>HEALTH,Window Weather - Major Crimes(Oni Nillsen REMIX)</h4>
+        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
+            ...
+        </div>
+        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+    </div>
+</div>
+                        <div class="video-card">
+    <div class="audio-container">
+        <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1898808423&color=%233e2b31&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+    </div>
+    <div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;">
+        <h4>PhaseOne - UFO(Oni Nillsen Remix)</h4>
+        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
+            ...
+        </div>
+        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+    </div>
+</div>
+                        <div class="video-card">
+    <div class="audio-container">
+        <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2117727474&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+    </div>
+    <div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;">
+        <h4>Grimes - Delicate Weapon(Oni Nillsen REMIX)</h4>
+        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
+            ...
+        </div>
+        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+    </div>
+</div>
+                        <div class="video-card">
+    <div class="audio-container">
+        <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A1996243647%3Fsecret_token%3Ds-EOyHbtxiN0Q&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+    </div>
+    <div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;">
+        <h4>Oni Nillsen - Offensive</h4>
+        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
+            ...
+        </div>
+        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+    </div>
+</div>
+                        <div class="video-card">
+    <div class="audio-container">
+        <iframe src="
+
+https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2014169807%3Fsecret_token%3Ds-7F2kbWbyFOm&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+    </div>
+    <div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;">
+        <h4>Oni Nillsen - Psycho</h4>
+        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
+            ...
+        </div>
+        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+    </div>
+</div>
+                        <div class="video-card">
+    <div class="audio-container">
+        <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2000369099%3Fsecret_token%3Ds-VChpslzOyE5&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+    </div>
+    <div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;">
+        <h4>Oni Nillsen - Heavy Rain</h4>
+        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
+            ...
+        </div>
+        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+    </div>
+</div>
+                        
                     </div>
                 </div>
 
                 <div id="tab-spotify" class="tab-content">
                     <div class="media-grid">
-                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
-                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
-                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
-                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
-                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
-                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
-                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
-                        <div class="video-card"><div class="audio-container spotify"><iframe src="https://open.spotify.com/embed/track/4cOdK2wGLETKBW3PvgPWqT?utm_source=generator" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+                        <div class="video-card">
+    <div class="audio-container">
+        <iframe src="..."></iframe>
+    </div>
+    <div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;">
+        <h4>Название трека</h4>
+        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
+            Здесь твое длинное описание, которое обрежется для сетки...
+        </div>
+        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+    </div>
+</div>
+                        <div class="video-card">
+    <div class="audio-container">
+        <iframe src="..."></iframe>
+    </div>
+    <div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;">
+        <h4>Название трека</h4>
+        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
+            Здесь твое длинное описание, которое обрежется для сетки...
+        </div>
+        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+    </div>
+</div>
+                        <div class="video-card">
+    <div class="audio-container">
+        <iframe src="..."></iframe>
+    </div>
+    <div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;">
+        <h4>Название трека</h4>
+        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
+            Здесь твое длинное описание, которое обрежется для сетки...
+        </div>
+        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+    </div>
+</div>
+                        <div class="video-card">
+    <div class="audio-container">
+        <iframe src="..."></iframe>
+    </div>
+    <div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;">
+        <h4>Название трека</h4>
+        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
+            Здесь твое длинное описание, которое обрежется для сетки...
+        </div>
+        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+    </div>
+</div>
+                        <div class="video-card">
+    <div class="audio-container">
+        <iframe src="..."></iframe>
+    </div>
+    <div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;">
+        <h4>Название трека</h4>
+        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
+            Здесь твое длинное описание, которое обрежется для сетки...
+        </div>
+        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+    </div>
+</div>
+                        <div class="video-card">
+    <div class="audio-container">
+        <iframe src="..."></iframe>
+    </div>
+    <div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;">
+        <h4>Название трека</h4>
+        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
+            Здесь твое длинное описание, которое обрежется для сетки...
+        </div>
+        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+    </div>
+</div>
+                        <div class="video-card">
+    <div class="audio-container">
+        <iframe src="..."></iframe>
+    </div>
+    <div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;">
+        <h4>Название трека</h4>
+        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
+            Здесь твое длинное описание, которое обрежется для сетки...
+        </div>
+        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+    </div>
+</div>
+                        <div class="video-card">
+    <div class="audio-container">
+        <iframe src="..."></iframe>
+    </div>
+    <div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;">
+        <h4>Название трека</h4>
+        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
+            Здесь твое длинное описание, которое обрежется для сетки...
+        </div>
+        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+    </div>
+</div>
                     </div>
                 </div>
             </section>
@@ -946,14 +1138,16 @@ if (activeView) {
         }
 
         function openDescModal(element) {
-    const title = element.querySelector('h4').innerText;
-    const fullText = element.querySelector('.desc-preview').innerHTML;
+    const titleEl = element.querySelector('h4');
+    const textEl = element.querySelector('.desc-preview');
+    
+    // Защита: если текста или заголовка нет, ставим заглушку, чтобы код не ломался
+    const title = titleEl ? titleEl.innerText : 'Description';
+    const fullText = textEl ? textEl.innerHTML : 'No description available.';
+    
     document.getElementById('desc-modal-title').innerText = title;
     document.getElementById('desc-modal-body').innerHTML = fullText;
     document.getElementById('desc-modal').style.display = 'flex';
-}
-function closeDescModal() {
-    document.getElementById('desc-modal').style.display = 'none';
 }
 
         // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ (Финальный фикс залипания)

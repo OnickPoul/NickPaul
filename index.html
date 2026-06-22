@@ -150,7 +150,7 @@
         /* Обрезаем текст в карточке до 2-х строк, чтобы сетка была идеальной */
 .desc-preview {
     display: -webkit-box;
-    -webkit-line-clamp: 1; 
+    -webkit-line-clamp: 2; 
     -webkit-box-orient: vertical;
     overflow: hidden;
     margin-top: 5px;
@@ -167,7 +167,7 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1; /* Этот параметр заставит фон растянуться до самого низа */
-    padding: 8px; /* Убедись, что тут есть отступы */
+    padding: 15px; /* Убедись, что тут есть отступы */
 }
 
 /* Ограничиваем заголовки ровно в 2 строки для симметрии */
@@ -225,44 +225,41 @@ header .nav-btn[href="#about"] {
 }
 .read-more-btn:hover { color: var(--text-color); }
 
-        /* Стили для всплывающего модального окна */
+        /* Базовые стили для всплывающего окна */
 .modal {
-    display: none; /* Скрыто по умолчанию, JS меняет это на flex */
-    position: fixed;
-    z-index: 9999; /* Поверх всего сайта */
+    display: none; /* По умолчанию скрыто */
+    position: fixed; /* Фиксируем поверх экрана */
+    z-index: 99999; /* Вытаскиваем на самый передний план, поверх плееров */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачный темный фон */
+    background-color: rgba(0, 0, 0, 0.7); /* Черный полупрозрачный фон */
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(4px); /* Легкое размытие заднего фона */
+    backdrop-filter: blur(5px); /* Размытие заднего плана */
 }
 
+/* Белая/темная плашка самого окна */
 .modal-content {
-    background-color: var(--bg-color); /* Цвет фона под тему сайта */
+    background-color: var(--bg-color, #ffffff);
     padding: 30px;
     border-radius: 12px;
     width: 90%;
     max-width: 600px;
     position: relative;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    border: 1px solid var(--border-color, #ccc);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
+/* Кнопка закрытия (крестик) */
 .close-modal {
     position: absolute;
     top: 15px;
     right: 20px;
-    font-size: 28px;
+    font-size: 30px;
     cursor: pointer;
-    color: var(--text-color);
-    line-height: 1;
-}
-
-.close-modal:hover {
-    color: var(--text-muted);
+    color: var(--text-color, #000);
 }
         
         /* --- МАГИЯ ПЛАВНОГО ИСЧЕЗНОВЕНИЯ SHOWREEL --- */
@@ -318,7 +315,7 @@ header .nav-btn[href="#about"] {
         /* Фон черный, чтобы не было белой полосы */
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; width: 100%; background-color: #000000; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: block; }
-        .video-description { padding: 10px 25px; border-top: 1px solid var(--border-color); background-color: var(--card-bg); }
+        .video-description { padding: 20px 25px; border-top: 1px solid var(--border-color); background-color: var(--card-bg); }
 
         .hero-section .video-card { box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 0; }
 

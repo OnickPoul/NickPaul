@@ -167,7 +167,10 @@
 .video-description {
     padding: 15px;
     position: relative;
-    /* Больше никаких cursor: pointer здесь! */
+    /* Возвращаем растягивание до низа: */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; 
 }
 
 /* Делаем кликабельной ТОЛЬКО кнопку */
@@ -1191,30 +1194,35 @@ if (activeView) {
         }
 
         function openDescModal(buttonElement) {
-    // 1. Находим родительский контейнер карточки, внутри которой нажали кнопку
+    console.log("1. Клик по кнопке прошел!");
+
     const parentBlock = buttonElement.closest('.video-description');
-    
     if (!parentBlock) {
-        console.error("Не найден родительский блок .video-description");
+        console.error("ОШИБКА: Не найден родительский блок .video-description");
         return;
     }
+    console.log("2. Родительский блок найден.");
 
-    // 2. Ищем заголовок и ПОЛНЫЙ текст внутри этой конкретной карточки
     const titleEl = parentBlock.querySelector('.track-title');
     const textEl = parentBlock.querySelector('.desc-full');
     
     if (!titleEl || !textEl) {
-        console.error("Ошибка: Не найден заголовок или скрытый текст .desc-full!");
+        console.error("ОШИБКА: Не найден заголовок (.track-title) или скрытый текст (.desc-full)!");
         return;
     }
+    console.log("3. Текст для модалки успешно собран.");
     
-    // 3. Перекидываем данные в модальное окно
+    const modal = document.getElementById('desc-modal');
+    if (!modal) {
+        console.error("ОШИБКА: В HTML вообще нет элемента с id='desc-modal'!");
+        return;
+    }
+
     document.getElementById('desc-modal-title').innerText = titleEl.innerText;
     document.getElementById('desc-modal-body').innerHTML = textEl.innerHTML;
     
-    // 4. Показываем окно
-    const modal = document.getElementById('desc-modal');
     modal.style.display = 'flex';
+    console.log("4. Модальное окно должно быть открыто!");
 }
 
 function closeDescModal() {

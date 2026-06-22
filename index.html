@@ -1175,16 +1175,34 @@ if (activeView) {
         }
 
         function openDescModal(element) {
+    // 1. Проверяем, находит ли скрипт заголовок трека
     const titleEl = element.querySelector('h4');
+    // 2. Проверяем, находит ли скрипт скрытый текст
     const textEl = element.querySelector('.desc-preview');
     
-    // Защита: если текста или заголовка нет, ставим заглушку, чтобы код не ломался
-    const title = titleEl ? titleEl.innerText : 'Description';
-    const fullText = textEl ? textEl.innerHTML : 'No description available.';
+    if (!titleEl || !textEl) {
+        console.error("Ошибка: Внутри этой карточки не найден тег h4 или класс .desc-preview!");
+        return; // Останавливаем выполнение, чтобы сайт не лагал
+    }
     
-    document.getElementById('desc-modal-title').innerText = title;
-    document.getElementById('desc-modal-body').innerHTML = fullText;
-    document.getElementById('desc-modal').style.display = 'flex';
+    // 3. Проверяем, существует ли само окно внизу страницы
+    const modal = document.getElementById('desc-modal');
+    if (!modal) {
+        console.error("Ошибка: На странице не найден блок с id='desc-modal'!");
+        return;
+    }
+    
+    // Если всё на месте — перекидываем текст в модалку и показываем её
+    document.getElementById('desc-modal-title').innerText = titleEl.innerText;
+    document.getElementById('desc-modal-body').innerHTML = textEl.innerHTML;
+    modal.style.display = 'flex';
+}
+
+function closeDescModal() {
+    const modal = document.getElementById('desc-modal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }
 
         // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ (Финальный фикс залипания)

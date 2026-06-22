@@ -122,7 +122,29 @@
 
         /* Уменьшаем вертикальное расстояние между плеерами */
 .media-grid {
-    gap: 15px; /* Было больше, теперь карточки будут плотнее друг к другу */
+    gap: 15px !important; /* Было больше, теперь карточки будут плотнее друг к другу */
+}
+
+        /* Жестко фиксируем высоту для плееров Spotify, чтобы они не сплющивались */
+.audio-container.spotify {
+    padding-bottom: 0 !important; /* Отключаем пропорции от видео-плееров */
+    height: 152px !important; /* Стандартная высота маленького плеера. Если хочешь большие - ставь 352px */
+    border-radius: 12px; /* Скругляем углы под стиль Spotify */
+    overflow: hidden;
+}
+
+.audio-container.spotify iframe {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    border: none !important;
+}
+
+/* Убираем лишний фон у карточки, если после удаления текста осталась пустота */
+#tab-spotify .video-card {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 }
         
         /* Унифицированные кнопки шапки - теперь одинакового размера */
@@ -152,9 +174,9 @@
         .btn-group { display: flex; gap: 18px; }
 
         /* Отодвигаем "Contacts" от "Showreel" и "Works" от "About" */
-header .nav-btn[href="#demo-reel"], 
+header .nav-btn[href="#hero"], 
 header .nav-btn[href="#about"] {
-    margin-right: 25px;
+    margin-right: 15px;
 }
         
         /* --- МАГИЯ ПЛАВНОГО ИСЧЕЗНОВЕНИЯ SHOWREEL --- */
@@ -535,7 +557,7 @@ header .nav-btn[href="#about"] {
                     <button class="title-back-btn" onclick="switchView('home', 'about')" data-ru="Назад" data-en="Back">Back</button>
                 </div>
 
-                <div class="tabs-container" style="display: flex; justify-content: flex-start; gap: 20px; margin-bottom: 15px;">
+                <div class="tabs-container" style="display: flex; justify-content: flex-start; gap: 20px; margin-bottom: 30px;">
     <button class="tab-btn active" onclick="switchTab('soundcloud')">SoundCloud</button>
     <button class="tab-btn" onclick="switchTab('spotify')">Spotify</button>
 </div>

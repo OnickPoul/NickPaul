@@ -926,16 +926,6 @@ if (activeView) {
             }
         });
 
-        function openDescModal(element) {
-    const title = element.querySelector('h4').innerText;
-    const fullText = element.querySelector('.desc-preview').innerHTML;
-    document.getElementById('desc-modal-title').innerText = title;
-    document.getElementById('desc-modal-body').innerHTML = fullText;
-    document.getElementById('desc-modal').style.display = 'flex';
-}
-function closeDescModal() {
-    document.getElementById('desc-modal').style.display = 'none';
-}
 
         // ВКЛАДКИ ДЛЯ МУЗЫКИ
         function switchTab(tabId) {
@@ -954,6 +944,17 @@ function closeDescModal() {
                 activeContent.classList.add('active');
             }
         }
+
+        function openDescModal(element) {
+    const title = element.querySelector('h4').innerText;
+    const fullText = element.querySelector('.desc-preview').innerHTML;
+    document.getElementById('desc-modal-title').innerText = title;
+    document.getElementById('desc-modal-body').innerHTML = fullText;
+    document.getElementById('desc-modal').style.display = 'flex';
+}
+function closeDescModal() {
+    document.getElementById('desc-modal').style.display = 'none';
+}
 
         // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ (Финальный фикс залипания)
 const sections = document.querySelectorAll('#view-home section[id]');
@@ -991,7 +992,6 @@ const observer = new IntersectionObserver((entries) => {
 
 sections.forEach(section => observer.observe(section));
     </script>
-</body>
                             <div id="desc-modal" class="modal" onclick="closeDescModal()">
     <div class="modal-content" onclick="event.stopPropagation()" style="max-width: 600px;">
         <span class="close-modal" onclick="closeDescModal()">&times;</span>
@@ -999,4 +999,5 @@ sections.forEach(section => observer.observe(section));
         <div id="desc-modal-body" style="color: var(--text-muted); line-height: 1.6;"></div>
     </div>
 </div>
+</body>
 </html>

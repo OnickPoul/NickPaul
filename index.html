@@ -128,10 +128,32 @@
 
         .btn-group { display: flex; gap: 14px; }
         
-        .home-only-group { transition: opacity 0.3s ease, visibility 0.3s ease; opacity: 1; visibility: visible; }
+        /* --- МАГИЯ ПЛАВНОГО ИСЧЕЗНОВЕНИЯ SHOWREEL --- */
+        .showreel-btn {
+            transition: max-width 0.4s ease, opacity 0.4s ease, margin 0.4s ease, padding 0.4s ease, border-width 0.4s ease;
+            max-width: 150px; /* Ширина с запасом */
+            overflow: hidden;
+            opacity: 1;
+            white-space: nowrap;
+        }
+        body.is-subpage .showreel-btn {
+            max-width: 0;
+            padding-left: 0;
+            padding-right: 0;
+            border-width: 0;
+            opacity: 0;
+            margin-right: -14px; /* Компенсируем gap десктопа, чтобы Contact скользил идеально */
+            pointer-events: none;
+        }
+        @media (max-width: 768px) {
+            body.is-subpage .showreel-btn {
+                margin-right: -10px; /* Компенсируем gap мобилки */
+            }
+        }
+        /* ------------------------------------------- */
+
+        .home-only-group { transition: opacity 0.4s ease, visibility 0.4s ease; opacity: 1; visibility: visible; }
         body.is-subpage .home-only-group { opacity: 0; visibility: hidden; pointer-events: none; }
-        
-        .mobile-only { display: none; }
 
         /* --- МОБИЛЬНАЯ ШАПКА --- */
         @media (max-width: 768px) {
@@ -315,8 +337,8 @@
                         <img src="NickPaulLogoAlpha.png" alt="Logo" id="siteLogo">
                     </a>
                     <div class="desktop-only btn-group">
+                        <a href="#hero" class="nav-btn showreel-btn" data-ru="Шоурил" data-en="Showreel">Showreel</a>
                         <a href="#" class="nav-btn contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
-                        <a href="#hero" class="nav-btn" data-ru="Шоурил" data-en="Showreel">Showreel</a>
                     </div>
                 </div>
 
@@ -340,12 +362,10 @@
 
                 <div class="mobile-only mobile-nav-row">
                     <div class="btn-group">
+                        <a href="#hero" class="nav-btn showreel-btn" data-ru="Шоурил" data-en="Showreel">Showreel</a>
                         <a href="#" class="nav-btn contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
-                        <div class="home-only-group" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
-                            <a href="#hero" class="nav-btn" data-ru="Шоурил" data-en="Showreel">Showreel</a>
-                            <a href="#about" class="nav-btn" data-ru="Обо мне" data-en="About">About</a>
-                            <a href="#works" class="nav-btn" data-ru="Работы" data-en="Works">Works</a>
-                        </div>
+                        <a href="#works" class="nav-btn home-only-group" data-ru="Работы" data-en="Works">Works</a>
+                        <a href="#about" class="nav-btn home-only-group" data-ru="Обо мне" data-en="About">About</a>
                     </div>
                 </div>
             </div>
@@ -808,32 +828,38 @@
             }
         }
 
-        // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ
+        // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ (Теперь видит кнопки в ЛЮБОЙ части шапки)
         const sections = document.querySelectorAll('#view-home section[id]');
-        const navLinks = document.querySelectorAll('.home-only-group .nav-btn[href^="#"]');
+        
+        // Убрали жесткую привязку к .home-only-group, теперь ищем все навигационные ссылки
+        const navLinks = document.querySelectorAll('.nav-btn[href^="#"]');
 
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 const targetHref = link.getAttribute('href');
                 if(targetHref.startsWith('#')) {
                     e.preventDefault();
+                    
+                    // Снимаем подсветку со всех кнопок
                     navLinks.forEach(l => l.classList.remove('active'));
-                    document.querySelectorAll(`.home-only-group .nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active'));
+                    // Вешаем только на активную (где бы она ни находилась)
+                    document.querySelectorAll(`.nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active'));
+                    
                     scrollToTarget(targetHref.substring(1));
                 }
             });
         });
 
-        // Отслеживаем скролл для автоматической подсветки
-        const observerOptions = { root: null, rootMargin: '-120px 0px -60% 0px', threshold: 0 };
+        const observerOptions = { root: null, rootMargin: '-100px 0px -40% 0px', threshold: 0 };
         const observer = new IntersectionObserver((entries) => {
             if (isClickScrolling || document.body.classList.contains('is-subpage')) return; 
 
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const id = entry.target.getAttribute('id');
+                    
                     navLinks.forEach(link => link.classList.remove('active'));
-                    document.querySelectorAll(`.home-only-group .nav-btn[href="#${id}"]`).forEach(activeLink => {
+                    document.querySelectorAll(`.nav-btn[href="#${id}"]`).forEach(activeLink => {
                         activeLink.classList.add('active');
                     });
                 }

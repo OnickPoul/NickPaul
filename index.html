@@ -61,6 +61,12 @@
         body, header, .video-card, .about-spoiler, .testimonial-card, input, textarea, .modal-content, hr, iframe {
             transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, opacity 0.5s ease;
         }
+
+        #desc-modal-body, 
+.desc-preview,
+.desc-full {
+    white-space: pre-line; /* Превращает обычные переносы строк в коде в абзацы на экране */
+}
         
         body {
             font-family: 'Manrope', sans-serif;
@@ -160,18 +166,20 @@
 .video-card {
     display: flex;
     flex-direction: column;
-    height: 100%; /* Заставляет карточку тянуться */
+    height: auto !important; /* Заставляет карточку тянуться */
 }
 
-/* Контейнер описания (сразу под плеером) */
-.video-description { 
-    padding: 20px !important; 
-    border-top: 1px solid var(--border-color); 
+/* Контейнер с текстом под плеером */
+.video-description {
+    padding: 20px !important;
     background-color: var(--card-bg) !important;
+    flex-grow: 0 !important; /* Запрещаем блоку насильно растягивать карточку вниз */
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* Растягивает блок, убирая пустоты снизу */
-    box-sizing: border-box;
+}
+
+        .video-grid, .works-container { 
+    align-items: flex-start !important; 
 }
 
 /* Заголовок трека */
@@ -709,7 +717,15 @@ header .nav-btn[href="#about"] {
                 <div class="about-spoiler-block" style="margin-bottom: 40px; max-width: 800px;">
     <h2 style="margin-bottom: 15px; font-size: 2rem; "data-ru="Немного о Oni Nillsen.." data-en="A little bit about Oni Nillsen..">A little bit about Oni Nillsen..</h2>
                     <div id="music-about-text" class="text-content collapsed">
-    <p style="color: var(--text-muted); line-height: 1.6; font-size: 1.1rem;" data-ru="Oni Nillsen - проект, который только только начал набирать небольшие обороты. Был создан в 2019 и долгое время оставался в тени, пока не получил полноценный релиз на лейбле ALL41 Records. Гибридная оркестровая музыка, меланхоличная и душевная -  наверное так можно описать стиль и жанр, который он пишет. Сейчас ему 21 и уже успел получить возможность поработать с Nightblue Music, выпустить EP на ALL41 Records и взыметь поддержку от больших каналов, таких как Bass City, SuicideSheeep, Cloudx Music, Trap Woofer, 8D TUNES и многих других." data-en="Oni Nillsen is an emerging artist and producer whose cinematic approach to electronic music has begun to attract growing attention across the scene. Launched in 2019, the project spent several years developing behind the scenes before making its official label debut with an EP release on ALL41 Records. Combining orchestral textures, atmospheric sound design, and emotionally driven songwriting, Oni Nillsen creates music that balances melancholy, warmth, and cinematic depth. His work has already led to collaborations with Nightblue Music and support from influential music platforms including Bass City, SuicideSheeep, Cloudx Music, Trap Woofer, 8D TUNES, and many others. At just 23 years old, Oni Nillsen continues to refine a distinctive sound that bridges the worlds of orchestral and electronic music, establishing himself as a promising new voice in the genre."
+    <p style="color: var(--text-muted); line-height: 1.6; font-size: 1.1rem;" data-ru="Oni Nillsen — молодой артист и продюсер, чей кинематографичный подход к электронной музыке постепенно привлекает всё больше внимания слушателей и представителей индустрии. Проект был основан в 2019 году и несколько лет развивался за кулисами, прежде чем состоялся его официальный дебют на лейбле ALL41 Records с выпуском собственного EP. 
+        
+        Сочетая оркестровые элементы, атмосферный саунд-дизайн и эмоционально насыщенное авторское видение, Oni Nillsen создаёт музыку, в которой переплетаются меланхолия, тепло и кинематографическая глубина. Его творчество уже привело к сотрудничеству с Nightblue Music и получило поддержку от крупных музыкальных платформ, включая Bass City, SuicideSheeep, Cloudx Music, Trap Woofer, 8D TUNES и многих других. 
+        
+        В свои 23 года Oni Nillsen продолжает развивать собственное звучание, объединяющее оркестровую и электронную музыку, постепенно формируя себя как одного из перспективных новых артистов жанра." data-en="Oni Nillsen is an emerging artist and producer whose cinematic approach to electronic music has begun to attract growing attention across the scene. Launched in 2019, the project spent several years developing behind the scenes before making its official label debut with an EP release on ALL41 Records. 
+        
+        Combining orchestral textures, atmospheric sound design, and emotionally driven songwriting, Oni Nillsen creates music that balances melancholy, warmth, and cinematic depth. His work has already led to collaborations with Nightblue Music and support from influential music platforms including Bass City, SuicideSheeep, Cloudx Music, Trap Woofer, 8D TUNES, and many others. 
+        
+        At just 23 years old, Oni Nillsen continues to refine a distinctive sound that bridges the worlds of orchestral and electronic music, establishing himself as a promising new voice in the genre."
         > Oni Nillsen is an emerging artist and producer whose cinematic approach to electronic music has begun to attract growing attention across the scene. Launched in 2019, the project spent several years developing behind the scenes before making its official label debut with an EP release on ALL41 Records. Combining orchestral textures, atmospheric sound design, and emotionally driven songwriting, Oni Nillsen creates music that balances melancholy, warmth, and cinematic depth. His work has already led to collaborations with Nightblue Music and support from influential music platforms including Bass City, SuicideSheeep, Cloudx Music, Trap Woofer, 8D TUNES, and many others. At just 23 years old, Oni Nillsen continues to refine a distinctive sound that bridges the worlds of orchestral and electronic music, establishing himself as a promising new voice in the genre.
         </p>
 </div>
@@ -734,15 +750,35 @@ header .nav-btn[href="#about"] {
     <div class="video-description"> 
         <h4 class="track-title">Grimes - 4ÆM (Oni Nillsen REMIX)</h4>
         
-        <p class="desc-preview" data-ru="Что вы почувствовали, когда впервые услышали 4ÆM от Grimes? Впервые я услышал эту песню во время прохождения Cyberpunk..." data-en="What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk...">
+        <p class="desc-preview" data-ru="Что вы почувствовали, когда впервые услышали 4ÆM от Grimes? 
+            
+            Впервые я услышал эту песню во время прохождения Cyberpunk..." data-en="What did you feel when you first heard 4ÆM by Grimes? 
+            
+            I first came across the song while playing Cyberpunk...">
             What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk...
         </p>
         
         <span class="read-more-btn" data-ru="Подробнее" data-en="Read more">Read more</span>
         
         <div class="desc-full" style="display: none;" 
-             data-ru="Что вы почувствовали, когда впервые услышали 4ÆM от Grimes? Впервые я услышал эту песню во время прохождения Cyberpunk 2077 в 2020 году. Сочетание вокала Grimes и инструментала создавало ощущение чего-то возвышенного и почти неземного, словно короткого момента свободы среди хаоса окружающего мира. Именно это чувство стало отправной точкой для моего ремикса. Мне хотелось сохранить эмоциональное ядро оригинала, но взглянуть на него через призму Cyberpunk — мира, в котором за каждым взлётом неизбежно следует падение, а надежда постоянно сталкивается с реальностью. Тяжёлые синтезаторы, искажённые струнные, агрессивные ударные, эксперименты с темпом и смешение жанров стали инструментами для передачи этой идеи. Ремикс постепенно движется от чувства возвышенности к ощущению неизбежности, сохраняя связь с оригинальной композицией, но рассказывая уже собственную историю. Это моя интерпретация 4ÆM — вдохновлённая как самой песней, так и атмосферой Night City, которая ещё долго не отпускает после финальных титров."
-             data-en="What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk 2077 back in 2020. The combination of Grimes' vocals and the instrumental created a sense of something elevated and almost otherworldly—a brief moment of freedom amidst the chaos of the world around it. That feeling became the starting point for this remix. I wanted to preserve the emotional core of the original while reinterpreting it through the lens of Cyberpunk—a world where every rise is followed by a fall, and hope is constantly confronted by reality. Heavy synthesizers, distorted strings, aggressive drums, tempo shifts, and genre-blending became the tools I used to explore that idea. The remix gradually moves from a sense of transcendence toward a feeling of inevitability, maintaining a connection to the original while telling its own story. This is my interpretation of 4ÆM—inspired both by the song itself and by the atmosphere of Night City, a world that lingers long after the credits roll.">
+             data-ru="Что вы почувствовали, когда впервые услышали 4ÆM от Grimes? 
+            
+            Впервые я услышал эту песню во время прохождения Cyberpunk 2077 в 2020 году. Сочетание вокала Grimes и инструментала создавало ощущение чего-то возвышенного и почти неземного, словно короткого момента свободы среди хаоса окружающего мира. 
+            
+            Именно это чувство стало отправной точкой для моего ремикса. Мне хотелось сохранить эмоциональное ядро оригинала, но взглянуть на него через призму Cyberpunk — мира, в котором за каждым взлётом неизбежно следует падение, а надежда постоянно сталкивается с реальностью. 
+            
+            Тяжёлые синтезаторы, искажённые струнные, агрессивные ударные, эксперименты с темпом и смешение жанров стали инструментами для передачи этой идеи. Ремикс постепенно движется от чувства возвышенности к ощущению неизбежности, сохраняя связь с оригинальной композицией, но рассказывая уже собственную историю. 
+            
+            Это моя интерпретация 4ÆM — вдохновлённая как самой песней, так и атмосферой Night City, которая ещё долго не отпускает после финальных титров."
+             data-en="What did you feel when you first heard 4ÆM by Grimes? 
+            
+            I first came across the song while playing Cyberpunk 2077 back in 2020. The combination of Grimes' vocals and the instrumental created a sense of something elevated and almost otherworldly—a brief moment of freedom amidst the chaos of the world around it. 
+            
+            That feeling became the starting point for this remix. I wanted to preserve the emotional core of the original while reinterpreting it through the lens of Cyberpunk—a world where every rise is followed by a fall, and hope is constantly confronted by reality. 
+            
+            Heavy synthesizers, distorted strings, aggressive drums, tempo shifts, and genre-blending became the tools I used to explore that idea. The remix gradually moves from a sense of transcendence toward a feeling of inevitability, maintaining a connection to the original while telling its own story. 
+            
+            This is my interpretation of 4ÆM—inspired both by the song itself and by the atmosphere of Night City, a world that lingers long after the credits roll.">
              What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk 2077 back in 2020...
         </div>
     </div>
@@ -945,12 +981,29 @@ https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcl
         <!-- ================= СТРАНИЦА САУНД-ДИЗАЙНА ================= -->
         <main id="view-sound-design" class="container page-view">
             <section style="margin-top: 50px;">
-                <div class="sd-about-block" style="margin-bottom: 40px; max-width: 800px;">
-            <h2 style="margin-bottom: 15px; font-size: 2rem; "data-ru="Немного о дизайне.." data-en="A little bit about design..">A little bit about design..</h2>
-            <p style="color: var(--text-muted); line-height: 1.6; font-size: 1.1rem; "data-ru="Мне нравится работать над задачами, которые требуют нестандартного подхода и заставляют искать собственные решения. Хотя в своей работе я нередко использую различные инструменты — от пресетов до готовых семплов, — наибольший интерес для меня представляет процесс трансформации и переосмысления исходного материала. Особенно меня вдохновляют творческие ограничения. Например, создать убедительные барабаны, используя только звук льющейся в стакан воды, или воссоздать движение груды металлолома на дне океана с помощью одного синтезатора. Подобные задачи не только мотивируют добиться максимально качественного результата, но и помогают открывать новые техники, подходы и способы работы со звуком. Именно такой процесс постоянного поиска и эксперимента позволяет мне развиваться как саунд-дизайнеру, расширять свой инструментарий и глубже понимать природу звука. Для меня это один из самых важных аспектов профессионального роста." data-en="I enjoy working on challenges that require unconventional thinking and encourage me to find my own solutions. While I regularly use a wide range of tools in my workflow—from presets to sample libraries—the part I find most rewarding is transforming and reimagining source material into something new. I am particularly drawn to creative constraints. Whether it's building a convincing drum kit entirely from the sound of water being poured into a glass or recreating the movement of a pile of scrap metal resting on the ocean floor using only a single synthesizer, these kinds of challenges push me to achieve the best possible result while exploring new techniques and approaches to sound design. This constant process of experimentation and discovery is what allows me to grow as a sound designer, expand my creative toolkit, and develop a deeper understanding of sound itself. For me, that pursuit of growth and exploration is one of the most important aspects of the craft.">
-                I enjoy working on challenges that require unconventional thinking and encourage me to find my own solutions. While I regularly use a wide range of tools in my workflow—from presets to sample libraries—the part I find most rewarding is transforming and reimagining source material into something new. I am particularly drawn to creative constraints. Whether it's building a convincing drum kit entirely from the sound of water being poured into a glass or recreating the movement of a pile of scrap metal resting on the ocean floor using only a single synthesizer, these kinds of challenges push me to achieve the best possible result while exploring new techniques and approaches to sound design. This constant process of experimentation and discovery is what allows me to grow as a sound designer, expand my creative toolkit, and develop a deeper understanding of sound itself. For me, that pursuit of growth and exploration is one of the most important aspects of the craft.
-            </p>
-        </div>
+                <div class="about-spoiler-block" style="margin-bottom: 40px; max-width: 800px;">
+    <h2 style="margin-bottom: 15px; font-size: 2rem; "data-ru="Немного о дизайне.." data-en="A little bit about design..">A little bit about design..</h2>
+                    <div id="sd-about-text" class="text-content collapsed">
+    <p style="color: var(--text-muted); line-height: 1.6; font-size: 1.1rem;" data-ru="Мне нравится работать над задачами, которые требуют нестандартного подхода и заставляют искать собственные решения. Хотя в своей работе я нередко использую различные инструменты — от пресетов до готовых семплов, — наибольший интерес для меня представляет процесс трансформации и переосмысления исходного материала.
+        
+        Особенно меня вдохновляют творческие ограничения. Например, создать убедительные барабаны, используя только звук льющейся в стакан воды, или воссоздать движение груды металлолома на дне океана с помощью одного синтезатора. Подобные задачи не только мотивируют добиться максимально качественного результата, но и помогают открывать новые техники, подходы и способы работы со звуком.
+        
+        Именно такой процесс постоянного поиска и эксперимента позволяет мне развиваться как саунд-дизайнеру, расширять свой инструментарий и глубже понимать природу звука. Для меня это один из самых важных аспектов профессионального роста." 
+        
+        data-en="I enjoy working on challenges that require unconventional thinking and encourage me to find my own solutions. While I regularly use a wide range of tools in my workflow—from presets to sample libraries—the part I find most rewarding is transforming and reimagining source material into something new.
+        
+        I am particularly drawn to creative constraints. Whether it's building a convincing drum kit entirely from the sound of water being poured into a glass or recreating the movement of a pile of scrap metal resting on the ocean floor using only a single synthesizer, these kinds of challenges push me to achieve the best possible result while exploring new techniques and approaches to sound design.
+        
+        This constant process of experimentation and discovery is what allows me to grow as a sound designer, expand my creative toolkit, and develop a deeper understanding of sound itself. For me, that pursuit of growth and exploration is one of the most important aspects of the craft."
+        > I enjoy working on challenges that require unconventional thinking and encourage me to find my own solutions. While I regularly use a wide range of tools in my workflow—from presets to sample libraries—the part I find most rewarding is transforming and reimagining source material into something new. 
+        
+        I am particularly drawn to creative constraints. Whether it's building a convincing drum kit entirely from the sound of water being poured into a glass or recreating the movement of a pile of scrap metal resting on the ocean floor using only a single synthesizer, these kinds of challenges push me to achieve the best possible result while exploring new techniques and approaches to sound design. 
+        
+        This constant process of experimentation and discovery is what allows me to grow as a sound designer, expand my creative toolkit, and develop a deeper understanding of sound itself. For me, that pursuit of growth and exploration is one of the most important aspects of the craft.
+        </p>
+</div>
+                    <button class="read-more-btn" onclick="toggleTextSpoiler('sd-about-text', this)">Read more</button>
+</div>
                 <div class="page-header-wrapper">
                     <h2 class="section-title" data-ru="Саунд Дизайн" data-en="Sound Design">Sound Design</h2>
                     <button class="title-back-btn" onclick="switchView('home', 'about')" data-ru="Назад" data-en="Back">Back</button>
@@ -958,14 +1011,74 @@ https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcl
 
                 <div class="media-grid">
                     <div class="video-card">
-                        <div class="video-container"><iframe src="https://www.youtube.com/embed/1YFbCW5-OSE?si=mGS7Fuiwoi_uo7Wq" allowfullscreen></iframe></div>
-                        <div class="video-description"><h4 data-ru="Запись, сэмплирование и синтез звука с нуля. Насколько далеко можно зайти, используя лишь подручные предметы и бытовые условия записи? Можно ли создать действительно качественные звуковые ассеты для игры без доступа к профессиональной студии? В этом видео я записываю всё, что попадается под руку: от обычного карандаша до весьма неожиданных предметов вроде сундука со Спанч Бобом. Затем полученный материал проходит через этапы обработки, сэмплирования, синтеза и морфинга, превращаясь в совершенно новые звуки. Такой подход позволяет получать уникальный исходный материал и находить нестандартные решения для создания игровых ассетов. Многие техники и звуки, показанные в этом видео, до сих пор используются мной при работе над собственными проектами." data-en="Recording, sampling, and synthesizing sounds from scratch. How far can you go using nothing more than everyday objects and a home recording setup? Is it possible to create high-quality audio assets for a game without access to a professional studio? In this video, I record anything I can get my hands on—from an ordinary pencil to more unusual objects, including a SpongeBob-themed treasure chest. The recorded material is then transformed through processing, sampling, synthesis, and sound morphing, evolving into entirely new sounds. This approach allows me to generate unique source material and discover unconventional solutions for game audio design. Many of the techniques and sounds featured in this video continue to influence my workflow and are still used in my own projects today.">Recording, sampling, and synthesizing sounds from scratch. How far can you go using nothing more than everyday objects and a home recording setup? Is it possible to create high-quality audio assets for a game without access to a professional studio? In this video, I record anything I can get my hands on—from an ordinary pencil to more unusual objects, including a SpongeBob-themed treasure chest. The recorded material is then transformed through processing, sampling, synthesis, and sound morphing, evolving into entirely new sounds. This approach allows me to generate unique source material and discover unconventional solutions for game audio design. Many of the techniques and sounds featured in this video continue to influence my workflow and are still used in my own projects today.</h4></div>
-                    </div>
+    <!-- БЛОК ПЛЕЕРА: Меняем только ссылку в src -->
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/1YFbCW5-OSE?si=mGS7Fuiwoi_uo7Wq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    
+    <!-- БЛОК ОПИСАНИЯ: Меняем только текст внутри data-ru, data-en и между тегами -->
+    <div class="video-description"> 
+        <h4 class="track-title">Sample Manipulation</h4>
+        
+        <!-- Короткое превью -->
+        <p class="desc-preview" 
+           data-ru="Запись, сэмплирование и синтез звука с нуля. Насколько далеко можно зайти, используя лишь подручные предметы и бытовые условия записи?..." 
+           data-en="Recording, sampling, and synthesizing sounds from scratch. How far can you go using nothing more than everyday objects and a home recording setup?...">
+           Запись, сэмплирование и синтез звука с нуля. Насколько далеко можно зайти, используя лишь подручные предметы и бытовые условия записи?...
+        </p>
+        
+        <!-- Кнопка (КЛАССЫ НЕ ТРОГАТЬ) -->
+        <span class="read-more-btn" data-ru="Подробнее" data-en="Read more">Подробнее</span>
+        
+        <!-- Полный текст для модалки (КЛАСС НЕ ТРОГАТЬ) -->
+        <div class="desc-full" style="display: none;" 
+             data-ru="Запись, сэмплирование и синтез звука с нуля. Насколько далеко можно зайти, используя лишь подручные предметы и бытовые условия записи? Можно ли создать действительно качественные звуковые ассеты для игры без доступа к профессиональной студии? 
+                                                           
+                                                           В этом видео я записываю всё, что попадается под руку: от обычного карандаша до весьма неожиданных предметов вроде сундука со Спанч Бобом. Затем полученный материал проходит через этапы обработки, сэмплирования, синтеза и морфинга, превращаясь в совершенно новые звуки. 
+                                                           
+                                                           Такой подход позволяет получать уникальный исходный материал и находить нестандартные решения для создания игровых ассетов. Многие техники и звуки, показанные в этом видео, до сих пор используются мной при работе над собственными проектами."
+             data-en="Recording, sampling, and synthesizing sounds from scratch. How far can you go using nothing more than everyday objects and a home recording setup? Is it possible to create high-quality audio assets for a game without access to a professional studio? 
+            
+            In this video, I record anything I can get my hands on—from an ordinary pencil to more unusual objects, including a SpongeBob-themed treasure chest. The recorded material is then transformed through processing, sampling, synthesis, and sound morphing, evolving into entirely new sounds. 
+            
+            This approach allows me to generate unique source material and discover unconventional solutions for game audio design. Many of the techniques and sounds featured in this video continue to influence my workflow and are still used in my own projects today.">
+        </div>
+    </div>
                     <div class="video-card">
-                        <div class="video-container"><iframe src="https://www.youtube.com/embed/uottFtaYr_M?si=r2yYOKmkvu6_E7Ba" allowfullscreen></iframe></div>
-                        <div class="video-description"><h4 data-ru="При работе над Sci-Fi проектами особенно важно сохранять вариативность и гибкость звуковой среды. Мир будущего редко состоит из повторяющихся звуков — он должен ощущаться живым, технологичным и постоянно меняющимся. В этом видео я показываю несколько подходов к созданию подобных систем практически с нуля. Металлические окружения, капли воды для закрытых пространств, тревожный вой роботов или даже полностью настраиваемый RPM двигателя — всё это создаётся с помощью синтеза, обработки и процедурных техник. Главное преимущество такого подхода заключается не только в уникальности звучания, но и в возможности быстро генерировать большое количество вариаций и адаптировать звук под разные игровые ситуации. Именно поэтому подобные инструменты и методы остаются важной частью моего рабочего процесса." data-en="When working on Sci-Fi projects, maintaining variety and flexibility within the sonic environment is especially important. A futuristic world rarely consists of repetitive sounds—it should feel alive, technological, and constantly evolving. In this video, I demonstrate several approaches to building these kinds of systems from the ground up. Metallic environments, water droplets for enclosed spaces, unsettling robotic drones, or even a fully customizable and automatable engine RPM system—all of these are created through synthesis, sound processing, and procedural techniques. The key advantage of this approach lies not only in creating unique sounds, but also in the ability to generate a wide range of variations and quickly adapt audio to different gameplay situations. For that reason, these tools and methods continue to be an essential part of my sound design workflow.">When working on Sci-Fi projects, maintaining variety and flexibility within the sonic environment is especially important. A futuristic world rarely consists of repetitive sounds—it should feel alive, technological, and constantly evolving. In this video, I demonstrate several approaches to building these kinds of systems from the ground up. Metallic environments, water droplets for enclosed spaces, unsettling robotic drones, or even a fully customizable and automatable engine RPM system—all of these are created through synthesis, sound processing, and procedural techniques. The key advantage of this approach lies not only in creating unique sounds, but also in the ability to generate a wide range of variations and quickly adapt audio to different gameplay situations. For that reason, these tools and methods continue to be an essential part of my sound design workflow.</h4></div>
-                    </div>
-                </div>
+    <!-- БЛОК ПЛЕЕРА: Меняем только ссылку в src -->
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/uottFtaYr_M?si=r2yYOKmkvu6_E7Ba" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    
+    <!-- БЛОК ОПИСАНИЯ: Меняем только текст внутри data-ru, data-en и между тегами -->
+    <div class="video-description"> 
+        <h4 class="track-title">SFX from Scratch</h4>
+        
+        <!-- Короткое превью -->
+        <p class="desc-preview" 
+           data-ru="При работе над Sci-Fi проектами особенно важно сохранять вариативность и гибкость звуковой среды. Мир будущего..." 
+           data-en="When working on Sci-Fi projects, maintaining variety and flexibility within the sonic environment is especially important. A futuristic world...">
+           При работе над Sci-Fi проектами особенно важно сохранять вариативность и гибкость звуковой среды. Мир будущего...
+        </p>
+        
+        <!-- Кнопка (КЛАССЫ НЕ ТРОГАТЬ) -->
+        <span class="read-more-btn" data-ru="Подробнее" data-en="Read more">Подробнее</span>
+        
+        <!-- Полный текст для модалки (КЛАСС НЕ ТРОГАТЬ) -->
+        <div class="desc-full" style="display: none;" 
+             data-ru="При работе над Sci-Fi проектами особенно важно сохранять вариативность и гибкость звуковой среды. Мир будущего редко состоит из повторяющихся звуков — он должен ощущаться живым, технологичным и постоянно меняющимся. 
+            
+            В этом видео я показываю несколько подходов к созданию подобных систем практически с нуля. Металлические окружения, капли воды для закрытых пространств, тревожный вой роботов или даже полностью настраиваемый RPM двигателя — всё это создаётся с помощью синтеза, обработки и процедурных техник. 
+            
+            Главное преимущество такого подхода заключается не только в уникальности звучания, но и в возможности быстро генерировать большое количество вариаций и адаптировать звук под разные игровые ситуации. Именно поэтому подобные инструменты и методы остаются важной частью моего рабочего процесса."
+             data-en="When working on Sci-Fi projects, maintaining variety and flexibility within the sonic environment is especially important. A futuristic world rarely consists of repetitive sounds—it should feel alive, technological, and constantly evolving. 
+            
+            In this video, I demonstrate several approaches to building these kinds of systems from the ground up. Metallic environments, water droplets for enclosed spaces, unsettling robotic drones, or even a fully customizable and automatable engine RPM system—all of these are created through synthesis, sound processing, and procedural techniques. 
+            
+            The key advantage of this approach lies not only in creating unique sounds, but also in the ability to generate a wide range of variations and quickly adapt audio to different gameplay situations. For that reason, these tools and methods continue to be an essential part of my sound design workflow.>
+        </div>
+    </div>
+</div>>
             </section>
         </main>
 
@@ -1207,6 +1320,14 @@ document.addEventListener('click', function(event) {
         
         const parentBlock = event.target.closest('.video-description');
         if (!parentBlock) return;
+
+        // Функция закрытия модального окна описания
+function closeDescModal() {
+    const modal = document.getElementById('desc-modal');
+    if (modal) {
+        modal.classList.remove('show');
+    }
+}
 
         // Ищем заголовок и скрытый блок с текстом
         const titleEl = parentBlock.querySelector('.track-title') || parentBlock.querySelector('h4');

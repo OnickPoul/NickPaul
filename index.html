@@ -283,6 +283,28 @@ header .nav-btn[href="#about"] {
 }
 .read-more-btn:hover { color: var(--text-color); }
 
+        /* Заставляем все блоки с текстом внутри спойлеров уважать переносы строк */
+.text-content p {
+    white-space: pre-line !important;
+}
+
+/* Если кнопка spoiler-btn потеряла стили, унаследуй их от read-more-btn */
+.spoiler-btn {
+    font-size: 0.85rem;
+    color: var(--text-color);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+.spoiler-btn:hover {
+    opacity: 1;
+}
+
         /* ЕДИНЫЙ КЛАСС ДЛЯ ВСЕХ МОДАЛЬНЫХ ОКНО (Фон и анимация) */
 .modal {
     position: fixed;
@@ -474,7 +496,7 @@ header .nav-btn[href="#about"] {
             .social-link svg { width: 28px; height: 28px; }
         }
 
-        /* ЕДИНЫЙ КЛАСС ДЛЯ ВСЕХ МОДАЛЬНЫХ ОКНО (Фон и анимация) */
+        /* ЕДИНЫЙ КЛАСС ДЛЯ ВСЕХ МОДАЛЬНЫХ ОКОН (Фон и анимация) */
 .modal {
     position: fixed;
     z-index: -1; 
@@ -593,7 +615,7 @@ header .nav-btn[href="#about"] {
                         <iframe src="https://player.vimeo.com/video/1203257294?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="2560" height="1440" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Nick Paul - Audio Showreel"></iframe>
                     </div>
                     <div class="video-description">
-                        <h4 data-ru="Шоурил" data-en="Showreel">Showreel</h4>
+                        <h4 data-ru="Шоурил, который удивит" data-en="A showreel that amaze you">A showreel that amaze you</h4>
                     </div>
                 </div>
             </section>
@@ -711,26 +733,36 @@ header .nav-btn[href="#about"] {
             </section>
         </main>
 
-        <!-- ================= СТРАНИЦА МУЗЫКИ ================= -->
-        <main id="view-music" class="container page-view">
-            <section style="margin-top: 50px;">
-                <div class="about-spoiler-block" style="margin-bottom: 40px; max-width: 800px;">
-    <h2 style="margin-bottom: 15px; font-size: 2rem; "data-ru="Немного о Oni Nillsen.." data-en="A little bit about Oni Nillsen..">A little bit about Oni Nillsen..</h2>
-                    <div id="music-about-text" class="text-content collapsed">
-    <p style="color: var(--text-muted); line-height: 1.6; font-size: 1.1rem;" data-ru="Oni Nillsen — молодой артист и продюсер, чей кинематографичный подход к электронной музыке постепенно привлекает всё больше внимания слушателей и представителей индустрии. Проект был основан в 2019 году и несколько лет развивался за кулисами, прежде чем состоялся его официальный дебют на лейбле ALL41 Records с выпуском собственного EP. 
+       <!-- ================= СТРАНИЦА МУЗЫКИ ================= -->
+<main id="view-music" class="container page-view">
+    <section style="margin-top: 50px;">
+        <div class="about-spoiler-block" style="margin-bottom: 40px; max-width: 800px;">
+            
+            <!-- Ошибка с кавычкой исправлена: пробел перед data-ru на месте -->
+            <h2 style="margin-bottom: 15px; font-size: 2rem;" data-ru="Немного о Oni Nillsen.." data-en="A little bit about Oni Nillsen..">A little bit about Oni Nillsen..</h2>
+            
+            <div id="music-about-text" class="text-content collapsed">
+                <!-- Добавлено свойство white-space: pre-line; чтобы переносы стали абзацами -->
+                <p style="color: var(--text-muted); line-height: 1.6; font-size: 1.1rem; white-space: pre-line;" 
+                   data-ru="Oni Nillsen — молодой артист и продюсер, чей кинематографичный подход к электронной музыке постепенно привлекает всё больше внимания слушателей и представителей индустрии. Проект был основан в 2019 году и несколько лет развивался за кулисами, прежде чем состоялся его официальный дебют на лейбле ALL41 Records с выпуском собственного EP. 
         
-        Сочетая оркестровые элементы, атмосферный саунд-дизайн и эмоционально насыщенное авторское видение, Oni Nillsen создаёт музыку, в которой переплетаются меланхолия, тепло и кинематографическая глубина. Его творчество уже привело к сотрудничеству с Nightblue Music и получило поддержку от крупных музыкальных платформ, включая Bass City, SuicideSheeep, Cloudx Music, Trap Woofer, 8D TUNES и многих других. 
+Сочетая оркестровые элементы, атмосферный саунд-дизайн и эмоционально насыщенное авторское видение, Oni Nillsen создаёт музыку, в которой переплетаются меланхолия, тепло и кинематографическая глубина. Его творчество уже привело к сотрудничеству с Nightblue Music и получило поддержку от крупных музыкальных платформ, включая Bass City, SuicideSheeep, Cloudx Music, Trap Woofer, 8D TUNES и многих других. 
         
-        В свои 23 года Oni Nillsen продолжает развивать собственное звучание, объединяющее оркестровую и электронную музыку, постепенно формируя себя как одного из перспективных новых артистов жанра." data-en="Oni Nillsen is an emerging artist and producer whose cinematic approach to electronic music has begun to attract growing attention across the scene. Launched in 2019, the project spent several years developing behind the scenes before making its official label debut with an EP release on ALL41 Records. 
+В свои 23 года Oni Nillsen продолжает развивать собственное звучание, объединяющее оркестровую и электронную музыку, постепенно формируя себя как одного из перспективных новых артистов жанра." 
+                   data-en="Oni Nillsen is an emerging artist and producer whose cinematic approach to electronic music has begun to attract growing attention across the scene. Launched in 2019, the project spent several years developing behind the scenes before making its official label debut with an EP release on ALL41 Records. 
         
-        Combining orchestral textures, atmospheric sound design, and emotionally driven songwriting, Oni Nillsen creates music that balances melancholy, warmth, and cinematic depth. His work has already led to collaborations with Nightblue Music and support from influential music platforms including Bass City, SuicideSheeep, Cloudx Music, Trap Woofer, 8D TUNES, and many others. 
+Combining orchestral textures, atmospheric sound design, and emotionally driven songwriting, Oni Nillsen creates music that balances melancholy, warmth, and cinematic depth. His work has already led to collaborations with Nightblue Music and support from influential music platforms including Bass City, SuicideSheeep, Cloudx Music, Trap Woofer, 8D TUNES, and many others. 
         
-        At just 23 years old, Oni Nillsen continues to refine a distinctive sound that bridges the worlds of orchestral and electronic music, establishing himself as a promising new voice in the genre."
-        > Oni Nillsen is an emerging artist and producer whose cinematic approach to electronic music has begun to attract growing attention across the scene. Launched in 2019, the project spent several years developing behind the scenes before making its official label debut with an EP release on ALL41 Records. Combining orchestral textures, atmospheric sound design, and emotionally driven songwriting, Oni Nillsen creates music that balances melancholy, warmth, and cinematic depth. His work has already led to collaborations with Nightblue Music and support from influential music platforms including Bass City, SuicideSheeep, Cloudx Music, Trap Woofer, 8D TUNES, and many others. At just 23 years old, Oni Nillsen continues to refine a distinctive sound that bridges the worlds of orchestral and electronic music, establishing himself as a promising new voice in the genre.
-        </p>
-</div>
-                    <button class="read-more-btn" onclick="toggleTextSpoiler('music-about-text', this)">Read more</button>
-</div>
+At just 23 years old, Oni Nillsen continues to refine a distinctive sound that bridges the worlds of orchestral and electronic music, establishing himself as a promising new voice in the genre.">Oni Nillsen is an emerging artist and producer whose cinematic approach to electronic music has begun to attract growing attention across the scene. Launched in 2019, the project spent several years developing behind the scenes before making its official label debut with an EP release on ALL41 Records. 
+
+Combining orchestral textures, atmospheric sound design, and emotionally driven songwriting, Oni Nillsen creates music that balances melancholy, warmth, and cinematic depth. His work has already led to collaborations with Nightblue Music and support from influential music platforms including Bass City, SuicideSheeep, Cloudx Music, Trap Woofer, 8D TUNES, and many others. 
+
+At just 23 years old, Oni Nillsen continues to refine a distinctive sound that bridges the worlds of orchestral and electronic music, establishing himself as a promising new voice in the genre.</p>
+            </div>
+            
+            <!-- Изменили класс на spoiler-btn, чтобы не ломать логику модалок -->
+            <button class="spoiler-btn" onclick="toggleTextSpoiler('music-about-text', this)" data-ru="Read more" data-en="Read more">Read more</button>
+        </div>
                 <div class="page-header-wrapper">
                     <h2 class="section-title" data-ru="Музыка" data-en="Music Background">Music Background</h2>
                     <button class="title-back-btn" onclick="switchView('home', 'about')" data-ru="Назад" data-en="Back">Back</button>
@@ -755,7 +787,9 @@ header .nav-btn[href="#about"] {
             Впервые я услышал эту песню во время прохождения Cyberpunk..." data-en="What did you feel when you first heard 4ÆM by Grimes? 
             
             I first came across the song while playing Cyberpunk...">
-            What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk...
+            What did you feel when you first heard 4ÆM by Grimes? 
+            
+            I first came across the song while playing Cyberpunk...
         </p>
         
         <span class="read-more-btn" data-ru="Подробнее" data-en="Read more">Read more</span>
@@ -788,12 +822,39 @@ header .nav-btn[href="#about"] {
     <div class="audio-container">
         <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2022944900&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
     </div>
-    <div class="video-description" onclick="openDescModal(this)>" style="cursor: pointer; padding-top: 10px;">
-        <h4>Oni Nillsen - Hollow Hands(Demo)</h4>
-        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
-            ...
+    <div class="video-description"> 
+        <h4 class="track-title">Oni Nillsen - Hollow Hands(demo)</h4>
+        
+        <p class="desc-preview" data-ru="И ты протягиваешь мне пустые руки...  
+            
+            Изначально Hollow Hands задумывался как ремикс" data-en="And you reach for me with hollow hands... 
+            
+            Hollow Hands originally began as a remix">
+            And you reach for me with hollow hands... 
+            
+            Hollow Hands originally began as a remix
+        </p>
+        
+        <span class="read-more-btn" data-ru="Подробнее" data-en="Read more">Read more</span>
+        
+        <div class="desc-full" style="display: none;" 
+             data-ru="И ты протягиваешь мне пустые руки... 
+            
+            Изначально Hollow Hands задумывался как ремикс на композицию Nilu. Однако с каждой новой версией работа всё дальше отходила от исходного материала, постепенно превращаясь во что-то гораздо более мрачное и агрессивное, чем предполагалось изначально. 
+            
+            Если оригинальная композиция ощущается хрупкой и интимной, то моя интерпретация тяготеет к нуарной атмосфере, наполненной напряжением и неопределённостью. Агрессивные струнные, синтезированные хоровые текстуры, насыщенный бас и кинематографичные ударные создают ощущение последнего противостояния — момента, когда грань между союзником и врагом давно стёрлась.  
+            
+            Эта композиция стала для меня исследованием конфликта, неоднозначности и эмоционального напряжения. Родившись под впечатлением от работы Nilu, со временем она превратилась в самостоятельную историю со своим собственным характером и настроением."
+             data-en="And you reach for me with hollow hands... 
+            
+            Hollow Hands originally began as a remix of a track by Nilu. However, with each new iteration, the project drifted further away from its source material, gradually evolving into something much darker and more aggressive than originally intended.           
+            
+While the original piece feels intimate and vulnerable, my interpretation leans into a noir-inspired atmosphere filled with tension and uncertainty. Aggressive strings, synthesized choral textures, saturated basses, and cinematic percussion come together to create the feeling of a final confrontation—one where the line between ally and enemy has long since disappeared. 
+                  
+            
+This track became an exploration of conflict, ambiguity, and emotional weight. Although it was born from the inspiration of Nilu's work, it ultimately grew into a story of its own.">
+             And you reach for me with hollow hands...
         </div>
-        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
     </div>
 </div>
                         
@@ -982,9 +1043,10 @@ https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcl
         <main id="view-sound-design" class="container page-view">
             <section style="margin-top: 50px;">
                 <div class="about-spoiler-block" style="margin-bottom: 40px; max-width: 800px;">
-    <h2 style="margin-bottom: 15px; font-size: 2rem; "data-ru="Немного о дизайне.." data-en="A little bit about design..">A little bit about design..</h2>
+   <h2 style="margin-bottom: 15px; font-size: 2rem;" data-ru="Немного о дизайне.." data-en="A little bit about design..">A little bit about design..</h2>
                     <div id="sd-about-text" class="text-content collapsed">
-    <p style="color: var(--text-muted); line-height: 1.6; font-size: 1.1rem;" data-ru="Мне нравится работать над задачами, которые требуют нестандартного подхода и заставляют искать собственные решения. Хотя в своей работе я нередко использую различные инструменты — от пресетов до готовых семплов, — наибольший интерес для меня представляет процесс трансформации и переосмысления исходного материала.
+    <p style="color: var(--text-muted); line-height: 1.6; font-size: 1.1rem; white-space: pre-line;" 
+        data-ru="Мне нравится работать над задачами, которые требуют нестандартного подхода и заставляют искать собственные решения. Хотя в своей работе я нередко использую различные инструменты — от пресетов до готовых семплов, — наибольший интерес для меня представляет процесс трансформации и переосмысления исходного материала.
         
         Особенно меня вдохновляют творческие ограничения. Например, создать убедительные барабаны, используя только звук льющейся в стакан воды, или воссоздать движение груды металлолома на дне океана с помощью одного синтезатора. Подобные задачи не только мотивируют добиться максимально качественного результата, но и помогают открывать новые техники, подходы и способы работы со звуком.
         
@@ -994,15 +1056,13 @@ https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcl
         
         I am particularly drawn to creative constraints. Whether it's building a convincing drum kit entirely from the sound of water being poured into a glass or recreating the movement of a pile of scrap metal resting on the ocean floor using only a single synthesizer, these kinds of challenges push me to achieve the best possible result while exploring new techniques and approaches to sound design.
         
-        This constant process of experimentation and discovery is what allows me to grow as a sound designer, expand my creative toolkit, and develop a deeper understanding of sound itself. For me, that pursuit of growth and exploration is one of the most important aspects of the craft."
-        > I enjoy working on challenges that require unconventional thinking and encourage me to find my own solutions. While I regularly use a wide range of tools in my workflow—from presets to sample libraries—the part I find most rewarding is transforming and reimagining source material into something new. 
+        This constant process of experimentation and discovery is what allows me to grow as a sound designer, expand my creative toolkit, and develop a deeper understanding of sound itself. For me, that pursuit of growth and exploration is one of the most important aspects of the craft.">I enjoy working on challenges that require unconventional thinking and encourage me to find my own solutions. While I regularly use a wide range of tools in my workflow—from presets to sample libraries—the part I find most rewarding is transforming and reimagining source material into something new. 
         
         I am particularly drawn to creative constraints. Whether it's building a convincing drum kit entirely from the sound of water being poured into a glass or recreating the movement of a pile of scrap metal resting on the ocean floor using only a single synthesizer, these kinds of challenges push me to achieve the best possible result while exploring new techniques and approaches to sound design. 
         
-        This constant process of experimentation and discovery is what allows me to grow as a sound designer, expand my creative toolkit, and develop a deeper understanding of sound itself. For me, that pursuit of growth and exploration is one of the most important aspects of the craft.
-        </p>
+        This constant process of experimentation and discovery is what allows me to grow as a sound designer, expand my creative toolkit, and develop a deeper understanding of sound itself. For me, that pursuit of growth and exploration is one of the most important aspects of the craft.</p>
 </div>
-                    <button class="read-more-btn" onclick="toggleTextSpoiler('sd-about-text', this)">Read more</button>
+                    <button class="spoiler-btn" onclick="toggleTextSpoiler('sd-about-text', this)" data-ru="Read more" data-en="Read more">Read more</button>
 </div>
                 <div class="page-header-wrapper">
                     <h2 class="section-title" data-ru="Саунд Дизайн" data-en="Sound Design">Sound Design</h2>

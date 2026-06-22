@@ -150,7 +150,7 @@
         /* Обрезаем текст в карточке до 2-х строк, чтобы сетка была идеальной */
 .desc-preview {
     display: -webkit-box;
-    -webkit-line-clamp: 2; 
+    -webkit-line-clamp: 3; 
     -webkit-box-orient: vertical;
     overflow: hidden;
     margin-top: 5px;
@@ -164,12 +164,13 @@
 }
 
 /* Контейнер описания (сразу под плеером) */
-.video-description {
-    background-color: #181818; /* Цвет должен идеально совпадать с фоном самой карточки */
-    padding: 20px;
+.video-description { 
+    padding: 20px !important; 
+    border-top: 1px solid var(--border-color); 
+    background-color: var(--card-bg) !important;
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* Растягивает блок до самого низа карточки, убирая пустоты */
+    flex-grow: 1; /* Растягивает блок, убирая пустоты снизу */
     box-sizing: border-box;
 }
 
@@ -185,36 +186,47 @@
 /* Короткое превью текста */
 .desc-preview {
     font-size: 0.9rem;
-    color: #b3b3b3; /* Приятный приглушенный серый */
+    color: var(--text-muted);
     line-height: 1.5;
-    margin: 0 0 12px 0;
-    flex-grow: 1; /* Толкает кнопку Read More строго вниз */
+    margin: 0 0 14px 0 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Аккуратно прячем в 2 строки на всех устройствах */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex-grow: 1; /* Толкает кнопку Read More строго вниз карточки */
 }
 
-/* Кнопка Read More */
+/* Стильная и аккуратная кнопка */
 .read-more-btn {
     font-size: 0.85rem;
-    color: #ffffff;
+    color: var(--text-color);
     text-decoration: underline;
+    text-underline-offset: 3px;
     cursor: pointer;
-    align-self: flex-start; /* Чтобы рамка клика не растягивалась на всю ширину */
-    transition: color 0.2s ease;
-    opacity: 0.7;
+    align-self: flex-start;
+    transition: opacity 0.2s ease, color 0.2s ease;
+    opacity: 0.6;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
 }
 
 .read-more-btn:hover {
     opacity: 1;
-    color: #00fff0; /* Можно добавить твой акцентный цвет при наведении */
+    color: #00fff0; /* Твой кастомный неоновый акцент или любой другой цвет */
 }
 
 /* Ограничиваем заголовки ровно в 2 строки для симметрии */
 .video-description h4 {
+    font-size: 1.1rem;
+    color: var(--text-color);
+    margin: 0 0 8px 0 !important;
+    font-weight: 600;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    margin-top: 0;
-    margin-bottom: auto; /* Прижимает всё остальное вниз */
 }
 
         
@@ -263,30 +275,39 @@ header .nav-btn[href="#about"] {
 }
 .read-more-btn:hover { color: var(--text-color); }
 
-        /* Базовые стили для всплывающего окна */
+        /* ЕДИНЫЙ КЛАСС ДЛЯ ВСЕХ МОДАЛЬНЫХ ОКНО (Фон и анимация) */
 .modal {
-    display: none; /* По умолчанию скрыто */
-    position: fixed; /* Фиксируем поверх экрана */
-    z-index: 99999; /* Вытаскиваем на самый передний план, поверх плееров */
-    left: 0;
-    top: 0;
-    width: 100%;
+    position: fixed;
+    z-index: -1; 
+    left: 0; 
+    top: 0; 
+    width: 100%; 
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Черный полупрозрачный фон */
+    background: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center; 
     align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(5px); /* Размытие заднего плана */
+    opacity: 0; 
+    transition: opacity 0.3s ease, z-index 0s linear 0.3s;
 }
 
-/* Белая/темная плашка самого окна */
-.modal-content {
-    background-color: var(--bg-color, #ffffff);
-    padding: 30px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 600px;
-    position: relative;
-    border: 1px solid var(--border-color, #ccc);
+        /* Класс для открытия окон */
+.modal.show { 
+    opacity: 1;
+    z-index: 2000; 
+    transition: opacity 0.3s ease, z-index 0s; 
+}
+
+/* Контентная плашка внутри модалки */
+.modal-content { 
+    background: var(--bg-color); 
+    padding: 40px; 
+    border-radius: 12px; 
+    width: 90%; 
+    max-width: 650px;
+    position: relative; 
+    border: 1px solid var(--border-color);
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
@@ -445,20 +466,38 @@ header .nav-btn[href="#about"] {
             .social-link svg { width: 28px; height: 28px; }
         }
 
-        /* МОДАЛЬНОЕ ОКНО CONTACTS (Полностью переписано позиционирование) */
-        .modal {
-            position: fixed; z-index: -1; left: 0; top: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px);
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; transition: opacity 0.3s ease, z-index 0s linear 0.3s;
-        }
-        .modal.show { 
-            opacity: 1; z-index: 2000; transition: opacity 0.3s ease, z-index 0s; 
-        }
-        .modal-content {
-            background: var(--bg-color); padding: 40px; border-radius: 12px; width: 90%; max-width: 700px;
-            position: relative; border: 1px solid var(--border-color);
-        }
+        /* ЕДИНЫЙ КЛАСС ДЛЯ ВСЕХ МОДАЛЬНЫХ ОКНО (Фон и анимация) */
+.modal {
+    position: fixed;
+    z-index: -1; 
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); 
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    opacity: 0; 
+    transition: opacity 0.3s ease, z-index 0s linear 0.3s;
+}
+        /* Класс для открытия окон */
+.modal.show { 
+    opacity: 1;
+    z-index: 2000; 
+    transition: opacity 0.3s ease, z-index 0s; 
+}
+        .modal-content { 
+    background: var(--bg-color); 
+    padding: 40px; 
+    border-radius: 12px; 
+    width: 90%; 
+    max-width: 650px;
+    position: relative; 
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
         /* Фикс крестика: правильные отступы чтобы не налезал на иконки */
         .close-modal { 
             position: absolute; top: 15px; right: 15px; font-size: 32px; cursor: pointer; 
@@ -699,7 +738,7 @@ header .nav-btn[href="#about"] {
             What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk...
         </p>
         
-        <span class="read-more-btn">Read more</span>
+        <span class="read-more-btn" data-ru="Подробнее" data-en="Read more">Read more</span>
         
         <div class="desc-full" style="display: none;" 
              data-ru="Что вы почувствовали, когда впервые услышали 4ÆM от Grimes? Впервые я услышал эту песню во время прохождения Cyberpunk 2077 в 2020 году. Сочетание вокала Grimes и инструментала создавало ощущение чего-то возвышенного и почти неземного, словно короткого момента свободы среди хаоса окружающего мира. Именно это чувство стало отправной точкой для моего ремикса. Мне хотелось сохранить эмоциональное ядро оригинала, но взглянуть на него через призму Cyberpunk — мира, в котором за каждым взлётом неизбежно следует падение, а надежда постоянно сталкивается с реальностью. Тяжёлые синтезаторы, искажённые струнные, агрессивные ударные, эксперименты с темпом и смешение жанров стали инструментами для передачи этой идеи. Ремикс постепенно движется от чувства возвышенности к ощущению неизбежности, сохраняя связь с оригинальной композицией, но рассказывая уже собственную историю. Это моя интерпретация 4ÆM — вдохновлённая как самой песней, так и атмосферой Night City, которая ещё долго не отпускает после финальных титров."
@@ -1159,46 +1198,47 @@ if (activeView) {
         const contactForm = document.getElementById('contact-form');
         const submitStatus = document.getElementById('submit-status');
 
-        contactForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const btn = contactForm.querySelector('.submit-btn');
-            const originalText = btn.innerHTML;
-            
-            btn.innerHTML = currentLang === 'en' ? 'Sending...' : 'Отправка...';
-            submitStatus.style.display = 'none';
+        // Полная и чистая логика для модального окна описаний треков
+document.addEventListener('click', function(event) {
+    
+    // 1. ОТКРЫТИЕ МОДАЛКИ
+    if (event.target.classList.contains('read-more-btn')) {
+        console.log("Клик пойман на кнопке Read More!");
+        
+        const parentBlock = event.target.closest('.video-description');
+        if (!parentBlock) return;
 
-            if (contactForm.action.includes('ВАШ_ID')) {
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    submitStatus.style.display = 'block';
-                    submitStatus.style.color = '#4CAF50';
-                    submitStatus.innerText = currentLang === 'en' ? 'Message sent successfully!' : 'Сообщение успешно отправлено!';
-                    contactForm.reset();
-                    setTimeout(closeBtn, 2000);
-                }, 1500);
-            } else {
-                try {
-                    const response = await fetch(contactForm.action, {
-                        method: 'POST',
-                        body: new FormData(contactForm),
-                        headers: { 'Accept': 'application/json' }
-                    });
-                    if (response.ok) {
-                        btn.innerHTML = originalText;
-                        submitStatus.style.display = 'block';
-                        submitStatus.style.color = '#4CAF50';
-                        submitStatus.innerText = currentLang === 'en' ? 'Message sent successfully!' : 'Сообщение успешно отправлено!';
-                        contactForm.reset();
-                        setTimeout(closeBtn, 2000);
-                    } else { throw new Error(); }
-                } catch (error) {
-                    btn.innerHTML = originalText;
-                    submitStatus.style.display = 'block';
-                    submitStatus.style.color = '#F44336';
-                    submitStatus.innerText = currentLang === 'en' ? 'Error sending message.' : 'Ошибка при отправке.';
-                }
-            }
-        });
+        // Ищем заголовок и скрытый блок с текстом
+        const titleEl = parentBlock.querySelector('.track-title') || parentBlock.querySelector('h4');
+        const textEl = parentBlock.querySelector('.desc-full');
+
+        if (!textEl) {
+            console.error("ОШИБКА: В этой карточке забыли добавить блок .desc-full!");
+            return;
+        }
+
+        const modal = document.getElementById('desc-modal');
+        if (!modal) {
+            console.error("ОШИБКА: На странице не найден контейнер с id='desc-modal'!");
+            return;
+        }
+
+        // Переносим текст и заголовок (поддерживает текущий язык через innerHTML)
+        document.getElementById('desc-modal-title').innerText = titleEl ? titleEl.innerText : "Description";
+        document.getElementById('desc-modal-body').innerHTML = textEl.innerHTML;
+
+        // Добавляем класс show вместо изменения display
+        modal.classList.add('show');
+    }
+
+    // 2. ЗАКРЫТИЕ МОДАЛКИ (По крестику или по клику на темную область вокруг окна)
+    if (event.target.classList.contains('close-modal') || event.target.id === 'desc-modal') {
+        const modal = document.getElementById('desc-modal');
+        if (modal) {
+            modal.classList.remove('show');
+        }
+    }
+});
 
 
         // ВКЛАДКИ ДЛЯ МУЗЫКИ

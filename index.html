@@ -355,6 +355,8 @@
                 
                 <button class="icon-btn" id="langToggle">EN</button>
                 <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
                     </button>
             </div>
         </div>
@@ -820,42 +822,48 @@
         // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ (Теперь видит кнопки в ЛЮБОЙ части шапки)
         const sections = document.querySelectorAll('#view-home section[id]');
         
-        // Убрали жесткую привязку к .home-only-group, теперь ищем все навигационные ссылки
-        const navLinks = document.querySelectorAll('.nav-btn[href^="#"]');
+        // 1. Ищем только те кнопки, которые должны подсвечиваться (исключаем Contact)
+const navLinks = document.querySelectorAll('.nav-btn[href^="#"]:not(.contact-modal-trigger)');
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                const targetHref = link.getAttribute('href');
-                if(targetHref.startsWith('#')) {
-                    e.preventDefault();
-                    
-                    // Снимаем подсветку со всех кнопок
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    // Вешаем только на активную (где бы она ни находилась)
-                    document.querySelectorAll(`.nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active'));
-                    
-                    scrollToTarget(targetHref.substring(1));
+navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        const targetHref = link.getAttribute('href');
+        if(targetHref.startsWith('#')) {
+            e.preventDefault();
+            
+            // Снимаем подсветку со всех кнопок
+            navLinks.forEach(l => l.classList.remove('active'));
+            // Вешаем только на нажатую
+            link.classList.add('active');
+            
+            scrollToTarget(targetHref.substring(1));
+        }
+    });
+});
+
+// 2. Улучшенный наблюдатель (фиксит проблему с Works)
+const sections = document.querySelectorAll('#view-home section[id]');
+// rootMargin: сверху -100px (шапка), снизу -30% (позволяет активировать Works раньше)
+const observerOptions = { root: null, rootMargin: '-100px 0px -30% 0px', threshold: 0 };
+
+const observer = new IntersectionObserver((entries) => {
+    if (isClickScrolling || document.body.classList.contains('is-subpage')) return; 
+
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            // Подсвечиваем соответствующую кнопку
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${id}`) {
+                    link.classList.add('active');
                 }
             });
-        });
+        }
+    });
+}, observerOptions);
 
-        const observerOptions = { root: null, rootMargin: '-100px 0px -40% 0px', threshold: 0 };
-        const observer = new IntersectionObserver((entries) => {
-            if (isClickScrolling || document.body.classList.contains('is-subpage')) return; 
-
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const id = entry.target.getAttribute('id');
-                    
-                    navLinks.forEach(link => link.classList.remove('active'));
-                    document.querySelectorAll(`.nav-btn[href="#${id}"]`).forEach(activeLink => {
-                        activeLink.classList.add('active');
-                    });
-                }
-            });
-        }, observerOptions);
-
-        sections.forEach(section => observer.observe(section));
+sections.forEach(section => observer.observe(section));
     </script>
 </body>
 </html>

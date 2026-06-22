@@ -102,6 +102,13 @@
         .logo img { height: 40px; display: block; transition: filter 0.3s ease; }
         [data-theme="dark"] .logo img { filter: invert(1); }
 
+        body.dark-theme .social-links a svg {
+    fill: var(--text-color); /* Если иконки вставлены как <svg> */
+}
+body.dark-theme .social-links a img {
+    filter: invert(1); /* Если иконки вставлены как картинки <img> */
+}
+
         /* Унифицированные кнопки шапки - теперь одинакового размера */
         .nav-btn {
             font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 13px;
@@ -440,7 +447,7 @@
             <section id="works">
                 <h2 class="section-title" data-ru="Мои работы" data-en="Selected Works">Selected Works</h2>
 
-                <h3 class="subsection-title" data-ru="Разбор реализации" data-en="Implementation Breakdown">Implementation Breakdown</h3>
+                <h3 class="subsection-title" data-ru="Разбор имплементации" data-en="Implementation Breakdown">Implementation Breakdown</h3>
                 <div class="media-grid">
                     <div class="video-card">
                         <div class="video-container">
@@ -496,7 +503,13 @@
         <main id="view-music" class="container page-view">
             <section style="margin-top: 50px;">
                 <div class="page-header-wrapper">
-                    <h2 class="section-title" data-ru="Музыка" data-en="Music Background">Music Background</h2>
+                    <div class="music-about-block" style="margin-bottom: 40px; max-width: 800px;">
+    <h2 style="margin-bottom: 15px; font-size: 2rem;">A little bit about Oni Nillsen..</h2>
+    <p style="color: var(--text-muted); line-height: 1.6; font-size: 1.1rem;">
+        Здесь будет твой текст. Напиши небольшую информацию о своем бэкграунде в музыкальной карьере. Этот блок сверстан по аналогии с главной страницей, но адаптирован чисто под текстовый формат.
+    </p>
+</div>
+                    <h2 class="section-title" data-ru="Музыкальный бекграунд" data-en="Music Background">Music Background</h2>
                     <button class="title-back-btn" onclick="switchView('home', 'about')" data-ru="Назад" data-en="Back">Back</button>
                 </div>
                 
@@ -673,6 +686,11 @@
         function switchView(viewId, returnTargetId = null) {
             const currentView = document.querySelector('.page-view.active');
             const targetView = document.getElementById('view-' + viewId);
+            // Остановка всех iframe плееров при смене страницы
+document.querySelectorAll('iframe').forEach(iframe => {
+    const currentSrc = iframe.src;
+    iframe.src = currentSrc; // Эта магия заставляет iframe перезагрузиться и замолчать
+});
 
             if (currentView === targetView) return;
 
@@ -819,9 +837,9 @@
             }
         }
 
-        // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ (Исправленный: ищет кнопки ВЕЗДЕ)
+        // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ (Фикс: работает в обе стороны, без привязки к группам)
 const sections = document.querySelectorAll('#view-home section[id]');
-const navLinks = document.querySelectorAll('header .nav-btn[href^="#"]'); // Ищем только кнопки внутри header
+const navLinks = document.querySelectorAll('header .nav-btn[href^="#"]');
 
 navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
@@ -829,18 +847,18 @@ navLinks.forEach(link => {
         if(targetHref.startsWith('#')) {
             e.preventDefault();
             
-            // 1. Снимаем active со ВСЕХ кнопок в header
+            // Снимаем подсветку со всех кнопок
             navLinks.forEach(l => l.classList.remove('active'));
-            
-            // 2. Вешаем active на ВСЕ кнопки с этим href (в любой части шапки)
-            document.querySelectorAll(`.nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active'));
+            // Вешаем только на активную (Ищем по всему header, а не в .home-only-group)
+            document.querySelectorAll(`header .nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active'));
             
             scrollToTarget(targetHref.substring(1));
         }
     });
 });
 
-const observerOptions = { root: null, rootMargin: '-100px 0px -40% 0px', threshold: 0 };
+// Сместили триггер чуть выше центра, теперь отлично цепляет при скролле снизу вверх
+const observerOptions = { root: null, rootMargin: '-15% 0px -60% 0px', threshold: 0 };
 const observer = new IntersectionObserver((entries) => {
     if (isClickScrolling || document.body.classList.contains('is-subpage')) return; 
 
@@ -848,10 +866,8 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             const id = entry.target.getAttribute('id');
             
-            // Снимаем active со всех кнопок
             navLinks.forEach(link => link.classList.remove('active'));
-            // Вешаем active только на те, что соответствуют ID секции
-            document.querySelectorAll(`.nav-btn[href="#${id}"]`).forEach(activeLink => {
+            document.querySelectorAll(`header .nav-btn[href="#${id}"]`).forEach(activeLink => {
                 activeLink.classList.add('active');
             });
         }

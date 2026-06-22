@@ -1292,49 +1292,60 @@ if (activeView) {
             });
         });
 
-        // Функция закрытия модального окна (лежит снаружи, доступна всем!)
-function closeDescModal() {
+        function closeDescModal() {
     const modal = document.getElementById('desc-modal');
-    if (modal) {
-        modal.classList.remove('show');
-    }
+    if (modal) modal.classList.remove('show');
 }
 
-// Глобальный слушатель кликов для открытия окон
+// Один главный слушатель на всю страницу
 document.addEventListener('click', function(event) {
-    // 1. ОТКРЫТИЕ МОДАЛКИ
+    
+    // 1. ОТКРЫТИЕ МОДАЛКИ ОПИСАНИЯ ПЛЕЕРА
     if (event.target.classList.contains('read-more-btn')) {
-        console.log("Клик пойман на кнопке Read More!");
-        
+        console.log("Открываем описание трека...");
         const parentBlock = event.target.closest('.video-description');
         if (!parentBlock) return;
 
-        // Ищем заголовок и скрытый блок с текстом
         const titleEl = parentBlock.querySelector('.track-title') || parentBlock.querySelector('h4');
         const textEl = parentBlock.querySelector('.desc-full');
-
-        if (!textEl) {
-            console.error("ОШИБКА: Не найден блок .desc-full!");
-            return;
-        }
+        if (!textEl) return;
 
         const modal = document.getElementById('desc-modal');
         if (!modal) return;
 
-        // Переносим текст
         document.getElementById('desc-modal-title').innerText = titleEl ? titleEl.innerText : "Description";
         document.getElementById('desc-modal-body').innerHTML = textEl.innerHTML;
 
-        // Открываем
         modal.classList.add('show');
     }
 
-    // 2. ЗАКРЫТИЕ ПО ФОНУ (клик мимо контента модалки)
-    if (event.target.id === 'desc-modal') {
-        closeDescModal();
+    // 2. ОТКРЫТИЕ МОДАЛКИ КОНТАКТОВ
+    if (event.target.classList.contains('contact-modal-trigger')) {
+        event.preventDefault();
+        console.log("Открываем форму контактов...");
+        const contactModal = document.getElementById('contact-modal');
+        if (contactModal) {
+            contactModal.classList.add('show');
+        }
+    }
+
+    // 3. УНИВЕРСАЛЬНОЕ ЗАКРЫТИЕ ПО КЛИКУ НА КРЕСТИК
+    // Находим класс крестика и автоматически закрываем ту модалку, в которой он лежит
+    if (event.target.classList.contains('close-modal')) {
+        const modalToClose = event.target.closest('.modal');
+        if (modalToClose) {
+            modalToClose.classList.remove('show');
+            console.log("Модальное окно закрыто через крестик");
+        }
+    }
+
+    // 4. УНИВЕРСАЛЬНОЕ ЗАКРЫТИЕ ПО КЛИКУ НА ПУСТУЮ ОБЛАСТЬ (ФОН)
+    // Если кликнули строго по темной подложке модального окна
+    if (event.target.classList.contains('modal')) {
+        event.target.classList.remove('show');
+        console.log("Модальное окно закрыто через клик по фону");
     }
 });
-
 
         // ВКЛАДКИ ДЛЯ МУЗЫКИ
         function switchTab(tabId) {

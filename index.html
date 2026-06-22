@@ -163,29 +163,48 @@
     height: 100%; /* Заставляет карточку тянуться */
 }
 
-/* Возвращаем блоку стандартное поведение */
+/* Контейнер описания (сразу под плеером) */
 .video-description {
-    padding: 15px;
-    position: relative;
-    /* Возвращаем растягивание до низа: */
+    background-color: #181818; /* Цвет должен идеально совпадать с фоном самой карточки */
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    flex-grow: 1; 
+    flex-grow: 1; /* Растягивает блок до самого низа карточки, убирая пустоты */
+    box-sizing: border-box;
 }
 
-/* Делаем кликабельной ТОЛЬКО кнопку */
+/* Заголовок трека */
+.track-title {
+    font-size: 1.1rem;
+    color: #ffffff;
+    margin: 0 0 8px 0;
+    font-weight: 600;
+    font-family: sans-serif;
+}
+
+/* Короткое превью текста */
+.desc-preview {
+    font-size: 0.9rem;
+    color: #b3b3b3; /* Приятный приглушенный серый */
+    line-height: 1.5;
+    margin: 0 0 12px 0;
+    flex-grow: 1; /* Толкает кнопку Read More строго вниз */
+}
+
+/* Кнопка Read More */
 .read-more-btn {
-    color: #aaaaaa; /* Твой цвет текста */
-    cursor: pointer;
+    font-size: 0.85rem;
+    color: #ffffff;
     text-decoration: underline;
-    display: inline-block;
-    margin-top: 10px;
-    position: relative;
-    z-index: 20; /* Вытаскиваем саму кнопку поверх всего остального */
+    cursor: pointer;
+    align-self: flex-start; /* Чтобы рамка клика не растягивалась на всю ширину */
+    transition: color 0.2s ease;
+    opacity: 0.7;
 }
 
 .read-more-btn:hover {
-    color: #ffffff;
+    opacity: 1;
+    color: #00fff0; /* Можно добавить твой акцентный цвет при наведении */
 }
 
 /* Ограничиваем заголовки ровно в 2 строки для симметрии */
@@ -673,9 +692,9 @@ header .nav-btn[href="#about"] {
     <div class="audio-container">
         <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1863434040&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
     </div>
-    <div class="video-description" 
+    <div class="video-description"> 
         <h4 class="track-title">Grimes - 4ÆM (Oni Nillsen REMIX)</h4>
-        <p class="desc-preview" data-ru="Что вы почувствовали, когда впервые услышали 4ÆM от Grimes? Впервые я услышал эту песню во время прохождения Cyberpunk..." data-en="What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk">What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk...</p>" 
+        <p class="desc-preview"> data-ru="Что вы почувствовали, когда впервые услышали 4ÆM от Grimes? Впервые я услышал эту песню во время прохождения Cyberpunk..." data-en="What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk">What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk...</p>" 
                   <span class="read-more-btn" onclick="openDescModal(this)">Read more</span>
         <div class="desc-full" style="display: none;" data-ru="Что вы почувствовали, когда впервые услышали 4ÆM от Grimes? Впервые я услышал эту песню во время прохождения Cyberpunk 2077 в 2020 году. Сочетание вокала Grimes и инструментала создавало ощущение чего-то возвышенного и почти неземного, словно короткого момента свободы среди хаоса окружающего мира. Именно это чувство стало отправной точкой для моего ремикса. Мне хотелось сохранить эмоциональное ядро оригинала, но взглянуть на него через призму Cyberpunk — мира, в котором за каждым взлётом неизбежно следует падение, а надежда постоянно сталкивается с реальностью. Тяжёлые синтезаторы, искажённые струнные, агрессивные ударные, эксперименты с темпом и смешение жанров стали инструментами для передачи этой идеи. Ремикс постепенно движется от чувства возвышенности к ощущению неизбежности, сохраняя связь с оригинальной композицией, но рассказывая уже собственную историю. Это моя интерпретация 4ÆM — вдохновлённая как самой песней, так и атмосферой Night City, которая ещё долго не отпускает после финальных титров."
                              data-en="What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk 2077 back in 2020. The combination of Grimes' vocals and the instrumental created a sense of something elevated and almost otherworldly—a brief moment of freedom amidst the chaos of the world around it. That feeling became the starting point for this remix. I wanted to preserve the emotional core of the original while reinterpreting it through the lens of Cyberpunk—a world where every rise is followed by a fall, and hope is constantly confronted by reality. Heavy synthesizers, distorted strings, aggressive drums, tempo shifts, and genre-blending became the tools I used to explore that idea. The remix gradually moves from a sense of transcendence toward a feeling of inevitability, maintaining a connection to the original while telling its own story. This is my interpretation of 4ÆM—inspired both by the song itself and by the atmosphere of Night City, a world that lingers long after the credits roll.">What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk 2077 back in 2020. The combination of Grimes' vocals and the instrumental created a sense of something elevated and almost otherworldly—a brief moment of freedom amidst the chaos of the world around it. That feeling became the starting point for this remix. I wanted to preserve the emotional core of the original while reinterpreting it through the lens of Cyberpunk—a world where every rise is followed by a fall, and hope is constantly confronted by reality. Heavy synthesizers, distorted strings, aggressive drums, tempo shifts, and genre-blending became the tools I used to explore that idea. The remix gradually moves from a sense of transcendence toward a feeling of inevitability, maintaining a connection to the original while telling its own story. This is my interpretation of 4ÆM—inspired both by the song itself and by the atmosphere of Night City, a world that lingers long after the credits roll.
@@ -1194,42 +1213,45 @@ if (activeView) {
         }
 
         function openDescModal(buttonElement) {
-    console.log("1. Клик по кнопке прошел!");
+    console.log("1. Клик сработал.");
 
     const parentBlock = buttonElement.closest('.video-description');
     if (!parentBlock) {
         console.error("ОШИБКА: Не найден родительский блок .video-description");
         return;
     }
-    console.log("2. Родительский блок найден.");
 
-    const titleEl = parentBlock.querySelector('.track-title');
+    // Умный поиск заголовка: сначала по классу, если нет — по тегу h4
+    let titleEl = parentBlock.querySelector('.track-title');
+    if (!titleEl) titleEl = parentBlock.querySelector('h4');
+    
+    // Поиск полного текста
     const textEl = parentBlock.querySelector('.desc-full');
     
-    if (!titleEl || !textEl) {
-        console.error("ОШИБКА: Не найден заголовок (.track-title) или скрытый текст (.desc-full)!");
+    // Проверяем текстовый элемент
+    if (!textEl) {
+        console.error("ОШИБКА: Внутри карточки не найден скрытый блок .desc-full с полным текстом!");
+        alert("Ошибка разметки: отсутствует блок .desc-full");
         return;
     }
-    console.log("3. Текст для модалки успешно собран.");
     
+    const titleText = titleEl ? titleEl.innerText : "Описание трека";
+    console.log("3. Данные успешно собраны:", titleText);
+    
+    // Ищем само модальное окно
     const modal = document.getElementById('desc-modal');
     if (!modal) {
-        console.error("ОШИБКА: В HTML вообще нет элемента с id='desc-modal'!");
+        console.error("ОШИБКА: На странице нет контейнера с id='desc-modal'!");
         return;
     }
 
-    document.getElementById('desc-modal-title').innerText = titleEl.innerText;
+    // Закидываем данные в модалку
+    document.getElementById('desc-modal-title').innerText = titleText;
     document.getElementById('desc-modal-body').innerHTML = textEl.innerHTML;
     
+    // Открываем
     modal.style.display = 'flex';
-    console.log("4. Модальное окно должно быть открыто!");
-}
-
-function closeDescModal() {
-    const modal = document.getElementById('desc-modal');
-    if (modal) {
-        modal.style.display = 'none';
-    }
+    console.log("4. Окно открыто.");
 }
 
         // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ (Финальный фикс залипания)

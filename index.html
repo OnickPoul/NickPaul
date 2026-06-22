@@ -762,23 +762,13 @@ header .nav-btn[href="#about"] {
        let savedScrollPosition = 0;
 
         function switchView(viewId, returnTargetId = null) {
-            // Умная остановка аудио БЕЗ лагов и перезагрузок
-const activeView = document.querySelector('.page-view.active');
-if (activeView) {
-    const iframes = activeView.querySelectorAll('iframe');
-    iframes.forEach(iframe => {
-        // Элегантно ставим на паузу SoundCloud и Vimeo (без перезагрузки!)
-        if (iframe.src.includes('soundcloud') || iframe.src.includes('vimeo')) {
-            iframe.contentWindow.postMessage('{"method":"pause"}', '*');
-        } 
-        // Spotify не понимает паузу извне, поэтому мягко перезагружаем ТОЛЬКО его
-        else if (iframe.src.includes('spotify')) {
-            const currentSrc = iframe.src;
-            iframe.src = '';
-            setTimeout(() => { iframe.src = currentSrc; }, 50);
-        }
-    });
-}
+            const currentView = document.querySelector('.page-view.active');
+            const targetView = document.getElementById('view-' + viewId);
+            // Остановка всех iframe плееров при смене страницы
+document.querySelectorAll('iframe').forEach(iframe => {
+    const currentSrc = iframe.src;
+    iframe.src = currentSrc; // Эта магия заставляет iframe перезагрузиться и замолчать
+});
 
             if (currentView === targetView) return;
 

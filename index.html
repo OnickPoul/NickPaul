@@ -589,10 +589,10 @@ header .nav-btn[href="#about"] {
 
                 <div id="tab-soundcloud" class="tab-content active">
                     <div class="media-grid">
-                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1863434040&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;"><div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;"><h4 
+                        <div class="video-card"><div class="audio-container"><iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A1863434040&color=%230e0e10&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe></div><div class="video-description" onclick="openDescModal(this)" style="cursor: pointer; padding-top: 10px;"><h4></h4><div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
                              data-ru="Что вы почувствовали, когда впервые услышали 4ÆM от Grimes? Впервые я услышал эту песню во время прохождения Cyberpunk 2077 в 2020 году. Сочетание вокала Grimes и инструментала создавало ощущение чего-то возвышенного и почти неземного, словно короткого момента свободы среди хаоса окружающего мира. Именно это чувство стало отправной точкой для моего ремикса. Мне хотелось сохранить эмоциональное ядро оригинала, но взглянуть на него через призму Cyberpunk — мира, в котором за каждым взлётом неизбежно следует падение, а надежда постоянно сталкивается с реальностью. Тяжёлые синтезаторы, искажённые струнные, агрессивные ударные, эксперименты с темпом и смешение жанров стали инструментами для передачи этой идеи. Ремикс постепенно движется от чувства возвышенности к ощущению неизбежности, сохраняя связь с оригинальной композицией, но рассказывая уже собственную историю.Это моя интерпретация 4ÆM — вдохновлённая как самой песней, так и атмосферой Night City, которая ещё долго не отпускает после финальных титров." 
                              data-en="What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk 2077 back in 2020. The combination of Grimes' vocals and the instrumental created a sense of something elevated and almost otherworldly—a brief moment of freedom amidst the chaos of the world around it. That feeling became the starting point for this remix. I wanted to preserve the emotional core of the original while reinterpreting it through the lens of Cyberpunk—a world where every rise is followed by a fall, and hope is constantly confronted by reality. Heavy synthesizers, distorted strings, aggressive drums, tempo shifts, and genre-blending became the tools I used to explore that idea. The remix gradually moves from a sense of transcendence toward a feeling of inevitability, maintaining a connection to the original while telling its own story. This is my interpretation of 4ÆM—inspired both by the song itself and by the atmosphere of Night City, a world that lingers long after the credits roll.">What did you feel when you first heard 4ÆM by Grimes? I first came across the song while playing Cyberpunk 2077 back in 2020. The combination of Grimes' vocals and the instrumental created a sense of something elevated and almost otherworldly—a brief moment of freedom amidst the chaos of the world around it. That feeling became the starting point for this remix. I wanted to preserve the emotional core of the original while reinterpreting it through the lens of Cyberpunk—a world where every rise is followed by a fall, and hope is constantly confronted by reality. Heavy synthesizers, distorted strings, aggressive drums, tempo shifts, and genre-blending became the tools I used to explore that idea. The remix gradually moves from a sense of transcendence toward a feeling of inevitability, maintaining a connection to the original while telling its own story. This is my interpretation of 4ÆM—inspired both by the song itself and by the atmosphere of Night City, a world that lingers long after the credits roll.
-                </h4></div><span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+                </div><span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
             </div>
      </div>
                         
@@ -764,12 +764,23 @@ header .nav-btn[href="#about"] {
         function switchView(viewId, returnTargetId = null) {
             const currentView = document.querySelector('.page-view.active');
             const targetView = document.getElementById('view-' + viewId);
-            // Остановка всех iframe плееров при смене страницы
-document.querySelectorAll('iframe').forEach(iframe => {
-    const currentSrc = iframe.src;
-    iframe.src = currentSrc; // Эта магия заставляет iframe перезагрузиться и замолчать
-});
-
+            // Умная остановка аудио БЕЗ лагов и перезагрузок
+const activeView = document.querySelector('.page-view.active');
+if (activeView) {
+    const iframes = activeView.querySelectorAll('iframe');
+    iframes.forEach(iframe => {
+        // Элегантно ставим на паузу SoundCloud и Vimeo (без перезагрузки!)
+        if (iframe.src.includes('soundcloud') || iframe.src.includes('vimeo')) {
+            iframe.contentWindow.postMessage('{"method":"pause"}', '*');
+        } 
+        // Spotify не понимает паузу извне, поэтому мягко перезагружаем ТОЛЬКО его
+        else if (iframe.src.includes('spotify')) {
+            const currentSrc = iframe.src;
+            iframe.src = '';
+            setTimeout(() => { iframe.src = currentSrc; }, 50);
+        }
+    });
+}
             if (currentView === targetView) return;
 
             if (currentView.id === 'view-home') {

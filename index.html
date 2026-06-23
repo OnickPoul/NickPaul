@@ -558,96 +558,107 @@ header .nav-btn[href="#about"] {
 
         @media (max-width: 768px) {
     
-    /* 1. ГЛАВНАЯ ШАПКА: превращаем в аккуратную тонкую строку */
-    header {
+    /* 1. ШАПКА: Убиваем старый Grid, делаем жесткую полосу */
+    header, .header-grid {
+        display: flex !important;
         position: fixed !important;
         top: 0 !important;
         left: 0 !important;
         width: 100% !important;
-        height: 60px !important; /* Жесткая красивая высота */
+        height: 60px !important;
         padding: 0 15px !important;
-        display: flex !important;
-        justify-content: space-between !important;
         align-items: center !important;
+        justify-content: flex-end !important; /* Выталкиваем кнопки языка/темы вправо */
         box-sizing: border-box !important;
         background-color: var(--header-bg) !important;
         border-bottom: 1px solid var(--border-color) !important;
         z-index: 10000 !important;
+        
+        /* Жестко отключаем десктопную сетку, чтобы она не ломала дизайн */
+        grid-template-columns: none !important;
+        grid-template-rows: none !important;
+        gap: 0 !important;
     }
 
-    /* Чтобы контент сайта не заезжал под фиксированную шапку */
+    /* Отступ для контента страницы */
     body {
         padding-top: 60px !important;
     }
 
-    /* 2. ЦЕНТРИРОВАНИЕ: Текст "Nick Paul" и "Sound Designer" строго по центру экрана */
-    /* (Замени .logo на свой класс контейнера с именем, если он называется иначе) */
-    .logo, .header-branding, .name-container {
+    /* 2. ИМЯ И ПРОФЕССИЯ: Вырываем из потока и ставим строго по центру */
+    .header-center {
         position: absolute !important;
         left: 50% !important;
-        transform: translateX(-50%) !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
         text-align: center !important;
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
+        margin: 0 !important;
         width: max-content !important;
     }
 
-    /* Чуть уменьшаем шрифты, чтобы на маленьких экранах всё сидело идеально */
-    .logo h1, .name-container h1, .logo-text {
+    .header-center h1 {
         font-size: 1.1rem !important;
-        margin: 0 !important;
+        margin: 0 0 2px 0 !important;
         line-height: 1.2 !important;
     }
-    
-    .logo p, .name-container span, .logo-subtitle {
+
+    .header-center p {
         font-size: 0.75rem !important;
         margin: 0 !important;
-        opacity: 0.7;
+        opacity: 0.7 !important;
     }
 
-    /* 3. КНОПКИ УПРАВЛЕНИЯ (Переключатель темы и языка) */
-    /* Прижимаем их строго в правый угол */
-    .controls, .header-right, .theme-lang-wrapper {
-        margin-left: auto !important;
+    /* 3. КНОПКИ СПРАВА: Язык и Тема */
+    .header-right {
         display: flex !important;
         gap: 10px !important;
         align-items: center !important;
+        margin: 0 !important;
     }
 
-    /* 4. ПЕРЕНОС МЕНЮ НАВИГАЦИИ ВНИЗ (Showreel, Contact, About, Works) */
-    /* (Замени nav на свой класс контейнера меню, если нужно) */
-    nav, .nav-links, .menu-wrapper {
+    /* Скрываем левую ячейку грида, если она пустая и мешается */
+    .header-left {
+        display: none !important;
+    }
+
+    /* 4. НИЖНЕЕ МЕНЮ: Отрываем от шапки и прибиваем к низу экрана */
+    .mobile-nav-row, .btn-group {
         position: fixed !important;
         bottom: 0 !important;
         left: 0 !important;
         width: 100% !important;
-        height: 55px !important; /* Удобная высота для нажатия пальцем */
+        height: 55px !important;
         background-color: var(--header-bg) !important;
         border-top: 1px solid var(--border-color) !important;
         
         display: flex !important;
-        justify-content: center !important; /* Кнопки строго по центру бара */
+        justify-content: center !important;
         align-items: center !important;
-        gap: 8px !important; /* Расстояние между кнопками меню */
+        flex-direction: row !important; 
+        flex-wrap: nowrap !important; /* Запрещаем перенос кнопок */
+        gap: 8px !important;
         
         padding: 0 10px !important;
+        margin: 0 !important;
         box-sizing: border-box !important;
         z-index: 9999 !important;
     }
 
-    /* Сами кнопочки внутри нижнего бара */
-    nav .nav-btn, .nav-links a {
+    /* Оформление самих кнопок в нижнем меню */
+    .mobile-nav-row .nav-btn, .btn-group .nav-btn {
         font-size: 0.85rem !important;
         padding: 6px 10px !important;
-        white-space: nowrap !important; /* Запрещаем кнопкам переноситься на вторую строку */
+        margin: 0 !important;
+        white-space: nowrap !important;
     }
 
-    /* 5. МАГИЯ С ФУТЕРОМ */
-    /* Заставляем меню "остановиться" над контентом футера в самом низу страницы */
+    /* 5. ФУТЕР: Делаем отступ снизу, чтобы меню его не перекрыло */
     footer, .site-footer {
-        padding-bottom: 70px !important; /* Высота меню (55px) + аккуратный запас (15px) */
+        padding-bottom: 70px !important;
     }
 }
     </style>
@@ -1087,7 +1098,7 @@ At just 23 years old, Oni Nillsen continues to refine a distinctive sound that b
 </div>
                         <div class="video-card">
     <div class="audio-container">
-        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/6VRWwNpVmTCa1ihxE7IiI1?utm_source=generator&si=b5286d0b7572440d" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/5ZT2XWreFx3k0fMOeWNoFf?utm_source=generator&si=9047599792af4e06" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
     <div class="video-description"> 
         <h4 class="track-title">Maybe You</h4>             

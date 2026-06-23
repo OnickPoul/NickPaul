@@ -129,14 +129,14 @@
 /* 1. СЕТКИ (Выравниваем карточки по высоте) */
 .media-grid, .video-grid, .works-container { 
     gap: 10px !important; /* Делаем карточки плотнее друг к другу */
-    align-items: stretch !important; /* Заставляет карточки в одном ряду быть одинаковой высоты */
+    align-items: start !important; /* Заставляет карточки в одном ряду быть одинаковой высоты */
 }
 
 /* 2. ГЛАВНАЯ КАРТОЧКА*/
 .video-card {
     display: flex;
     flex-direction: column;
-    height: 100% !important; /* Тянется на всю высоту ячейки сетки */
+    height: auto !important; /* Тянется на всю высоту ячейки сетки */
     background-color: var(--card-bg) !important;
 }
 
@@ -201,8 +201,9 @@
     background-color: var(--card-bg) !important;
     display: flex;
     flex-direction: column;
-    flex-grow: 1 !important; /* МАГИЯ: заливает пустоту серым фоном до самого низа */
+    flex-grow: 1; /* МАГИЯ: заливает пустоту серым фоном до самого низа */
     box-sizing: border-box;
+}
 
 /* 2. Заголовки: ИСПРАВЛЯЕМ ОШИБКУ С MARGIN */
 .video-description h4, .track-title {

@@ -318,7 +318,7 @@ header .nav-btn[href="#about"] {
     opacity: 1;
 }
 
-        /* ЕДИНЫЙ КЛАСС ДЛЯ ВСЕХ МОДАЛЬНЫХ ОКНО (Фон и анимация) */
+        /* ЕДИНЫЙ КЛАСС ДЛЯ ВСЕХ МОДАЛЬНЫХ ОКОН (Фон и анимация) */
 .modal {
     position: fixed;
     z-index: -1; 
@@ -381,33 +381,9 @@ header .nav-btn[href="#about"] {
             margin-right: -6px; /* Компенсируем gap десктопа, чтобы Contact скользил идеально */
             pointer-events: none;
         }
-        @media (max-width: 768px) {
-            body.is-subpage .showreel-btn {
-                margin-right: -2px; /* Компенсируем gap мобилки */
-            }
-        }
-        /* ------------------------------------------- */
 
         .home-only-group { transition: opacity 0.4s ease, visibility 0.4s ease; opacity: 1; visibility: visible; }
         body.is-subpage .home-only-group { opacity: 0; visibility: hidden; pointer-events: none; }
-
-        /* --- МОБИЛЬНАЯ ШАПКА --- */
-        @media (max-width: 768px) {
-            .desktop-only { display: none !important; }
-            .mobile-only { display: flex; }
-
-            .header-grid { grid-template-columns: 1fr auto 1fr; grid-template-rows: auto auto; padding: 15px 0; gap: 15px 0; }
-            .header-left { justify-self: start; }
-            .header-center { justify-self: center; }
-            .header-right { justify-self: end; gap: 15px; }
-
-            .header-center h1 { font-size: 1.5rem; margin-bottom: 2px; }
-            .header-center p { font-size: 0.7rem; }
-            .logo img { height: 30px; }
-
-            .mobile-nav-row { grid-column: 1 / -1; width: 100%; display: flex; justify-content: center; }
-            .mobile-nav-row .btn-group { display: flex; gap: 10px; width: 100%; justify-content: center; flex-wrap: wrap; }
-        }
 
         /* --- КОНТЕНТ --- */
         section { margin-bottom: 60px; }
@@ -579,6 +555,101 @@ header .nav-btn[href="#about"] {
             .modal-header { flex-direction: column; align-items: flex-start; gap: 15px; padding-right: 0; }
             .close-modal { top: 10px; right: 10px; }
         }
+
+        @media (max-width: 768px) {
+    
+    /* 1. ГЛАВНАЯ ШАПКА: превращаем в аккуратную тонкую строку */
+    header {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 60px !important; /* Жесткая красивая высота */
+        padding: 0 15px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        box-sizing: border-box !important;
+        background-color: var(--header-bg) !important;
+        border-bottom: 1px solid var(--border-color) !important;
+        z-index: 10000 !important;
+    }
+
+    /* Чтобы контент сайта не заезжал под фиксированную шапку */
+    body {
+        padding-top: 60px !important;
+    }
+
+    /* 2. ЦЕНТРИРОВАНИЕ: Текст "Nick Paul" и "Sound Designer" строго по центру экрана */
+    /* (Замени .logo на свой класс контейнера с именем, если он называется иначе) */
+    .logo, .header-branding, .name-container {
+        position: absolute !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: max-content !important;
+    }
+
+    /* Чуть уменьшаем шрифты, чтобы на маленьких экранах всё сидело идеально */
+    .logo h1, .name-container h1, .logo-text {
+        font-size: 1.1rem !important;
+        margin: 0 !important;
+        line-height: 1.2 !important;
+    }
+    
+    .logo p, .name-container span, .logo-subtitle {
+        font-size: 0.75rem !important;
+        margin: 0 !important;
+        opacity: 0.7;
+    }
+
+    /* 3. КНОПКИ УПРАВЛЕНИЯ (Переключатель темы и языка) */
+    /* Прижимаем их строго в правый угол */
+    .controls, .header-right, .theme-lang-wrapper {
+        margin-left: auto !important;
+        display: flex !important;
+        gap: 10px !important;
+        align-items: center !important;
+    }
+
+    /* 4. ПЕРЕНОС МЕНЮ НАВИГАЦИИ ВНИЗ (Showreel, Contact, About, Works) */
+    /* (Замени nav на свой класс контейнера меню, если нужно) */
+    nav, .nav-links, .menu-wrapper {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 55px !important; /* Удобная высота для нажатия пальцем */
+        background-color: var(--header-bg) !important;
+        border-top: 1px solid var(--border-color) !important;
+        
+        display: flex !important;
+        justify-content: center !important; /* Кнопки строго по центру бара */
+        align-items: center !important;
+        gap: 8px !important; /* Расстояние между кнопками меню */
+        
+        padding: 0 10px !important;
+        box-sizing: border-box !important;
+        z-index: 9999 !important;
+    }
+
+    /* Сами кнопочки внутри нижнего бара */
+    nav .nav-btn, .nav-links a {
+        font-size: 0.85rem !important;
+        padding: 6px 10px !important;
+        white-space: nowrap !important; /* Запрещаем кнопкам переноситься на вторую строку */
+    }
+
+    /* 5. МАГИЯ С ФУТЕРОМ */
+    /* Заставляем меню "остановиться" над контентом футера в самом низу страницы */
+    footer, .site-footer {
+        padding-bottom: 70px !important; /* Высота меню (55px) + аккуратный запас (15px) */
+    }
+}
     </style>
 </head>
 <body>
@@ -628,7 +699,7 @@ header .nav-btn[href="#about"] {
                         <iframe src="https://player.vimeo.com/video/1203257294?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" width="2560" height="1440" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Nick Paul - Audio Showreel"></iframe>
                     </div>
                     <div class="video-description">
-                        <h4 data-ru="Шоурил, который удивит" data-en="A showreel that amaze you">A showreel that amaze you</h4>
+                        <h4 data-ru="Шоурил, который удивит" data-en="A showreel that amaze you">A showreel that amaze You</h4>
                     </div>
                 </div>
             </section>
@@ -984,7 +1055,7 @@ At just 23 years old, Oni Nillsen continues to refine a distinctive sound that b
                     <div class="media-grid">
                         <div class="video-card">
     <div class="audio-container">
-        <iframe src="https://open.spotify.com/embed/track/4XG2mv1RVUBctlDR3sgUjB"></iframe>
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/4XG2mv1RVUBctlDR3sgUjB?utm_source=generator&si=315474c8b4724878" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
     <div class="video-description"> 
         <h4 class="track-title">Clouds (VIP)</h4>             
@@ -992,58 +1063,58 @@ At just 23 years old, Oni Nillsen continues to refine a distinctive sound that b
 </div>
                         <div class="video-card">
     <div class="audio-container">
-        <iframe src="..."></iframe>
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/65aCFnHrmGDKBC1pi6glFm?utm_source=generator&si=69f52f42520641af" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
     <div class="video-description"> 
-        <h4 class="track-title">...</h4>             
+        <h4 class="CLouds">...</h4>             
     </div>
 </div>
                         <div class="video-card">
     <div class="audio-container">
-        <iframe src="..."></iframe>
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/6T8vjZrgHxrkULix9J0fov?utm_source=generator&si=ecf510b87ca74358" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
     <div class="video-description"> 
-        <h4 class="track-title">...</h4>             
+        <h4 class="track-title">Paranoia</h4>             
     </div>
 </div>
                         <div class="video-card">
     <div class="audio-container">
-        <iframe src="..."></iframe>
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/0RRpD9FYw1SENNr2BqvbHB?utm_source=generator&si=e20bc5b2b5214e59" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
     <div class="video-description"> 
-        <h4 class="track-title">...</h4>             
+        <h4 class="track-title">Lost Memories</h4>             
     </div>
 </div>
                         <div class="video-card">
     <div class="audio-container">
-        <iframe src="..."></iframe>
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/6VRWwNpVmTCa1ihxE7IiI1?utm_source=generator&si=b5286d0b7572440d" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
     <div class="video-description"> 
-        <h4 class="track-title">...</h4>             
+        <h4 class="track-title">Maybe You</h4>             
     </div>
 </div>
                         <div class="video-card">
     <div class="audio-container">
-        <iframe src="..."></iframe>
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/6VRWwNpVmTCa1ihxE7IiI1?utm_source=generator&si=61029056bac64bb8" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
     <div class="video-description"> 
-        <h4 class="track-title">...</h4>             
+        <h4 class="track-title">Blame</h4>             
     </div>
 </div>
                         <div class="video-card">
     <div class="audio-container">
-        <iframe src="..."></iframe>
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/6iIW1wLyUBObPJfVa5dyFI?utm_source=generator&si=d26fb33e47cb4b6f" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
     <div class="video-description"> 
-        <h4 class="track-title">...</h4>             
+        <h4 class="track-title">Before</h4>             
     </div>
 </div>
                         <div class="video-card">
     <div class="audio-container">
-        <iframe src="..."></iframe>
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/7n92QbfxhMwHZC1qlUCILx?utm_source=generator&si=5584b9bd361944a4" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
     <div class="video-description"> 
-        <h4 class="track-title">...</h4>             
+        <h4 class="track-title">Revelation</h4>             
     </div>
 </div>
                     </div>

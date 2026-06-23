@@ -149,9 +149,15 @@
 .audio-container.spotify {
     padding-bottom: 0 !important; 
     height: 152px !important; 
-    border-radius: 12px; 
+ /*   border-radius: 12px; 
     overflow: hidden;
-    display: flex;
+    display: flex; */
+}
+
+.video-card:has(.spotify) {
+    height: max-content !important; 
+    align-self: flex-start !important; /* Отцепляет карточку от растягивания в сетке */
+    background: transparent !important;
 }
 
 .audio-container.spotify iframe {
@@ -170,16 +176,18 @@
 
 /* 1. Блок описания: УМЕНЬШАЕМ ВЫСОТУ и ЦЕНТРИРУЕМ ТЕКСТ */
 .video-description {
-    padding: 12px 15px !important; /* Уменьшили отступы. Было 20px */
+    padding: 12px 15px !important;
     background-color: var(--card-bg) !important;
     display: flex;
     flex-direction: column;
+    
+    /* ВОТ ЭТО ДЕЛАЕТ МАГИЮ: */
+    justify-content: center !important; /* Центрирует всю группу текста по вертикали */
+    align-items: flex-start !important; /* Прибивает текст строго к левому краю */
+    text-align: left !important; /* Текст читается слева направо */
+    
     flex-grow: 1 !important; 
     box-sizing: border-box;
-    
-    /* Добавляем центровку */
-    text-align: center; /* Центрирует текст */
-    align-items: center; /* Выравнивает всё внутри строго по центру */
 }
 
 /* 2. Заголовки: ИСПРАВЛЯЕМ ОШИБКУ С MARGIN */
@@ -210,15 +218,13 @@
 
 /* 3. Кнопка "Read more": ЦЕНТРИРУЕМ ЕЁ */
 .read-more-btn {
+    margin: 8px 0 0 0 !important; /* Небольшой отступ вниз от текста. Никакого auto! */
+    align-self: flex-start !important; /* Кнопка строго слева */
     font-size: 0.85rem;
     color: var(--text-color);
     text-decoration: underline;
     text-underline-offset: 3px;
     cursor: pointer;
-    
-    align-self: center; /* БЫЛО flex-start. Теперь кнопка ровно посередине */
-    margin: auto 0 0 0 !important; /* Жестко прижимаем вниз */
-    
     padding: 0 !important;
     background: none !important;
     border: none !important;

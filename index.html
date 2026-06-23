@@ -126,70 +126,69 @@
     filter: invert(1) !important; 
 }
 
-        /* Уменьшаем вертикальное расстояние между плеерами */
-.media-grid {
-    gap: 10px !important; /* Было больше, теперь карточки будут плотнее друг к другу */
+/* 1. СЕТКИ (Выравниваем карточки по высоте) */
+.media-grid, .video-grid, .works-container { 
+    gap: 10px !important; /* Делаем карточки плотнее друг к другу */
+    align-items: stretch !important; /* Заставляет карточки в одном ряду быть одинаковой высоты */
 }
 
-        /* Жестко фиксируем высоту для плееров Spotify, чтобы они не сплющивались */
+/* 2. ГЛАВНАЯ КАРТОЧКА*/
+.video-card {
+    display: flex;
+    flex-direction: column;
+    height: 100% !important; /* Тянется на всю высоту ячейки сетки */
+    background-color: var(--card-bg) !important;
+}
+
+/* 3. КОНТЕЙНЕРЫ ПЛЕЕРОВ (Верхняя часть) */
+.video-container, .audio-container {
+    flex-shrink: 0; /* Запрещаем плееру сплющиваться */
+}
+
+/* Спец-фикс для Spotify */
 .audio-container.spotify {
-    padding-bottom: 0 !important; /* Отключаем пропорции от видео-плееров */
-    height: 152px !important; /* Стандартная высота маленького плеера. Если хочешь большие - ставь 352px */
-    border-radius: 12px; /* Скругляем углы под стиль Spotify */
+    padding-bottom: 0 !important; 
+    height: 152px !important; 
+    border-radius: 12px; 
     overflow: hidden;
+    display: flex;
 }
 
 .audio-container.spotify iframe {
-    position: relative !important;
+    position: static !important;
     width: 100% !important;
     height: 100% !important;
     border: none !important;
 }
 
-/* Убираем лишний фон у карточки, если после удаления текста осталась пустота */
+/* Убираем лишний фон у карточек Spotify без текста */
 #tab-spotify .video-card {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
 }
 
-        /* Обрезаем текст в карточке до 2-х строк, чтобы сетка была идеальной */
-.desc-preview {
-    display: -webkit-box;
-    -webkit-line-clamp: 3; 
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    margin-top: 5px;
-}
-
-        /* Делаем так, чтобы блок с текстом сам заполнял всю пустоту по высоте */
-.video-card {
-    display: flex;
-    flex-direction: column;
-    height: auto !important; /* Заставляет карточку тянуться */
-}
-
-/* Контейнер с текстом под плеером */
+/* 4. БЛОК ОПИСАНИЯ (Нижняя часть)*/
 .video-description {
     padding: 20px !important;
     background-color: var(--card-bg) !important;
-    flex-grow: 0 !important; /* Запрещаем блоку насильно растягивать карточку вниз */
     display: flex;
     flex-direction: column;
-}
-
-        /* Отключаем принудительное растягивание для ВСЕХ сеток на сайте */
-.media-grid, .video-grid, .works-container { 
-    align-items: flex-start !important; 
+    flex-grow: 1 !important; /* МАГИЯ: заливает пустоту серым фоном до самого низа */
+    box-sizing: border-box;
 }
 
 /* Заголовок трека */
-.track-title {
+.video-description h4, .track-title {
     font-size: 1.1rem;
-    color: #ffffff;
-    margin: 0 0 8px 0;
+    color: var(--text-color);
+    margin: 0 0 8px 0 !important;
     font-weight: 600;
     font-family: sans-serif;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Строго 2 строки для симметрии */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 /* Короткое превью текста */
@@ -199,13 +198,12 @@
     line-height: 1.5;
     margin: 0 0 14px 0 !important;
     display: -webkit-box;
-    -webkit-line-clamp: 2; /* Аккуратно прячем в 2 строки на всех устройствах */
+    -webkit-line-clamp: 2; /* Строго 2 строки на всех устройствах */
     -webkit-box-orient: vertical;
     overflow: hidden;
-    flex-grow: 1; /* Толкает кнопку Read More строго вниз карточки */
 }
 
-/* Стильная и аккуратная кнопка */
+/* 5. КНОПКА "READ MORE" */
 .read-more-btn {
     font-size: 0.85rem;
     color: var(--text-color);
@@ -213,31 +211,18 @@
     text-underline-offset: 3px;
     cursor: pointer;
     align-self: flex-start;
-    transition: opacity 0.2s ease, color 0.2s ease;
-    opacity: 0.6;
-    margin: 0 !important;
+    margin: auto 0 0 0 !important; /* МАГИЯ 2: Прижимает кнопку к самому низу карточки */
     padding: 0 !important;
     background: none !important;
     border: none !important;
+    transition: opacity 0.2s ease, color 0.2s ease;
+    opacity: 0.6;
 }
 
 .read-more-btn:hover {
     opacity: 1;
-    color: #00fff0; /* Твой кастомный неоновый акцент или любой другой цвет */
+    color: #00fff0;
 }
-
-/* Ограничиваем заголовки ровно в 2 строки для симметрии */
-.video-description h4 {
-    font-size: 1.1rem;
-    color: var(--text-color);
-    margin: 0 0 px 0 !important;
-    font-weight: 600;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
         
         /* Унифицированные кнопки шапки - теперь одинакового размера */
         .nav-btn {
@@ -959,33 +944,22 @@ At just 23 years old, Oni Nillsen continues to refine a distinctive sound that b
 </div>
                         <div class="video-card">
     <div class="audio-container">
-        <iframe src="
-
-https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2014169807%3Fsecret_token%3Ds-7F2kbWbyFOm&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
+        <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2014169807%3Fsecret_token%3Ds-7F2kbWbyFOm&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
     </div>
-    <div class="video-description" onclick="openDescModal(this)>" style="cursor: pointer; padding-top: 10px;">
-        <h4>Psycho</h4>
-        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
-            ...
-        </div>
-        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
+    <div class="video-description"> 
+        <h4 class="track-title">Psycho</h4>             
     </div>
 </div>
                         <div class="video-card">
     <div class="audio-container">
         <iframe src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%3Atracks%3A2000369099%3Fsecret_token%3Ds-VChpslzOyE5&color=%231a1927&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe>
     </div>
-    <div class="video-description" onclick="openDescModal(this)>" style="cursor: pointer; padding-top: 10px;">
-        <h4>Heavy Rain</h4>
-        <div class="desc-preview" style="color: var(--text-muted); font-size: 0.9rem;">
-            ...
-        </div>
-        <span style="font-size: 0.8rem; text-decoration: underline; color: #888; display: block; margin-top: 5px;">Read more</span>
-    </div>
+    <div class="video-description"> 
+        <h4 class="track-title">Heavy Rain</h4>             
+           </div>
+       </div>                        
+   </div>
 </div>
-                        
-                    </div>
-                </div>
 
                 <div id="tab-spotify" class="tab-content">
                     <div class="media-grid">
@@ -1180,11 +1154,9 @@ https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcl
                 The key advantage of this approach lies not only in creating unique sounds, but also in the ability to generate a wide range of variations and quickly adapt audio to different gameplay situations. For that reason, these tools and methods continue to be an essential part of my sound design workflow."> </div>
         </div>
     </div>
-    
 </div>
             </section>
         </main>
-
     </div>
 
     <!-- ПОДВАЛ -->

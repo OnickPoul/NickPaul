@@ -560,50 +560,72 @@ header .nav-btn[href="#about"] {
     display: none;
 }
 
+        .mobile-bottom-nav {
+    display: none;
+}
+
 @media (max-width: 768px) {
 
-    /* Скрываем старые кнопки */
-    .nav-links-wrapper,
-    .desktop-only.home-only-group {
-        display: none !important;
-    }
+    /* УБИРАЕМ НАВИГАЦИЮ ИЗ ШАПКИ */
 
-    /* Верхняя строка */
-    .header-grid {
-        display: grid;
-        grid-template-columns: 1fr auto 1fr;
-        align-items: center;
-    }
+.nav-links-wrapper,
+.desktop-only.home-only-group {
+    display: none !important;
+}
 
-    .header-left {
-        justify-self: start;
-    }
+/* ЧУТЬ КОМПАКТНЕЕ ШАПКА */
 
-    .header-center {
-        text-align: center;
-    }
+.header-center h1 {
+    font-size: 1.2rem;
+}
 
-    .header-right {
-        justify-self: end;
-    }
+.header-center p {
+    font-size: 0.8rem;
+}
 
-    /* Новая навигация */
-    .mobile-nav {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
+/* НИЖНЯЯ НАВИГАЦИЯ */
 
-        gap: 16px;
+.mobile-bottom-nav {
 
-        width: 100%;
-        margin-top: 12px;
-        padding-bottom: 10px;
-    }
+    display: flex;
 
-    .mobile-nav .nav-btn {
-        margin: 0;
-    }
+    position: fixed;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+
+    height: 68px;
+
+    justify-content: space-evenly;
+    align-items: center;
+
+    background: rgba(15,15,18,0.95);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border-top: 1px solid rgba(255,255,255,0.08);
+
+    z-index: 9999;
+
+    transition: transform 0.3s ease;
+}
+
+.mobile-bottom-nav .nav-btn {
+
+    margin: 0 !important;
+    padding: 4px 8px !important;
+
+    font-size: 0.85rem;
+}
+
+/* Чтобы контент не прятался за панель */
+
+body {
+    padding-bottom: 90px;
+}
 }
     </style>
 </head>
@@ -642,7 +664,8 @@ header .nav-btn[href="#about"] {
         </div>
 
         <!-- МОБИЛЬНАЯ НАВИГАЦИЯ -->
-<div class="mobile-nav">
+<div class="mobile-bottom-nav">
+
     <a href="#hero"
        class="nav-btn showreel-btn"
        data-ru="Шоурил"
@@ -670,6 +693,7 @@ header .nav-btn[href="#about"] {
        data-en="Contact">
        Contact
     </a>
+
 </div>
     </div>
 </header>
@@ -1540,7 +1564,7 @@ document.addEventListener('click', function(event) {
 
         // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ (Финальный фикс залипания)
 const sections = document.querySelectorAll('#view-home section[id]');
-const navLinks = document.querySelectorAll('header .nav-btn[href^="#"]:not(.contact-modal-trigger)');
+const navLinks = document.querySelectorAll('.nav-btn[href^="#"]:not(.contact-modal-trigger)');
 
 navLinks.forEach(link => {
     link.addEventListener('click', (e) => {
@@ -1548,7 +1572,7 @@ navLinks.forEach(link => {
         if(targetHref.startsWith('#')) {
             e.preventDefault();
             navLinks.forEach(l => l.classList.remove('active'));
-            document.querySelectorAll(`header .nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active'));
+            document.querySelectorAll(`.nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active'));
             scrollToTarget(targetHref.substring(1));
         }
     });
@@ -1564,7 +1588,7 @@ const observer = new IntersectionObserver((entries) => {
             const id = entry.target.getAttribute('id');
             navLinks.forEach(link => link.classList.remove('active'));
             
-            const activeLink = document.querySelector(`header .nav-btn[href="#${id}"]`);
+            const activeLink = document.querySelector(`.nav-btn[href="#${id}"]`);
             if (activeLink) {
                 activeLink.classList.add('active');
             }
@@ -1573,6 +1597,31 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 sections.forEach(section => observer.observe(section));
+
+        // ===== MOBILE BOTTOM NAV =====
+
+const footer = document.getElementById('footer');
+const mobileNav = document.querySelector('.mobile-bottom-nav');
+
+if (footer && mobileNav) {
+
+    const footerObserver = new IntersectionObserver(
+        (entries) => {
+
+            if (entries[0].isIntersecting) {
+                mobileNav.style.transform = 'translateY(100%)';
+            } else {
+                mobileNav.style.transform = 'translateY(0)';
+            }
+
+        },
+        {
+            threshold: 0
+        }
+    );
+
+    footerObserver.observe(footer);
+}
     </script>
                             <div id="desc-modal" class="modal" onclick="closeDescModal()">
     <div class="modal-content" onclick="event.stopPropagation()" style="max-width: 600px;">

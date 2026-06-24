@@ -558,75 +558,58 @@ header .nav-btn[href="#about"] {
 
 @media (max-width: 768px) {
     
-   /* =========================================
-   ШАПКА (Два этажа)
-   ========================================= */
-.site-header {
-    display: flex;
-    flex-direction: column; /* Элементы идут сверху вниз */
-    width: 100%;
-    background-color: var(--header-bg); /* Твой цвет фона */
-    border-bottom: 1px solid var(--border-color); /* Полоса снизу шапки */
-    padding: 15px 20px;
-    box-sizing: border-box;
-}
+   .header-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas:
+        "logo center controls"
+        "nav nav nav";
 
-/* --- ВЕРХНИЙ ЭТАЖ --- */
-.header-top-row {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 100%;
+    row-gap: 12px;
 }
 
-/* Трюк с flex: 1 для идеального центрирования имени */
 .header-left {
-    flex: 1;
-    display: flex;
-    justify-content: flex-start;
+    grid-area: logo;
+    justify-self: start;
 }
 
 .header-center {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    grid-area: center;
     text-align: center;
 }
 
-/* Убираем лишние отступы у текста */
-.header-center .my-name, 
-.header-center .my-job {
+.header-center h1,
+.header-center p {
     margin: 0;
     line-height: 1.2;
 }
 
 .header-right {
-    flex: 1;
+    grid-area: controls;
+    justify-self: end;
+
     display: flex;
-    justify-content: flex-end;
     align-items: center;
-    gap: 15px; /* Расстояние между EN и Луной */
+    gap: 10px;
 }
 
-/* --- НИЖНИЙ ЭТАЖ (Навигация) --- */
-.header-bottom-row {
-    margin-top: 15px; /* Отступ вниз от имени/профессии */
-    width: 100%;
-    display: flex;
-    justify-content: center; /* Центрируем всю группу кнопок */
-}
+.header-nav {
+    grid-area: nav;
 
-.header-bottom-row .btn-group {
     display: flex;
-    gap: 10px; /* Расстояние между самими кнопками */
-    flex-wrap: wrap; /* Если экран мобильника очень узкий, кнопки аккуратно перенесутся на новую строку, а не сломают верстку */
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 16px;
+    width: 100%;
 }
 
-/* Сброс лишних стилей для кнопок, чтобы они не разлетались */
-.nav-btn {
-    margin: 0; 
+/* Сбрасываем старые контейнеры */
+.nav-links-wrapper,
+.desktop-only.home-only-group {
+    display: contents;
 }
 }
     </style>
@@ -636,33 +619,79 @@ header .nav-btn[href="#about"] {
     <header id="mainHeader">
     <div class="container">
         <div class="header-grid">
+
+            <!-- Логотип -->
             <div class="header-left">
-                <a href="#hero" class="logo" onclick="switchView('home', 'hero'); return false;">
-                    <img src="NickPaulLogoAlpha.png" alt="Logo" id="siteLogo">
+                <a href="#hero"
+                   class="logo"
+                   onclick="switchView('home', 'hero'); return false;">
+                    <img src="NickPaulLogoAlpha.png"
+                         alt="Logo"
+                         id="siteLogo">
                 </a>
-                <div class="nav-links-wrapper">
-                    <a href="#hero" class="nav-btn showreel-btn" data-ru="Шоурил" data-en="Showreel">Showreel</a>
-                    <a href="#" class="nav-btn contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
-                </div>
             </div>
 
+            <!-- Имя -->
             <div class="header-center">
                 <h1>Nick Paul</h1>
-                <p data-ru="Саунд Дизайнер" data-en="Sound Designer">Sound Designer</p>
+                <p data-ru="Саунд Дизайнер"
+                   data-en="Sound Designer">
+                   Sound Designer
+                </p>
             </div>
 
+            <!-- Язык и тема -->
             <div class="header-right">
-                <div class="desktop-only home-only-group">
-                    <a href="#about" class="nav-btn" data-ru="Обо мне" data-en="About">About</a>
-                    <a href="#works" class="nav-btn" data-ru="Работы" data-en="Works">Works</a>
-                </div>
-                
                 <button class="icon-btn" id="langToggle">EN</button>
-                <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
-                    <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                    </button>
+
+                <button class="icon-btn"
+                        id="themeToggle"
+                        aria-label="Toggle theme">
+
+                    <svg class="icon-moon" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+
+                    <svg class="icon-sun" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                    </svg>
+
+                </button>
             </div>
+
+            <!-- Навигация -->
+            <div class="header-nav">
+
+                <a href="#hero"
+                   class="nav-btn showreel-btn"
+                   data-ru="Шоурил"
+                   data-en="Showreel">
+                   Showreel
+                </a>
+
+                <a href="#about"
+                   class="nav-btn"
+                   data-ru="Обо мне"
+                   data-en="About">
+                   About
+                </a>
+
+                <a href="#works"
+                   class="nav-btn"
+                   data-ru="Работы"
+                   data-en="Works">
+                   Works
+                </a>
+
+                <a href="#"
+                   class="nav-btn contact-modal-trigger"
+                   data-ru="Контакт"
+                   data-en="Contact">
+                   Contact
+                </a>
+
+            </div>
+
         </div>
     </div>
 </header>

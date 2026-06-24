@@ -575,12 +575,13 @@ header .nav-btn[href="#about"] {
 
 @media (max-width: 768px) {
 
-    .title-back-btn {
-        display: none !important;
-    }
+    .mobile-back-btn {
+    display: none !important;
+}
 
     body.is-subpage .mobile-back-btn {
-    display: inline-flex;
+    display: inline-flex !important;
+
 }
 
     /* УБИРАЕМ НАВИГАЦИЮ ИЗ ШАПКИ */
@@ -646,17 +647,20 @@ body {
     display: none !important;
 }
 
-    body.is-subpage .mobile-bottom-nav .contact-modal-trigger {
-        padding: 12px 28px !important;
-        font-size: 0.95rem;
-    }
+    body.is-subpage .mobile-bottom-nav .contact-modal-trigger,
+    body.is-subpage .mobile-bottom-nav .mobile-back-btn {
+
+    display: inline-flex !important;
+
+    min-width: 110px;
+    justify-content: center;
+
+    padding: 12px 28px !important;
+    font-size: 0.95rem;
+}
 
     body.is-subpage .mobile-bottom-nav {
     justify-content: space-evenly;
-}
-
-    body.is-subpage .mobile-bottom-nav .mobile-back-btn {
-    display: inline-flex !important;
 }
 }
     </style>

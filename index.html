@@ -558,94 +558,75 @@ header .nav-btn[href="#about"] {
 
 @media (max-width: 768px) {
     
-   /* Базовый каркас, чтобы прижать футер к низу, если контента мало */
-body.page-wrapper {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    background-color: var(--bg-color);
-}
-
-/* =========================================
-   ШАПКА (Идеальное выравнивание)
+   /* =========================================
+   ШАПКА (Два этажа)
    ========================================= */
-.top-header {
+.site-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: var(--header-bg);
-    border-bottom: 1px solid var(--border-color);
+    flex-direction: column; /* Элементы идут сверху вниз */
     width: 100%;
+    background-color: var(--header-bg); /* Твой цвет фона */
+    border-bottom: 1px solid var(--border-color); /* Полоса снизу шапки */
+    padding: 15px 20px;
     box-sizing: border-box;
 }
 
-/* Секрет центрирования: боковым блокам задаем flex: 1 */
+/* --- ВЕРХНИЙ ЭТАЖ --- */
+.header-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Трюк с flex: 1 для идеального центрирования имени */
 .header-left {
     flex: 1;
     display: flex;
-    justify-content: flex-start; /* Прижимаем лого влево */
+    justify-content: flex-start;
 }
 
 .header-center {
-    flex: 1; /* Занимает центральную часть */
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+}
+
+/* Убираем лишние отступы у текста */
+.header-center .my-name, 
+.header-center .my-job {
+    margin: 0;
+    line-height: 1.2;
 }
 
 .header-right {
     flex: 1;
     display: flex;
-    justify-content: flex-end; /* Прижимаем кнопки вправо */
-    gap: 10px; /* Отступ между кнопками темы и языка */
-}
-
-/* Убираем отступы у текста в шапке, чтобы не ломали высоту */
-.my-name, .my-job {
-    margin: 0;
-    line-height: 1.2;
-}
-
-/* =========================================
-   ОСНОВНОЙ КОНТЕНТ
-   ========================================= */
-main.content {
-    flex-grow: 1; /* Растягивается, отталкивая всё остальное вниз */
-    padding: 20px;
-}
-
-/* =========================================
-   ПЛАВАЮЩАЯ НАЖНЯЯ НАВИГАЦИЯ (Sticky)
-   ========================================= */
-.bottom-nav-panel {
-    position: sticky; /* Магия здесь. Ездит за экраном... */
-    bottom: 0;        /* ...прилипая к низу экрана. */
-    background-color: var(--header-bg);
-    border-top: 1px solid var(--border-color);
-    padding: 10px 20px;
-    z-index: 1000;
-}
-
-/* Контейнер кнопок навигации */
-.bottom-nav-panel .btn-group {
-    display: flex;
-    justify-content: center; /* Выстроены по центру. Если нужно левее - ставь flex-start */
+    justify-content: flex-end;
     align-items: center;
-    gap: 8px;
-    flex-wrap: nowrap;
+    gap: 15px; /* Расстояние между EN и Луной */
 }
 
-/* =========================================
-   НАСТОЯЩИЙ ФУТЕР
-   ========================================= */
-.real-footer {
-    padding: 40px 20px;
-    background-color: #222; /* Для наглядности */
-    color: #fff;
-    text-align: center;
+/* --- НИЖНИЙ ЭТАЖ (Навигация) --- */
+.header-bottom-row {
+    margin-top: 15px; /* Отступ вниз от имени/профессии */
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Центрируем всю группу кнопок */
+}
+
+.header-bottom-row .btn-group {
+    display: flex;
+    gap: 10px; /* Расстояние между самими кнопками */
+    flex-wrap: wrap; /* Если экран мобильника очень узкий, кнопки аккуратно перенесутся на новую строку, а не сломают верстку */
+    justify-content: center;
+}
+
+/* Сброс лишних стилей для кнопок, чтобы они не разлетались */
+.nav-btn {
+    margin: 0; 
 }
 }
     </style>

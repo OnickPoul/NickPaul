@@ -622,15 +622,15 @@ body {
     padding-bottom: 90px;
 }
 
+    body.is-subpage .mobile-bottom-nav .showreel-btn,
     body.is-subpage .mobile-bottom-nav .about-btn,
-body.is-subpage .mobile-bottom-nav .works-btn {
-    opacity: 0;
-    max-width: 0;
-    margin: 0;
-    padding-left: 0;
-    padding-right: 0;
-    overflow: hidden;
-    pointer-events: none;
+    body.is-subpage .mobile-bottom-nav .works-btn {
+    display: none !important;
+}
+
+    body.is-subpage .mobile-bottom-nav .contact-modal-trigger {
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
 }
 }
     </style>

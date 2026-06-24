@@ -558,130 +558,95 @@ header .nav-btn[href="#about"] {
 
 @media (max-width: 768px) {
     
-    /* 1. ВНЕШНЯЯ ШАПКА: фиксируем на самом верху */
-    header {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 60px !important;
-        background-color: var(--header-bg) !important;
-        border-bottom: 1px solid var(--border-color) !important;
-        z-index: 10000 !important;
-        display: block !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
+   /* Базовый каркас, чтобы прижать футер к низу, если контента мало */
+body.page-wrapper {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-color);
+}
 
-    /* ВНУТРЕННЯЯ СЕТКА: отключаем грид */
-    .header-grid {
-        display: block !important;
-        position: relative !important;
-        width: 100% !important;
-        height: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
+/* =========================================
+   ШАПКА (Идеальное выравнивание)
+   ========================================= */
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--header-bg);
+    border-bottom: 1px solid var(--border-color);
+    width: 100%;
+    box-sizing: border-box;
+}
 
-    /* Компенсация высоты шапки для всего сайта */
-    body {
-        padding-top: 60px !important;
-    }
+/* Секрет центрирования: боковым блокам задаем flex: 1 */
+.header-left {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start; /* Прижимаем лого влево */
+}
 
-    /* 2. ЛОГОТИП ПО ЦЕНТРУ: абсолютное выравнивание */
-    .header-center {
-        position: absolute !important;
-        left: 50% !important;
-        top: 50% !important;
-        transform: translate(-50%, -50%) !important;
-        text-align: center !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: max-content !important;
-        z-index: 10002 !important;
-    }
+.header-center {
+    flex: 1; /* Занимает центральную часть */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
 
-    .header-center h1 {
-        font-size: 1.1rem !important;
-        margin: 0 0 2px 0 !important;
-    }
+.header-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end; /* Прижимаем кнопки вправо */
+    gap: 10px; /* Отступ между кнопками темы и языка */
+}
 
-    .header-center p {
-        font-size: 0.75rem !important;
-        margin: 0 !important;
-    }
+/* Убираем отступы у текста в шапке, чтобы не ломали высоту */
+.my-name, .my-job {
+    margin: 0;
+    line-height: 1.2;
+}
 
-    /* 3. КНОПКИ СПРАВА (EN, Луна) */
-    .header-right {
-        position: absolute !important;
-        right: 15px !important;
-        top: 50% !important;
-        transform: translateY(-50%) !important;
-        display: flex !important;
-        gap: 12px !important;
-        align-items: center !important;
-        z-index: 10002 !important;
-    }
+/* =========================================
+   ОСНОВНОЙ КОНТЕНТ
+   ========================================= */
+main.content {
+    flex-grow: 1; /* Растягивается, отталкивая всё остальное вниз */
+    padding: 20px;
+}
 
-    /* 4. НИЖНЕЕ МЕНЮ: Умный захват контейнеров
-       Хватаем любые блоки с кнопками (header-left, btn-group), 
-       даже если HTML отличается от запланированного */
-    header .header-left,
-    header .mobile-nav-row,
-    .header-grid > .btn-group,
-    .header-grid > nav {
-        position: fixed !important;
-        bottom: 0 !important;
-        top: auto !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 55px !important;
-        background-color: var(--header-bg) !important;
-        border-top: 1px solid var(--border-color) !important;
-        
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: center !important;
-        align-items: center !important;
-        gap: 10px !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        z-index: 20000 !important;
-    }
+/* =========================================
+   ПЛАВАЮЩАЯ НАЖНЯЯ НАВИГАЦИЯ (Sticky)
+   ========================================= */
+.bottom-nav-panel {
+    position: sticky; /* Магия здесь. Ездит за экраном... */
+    bottom: 0;        /* ...прилипая к низу экрана. */
+    background-color: var(--header-bg);
+    border-top: 1px solid var(--border-color);
+    padding: 10px 20px;
+    z-index: 1000;
+}
 
-    /* Защита от "матрешки" (сбрасываем стили вложенных групп, чтобы не двоился фон) */
-    header .header-left .btn-group,
-    header nav .btn-group {
-        position: static !important;
-        width: auto !important;
-        height: auto !important;
-        background: transparent !important;
-        border: none !important;
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: center !important;
-        align-items: center !important;
-        gap: 10px !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
+/* Контейнер кнопок навигации */
+.bottom-nav-panel .btn-group {
+    display: flex;
+    justify-content: center; /* Выстроены по центру. Если нужно левее - ставь flex-start */
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
 
-    /* Настройка самих кнопок в мобилке, чтобы сидели ровно */
-    header .nav-btn {
-        font-size: 0.85rem !important;
-        padding: 6px 12px !important;
-        margin: 0 !important;
-        height: 36px !important;
-        display: flex !important;
-        align-items: center !important;
-    }
-
-    /* 5. ФУТЕР: Место под меню */
-    footer, .site-footer {
-        padding-bottom: 75px !important;
-    }
+/* =========================================
+   НАСТОЯЩИЙ ФУТЕР
+   ========================================= */
+.real-footer {
+    padding: 40px 20px;
+    background-color: #222; /* Для наглядности */
+    color: #fff;
+    text-align: center;
+}
 }
     </style>
 </head>

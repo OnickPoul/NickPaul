@@ -588,26 +588,21 @@ header .nav-btn[href="#about"] {
 .mobile-bottom-nav {
 
     display: flex;
-
     position: fixed;
-
     left: 0;
     bottom: 0;
-
     width: 100%;
-
     height: 68px;
+    justify-content: center;
+    gap: 18px;
+    align-items:center;
 
-    justify-content: space-evenly;
-    align-items: center;
-
-    background: rgba(15,15,18,0.95);
+    background-color: var(--header-bg);
+    border-top: 1px solid var(--border-color);
 
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-
-    border-top: 1px solid rgba(255,255,255,0.08);
-
+    
     z-index: 9999;
 
     transition: transform 0.3s ease;
@@ -616,15 +611,26 @@ header .nav-btn[href="#about"] {
 .mobile-bottom-nav .nav-btn {
 
     margin: 0 !important;
-    padding: 4px 8px !important;
-
+    padding: 10px 18px !important;
     font-size: 0.85rem;
+    transition: all .3s ease;
 }
 
 /* Чтобы контент не прятался за панель */
 
 body {
     padding-bottom: 90px;
+}
+
+    body.is-subpage .mobile-bottom-nav .about-btn,
+body.is-subpage .mobile-bottom-nav .works-btn {
+    opacity: 0;
+    max-width: 0;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+    overflow: hidden;
+    pointer-events: none;
 }
 }
     </style>
@@ -664,7 +670,7 @@ body {
         </div>
 
         <!-- МОБИЛЬНАЯ НАВИГАЦИЯ -->
-<div class="mobile-bottom-nav">
+<div class="mobile-bottom-nav home-only">
 
     <a href="#hero"
        class="nav-btn showreel-btn"
@@ -674,14 +680,14 @@ body {
     </a>
 
     <a href="#about"
-       class="nav-btn"
+       class="nav-btn about-btn"
        data-ru="Обо мне"
        data-en="About">
        About
     </a>
 
     <a href="#works"
-       class="nav-btn"
+       class="nav-btn works-btn"
        data-ru="Работы"
        data-en="Works">
        Works
@@ -693,7 +699,7 @@ body {
        data-en="Contact">
        Contact
     </a>
-
+    
 </div>
     </div>
 </header>

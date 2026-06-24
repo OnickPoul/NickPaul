@@ -556,9 +556,9 @@ header .nav-btn[href="#about"] {
             .close-modal { top: 10px; right: 10px; }
         }
 
-        @media (max-width: 768px) {
+@media (max-width: 768px) {
     
-    /* 1. ВНЕШНЯЯ ШАПКА: фиксированная полоса вверху экрана */
+    /* 1. ВНЕШНЯЯ ШАПКА: фиксируем на самом верху */
     header {
         position: fixed !important;
         top: 0 !important;
@@ -573,7 +573,7 @@ header .nav-btn[href="#about"] {
         margin: 0 !important;
     }
 
-    /* ВНУТРЕННЯЯ СЕТКА: сбрасываем грид, делаем просто контейнером */
+    /* ВНУТРЕННЯЯ СЕТКА: отключаем грид */
     .header-grid {
         display: block !important;
         position: relative !important;
@@ -581,17 +581,14 @@ header .nav-btn[href="#about"] {
         height: 100% !important;
         margin: 0 !important;
         padding: 0 !important;
-        grid-template-columns: none !important;
-        grid-template-rows: none !important;
-        gap: 0 !important;
     }
 
-    /* Отступ для контента всей страницы, чтобы не заезжал под шапку */
+    /* Компенсация высоты шапки для всего сайта */
     body {
         padding-top: 60px !important;
     }
 
-    /* 2. ТЕКСТ ПО ЦЕНТРУ: Абсолютное центрирование имени и профессии */
+    /* 2. ЛОГОТИП ПО ЦЕНТРУ: абсолютное выравнивание */
     .header-center {
         position: absolute !important;
         left: 50% !important;
@@ -602,7 +599,6 @@ header .nav-btn[href="#about"] {
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
-        margin: 0 !important;
         width: max-content !important;
         z-index: 10002 !important;
     }
@@ -610,16 +606,14 @@ header .nav-btn[href="#about"] {
     .header-center h1 {
         font-size: 1.1rem !important;
         margin: 0 0 2px 0 !important;
-        line-height: 1.2 !important;
     }
 
     .header-center p {
         font-size: 0.75rem !important;
         margin: 0 !important;
-        opacity: 0.7 !important;
     }
 
-    /* 3. КНОПКИ СПРАВА (Язык/Тема): Идеальное вертикальное выравнивание */
+    /* 3. КНОПКИ СПРАВА (EN, Луна) */
     .header-right {
         position: absolute !important;
         right: 15px !important;
@@ -628,20 +622,19 @@ header .nav-btn[href="#about"] {
         display: flex !important;
         gap: 12px !important;
         align-items: center !important;
-        margin: 0 !important;
         z-index: 10002 !important;
     }
 
-    /* Прячем левый блок грида, чтобы не мешался */
-    .header-left {
-        display: none !important;
-    }
-
-    /* 4. НИЖНЕЕ МЕНЮ НАВИГАЦИИ: Жестко прибиваем к низу экрана (Viewport) */
-    .mobile-nav-row {
+    /* 4. НИЖНЕЕ МЕНЮ: Умный захват контейнеров
+       Хватаем любые блоки с кнопками (header-left, btn-group), 
+       даже если HTML отличается от запланированного */
+    header .header-left,
+    header .mobile-nav-row,
+    .header-grid > .btn-group,
+    .header-grid > nav {
         position: fixed !important;
         bottom: 0 !important;
-        top: auto !important; /* Обнуляем любые попытки утянуть блок наверх */
+        top: auto !important;
         left: 0 !important;
         width: 100% !important;
         height: 55px !important;
@@ -649,37 +642,45 @@ header .nav-btn[href="#about"] {
         border-top: 1px solid var(--border-color) !important;
         
         display: flex !important;
+        flex-direction: row !important;
         justify-content: center !important;
         align-items: center !important;
-        padding: 0 10px !important;
+        gap: 10px !important;
+        padding: 0 !important;
         margin: 0 !important;
-        box-sizing: border-box !important;
-        z-index: 20000 !important; /* Ставим поверх вообще всего контента */
+        z-index: 20000 !important;
     }
 
-    /* Контейнер кнопок внутри нижнего меню */
-    .mobile-nav-row .btn-group {
+    /* Защита от "матрешки" (сбрасываем стили вложенных групп, чтобы не двоился фон) */
+    header .header-left .btn-group,
+    header nav .btn-group {
+        position: static !important;
+        width: auto !important;
+        height: auto !important;
+        background: transparent !important;
+        border: none !important;
         display: flex !important;
+        flex-direction: row !important;
         justify-content: center !important;
         align-items: center !important;
-        gap: 8px !important;
-        width: 100% !important;
-        flex-wrap: nowrap !important; /* Кнопки строго в одну линию */
+        gap: 10px !important;
         margin: 0 !important;
         padding: 0 !important;
     }
 
-    /* Сами кнопки управления внизу */
-    .mobile-nav-row .nav-btn, .btn-group .nav-btn {
+    /* Настройка самих кнопок в мобилке, чтобы сидели ровно */
+    header .nav-btn {
         font-size: 0.85rem !important;
-        padding: 6px 10px !important;
+        padding: 6px 12px !important;
         margin: 0 !important;
-        white-space: nowrap !important; /* Никаких переносов строк */
+        height: 36px !important;
+        display: flex !important;
+        align-items: center !important;
     }
 
-    /* 5. ФУТЕР: Добавляем отступ, чтобы нижнее меню плавно ложилось поверх него */
+    /* 5. ФУТЕР: Место под меню */
     footer, .site-footer {
-        padding-bottom: 75px !important; /* Высота меню 55px + аккуратный зазор */
+        padding-bottom: 75px !important;
     }
 }
     </style>

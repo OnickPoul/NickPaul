@@ -482,11 +482,30 @@ header .nav-btn[href="#about"] {
         .up-arrow-btn:hover { background: var(--text-color); color: var(--bg-color); }
 
         @media (max-width: 768px) {
-            .footer-container { display: flex; flex-direction: row; justify-content: space-between; flex-wrap: nowrap; }
-            .footer-center { gap: 10px; }
-            .social-link svg { width: 28px; height: 28px; }
-        }
+             footer {
+        padding: 8px 0;
+        margin-top: 30px;
+    }
 
+    .footer-center {
+        gap: 8px;
+    }
+
+    .social-link svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .up-arrow-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 0.9rem;
+    }
+
+    .footer-left {
+        font-size: 0.85rem;
+    }
+}
         /* ЕДИНЫЙ КЛАСС ДЛЯ ВСЕХ МОДАЛЬНЫХ ОКОН (Фон и анимация) */
 .modal {
     position: fixed;

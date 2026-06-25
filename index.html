@@ -481,31 +481,22 @@ header .nav-btn[href="#about"] {
         .up-arrow-btn { background: transparent; border: 1px solid var(--border-color); color: var(--text-color); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background-color 0.3s, color 0.3s; font-size: 1.2rem; font-family: 'Manrope', sans-serif; }
         .up-arrow-btn:hover { background: var(--text-color); color: var(--bg-color); }
 
-        @media (max-width: 768px) {
-             footer {
-        padding: 8px 0;
-        margin-top: 30px;
+        @media (max-width: 768px) 
+        {
+            footer {
+                padding: 8px 0;
+                margin-top: 30px;
+        }
+            .footer-container { 
+                display: flex; flex-direction: row; justify-content: space-between; flex-wrap: nowrap; align-items: center; 
+        }
+            .footer-center { 
+                gap: 20px; 
+        }
+            .social-link svg { 
+                width: 28px; height: 28px; 
+        }
     }
-
-    .footer-center {
-        gap: 8px;
-    }
-
-    .social-link svg {
-        width: 22px;
-        height: 22px;
-    }
-
-    .up-arrow-btn {
-        width: 34px;
-        height: 34px;
-        font-size: 0.9rem;
-    }
-
-    .footer-left {
-        font-size: 0.85rem;
-    }
-}
         /* ЕДИНЫЙ КЛАСС ДЛЯ ВСЕХ МОДАЛЬНЫХ ОКОН (Фон и анимация) */
 .modal {
     position: fixed;

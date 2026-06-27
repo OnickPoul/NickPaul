@@ -56,34 +56,18 @@
             --btn-active-text: #000000;
         }
 
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-            -webkit-tap-highlight-color: transparent; 
-        }
-        
-        html { 
-            scroll-behavior: auto; /* Контролируем плавный скролл через JS для точного отступа */
-            overflow-y: scroll; 
-        }
+         { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    
+        html { scroll-behavior: auto; overflow-y: scroll; }
 
-        /* Плавная смена темы для всех элементов */
         body, header, .video-card, .about-spoiler, .testimonial-card, input, textarea, .modal-content, hr, iframe {
-            transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, opacity 0.5s ease;
-        }
+            transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, opacity 0.5s ease;}
 
         #desc-modal-body, 
-.desc-preview,
-.desc-full {
-    white-space: pre-line; /* Превращает обычные переносы строк в коде в абзацы на экране */
-}
+        .desc-preview,
+        .desc-full { white-space: pre-line;}
         
-        body {
-            font-family: 'Manrope', sans-serif;
-            background-color: var(--bg-color); color: var(--text-color);
-            line-height: 1.5; display: flex; flex-direction: column; min-height: 100vh;
-        }
+        body { font-family: 'Manrope', sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.5; display: flex; flex-direction: column; min-height: 100vh;}
 
         .main-wrapper { flex-grow: 1; position: relative; padding-bottom: 20px; }
         
@@ -97,16 +81,9 @@
         .page-view { display: none; opacity: 0; transition: opacity 0.3s ease; }
         .page-view.active { display: block; opacity: 1; }
 
-        /* --- ШАПКА --- */
-        header {
-            position: sticky; top: 0; background-color: var(--header-bg);
-            border-bottom: 1px solid var(--border-color); z-index: 1000; width: 100%;
-        }
+        header { position: sticky; top: 0; background-color: var(--header-bg); border-bottom: 1px solid var(--border-color); z-index: 1000; width: 100%; }
 
-        .header-grid {
-            display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
-            min-height: 80px; padding: 10px 0; width: 100%;
-        }
+        .header-grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 80px; padding: 10px 0; width: 100%; }
 
         .header-left { justify-self: start; display: flex; align-items: center; gap: 20px; }
         .header-right { justify-self: end; display: flex; align-items: center; gap: 20px; }
@@ -119,289 +96,103 @@
         .logo img { height: 40px; display: block; transition: filter 0.3s ease; }
         [data-theme="dark"] .logo img { filter: invert(1); }
 
-        /* Правильный фикс цвета иконок соцсетей под твой код переключения темы */
-[data-theme="dark"] .social-links a svg {
-    fill: var(--text-color); 
-}
-[data-theme="dark"] .social-links a img {
-    filter: invert(1); 
-}
-        /* Принудительный цвет для иконок ВЕЗДЕ в темной теме (включая модалки) */
-[data-theme="dark"] .contact-modal a svg,
-[data-theme="dark"] .modal a svg,
-[data-theme="dark"] .social-icon { 
-    fill: var(--text-color) !important; 
-}
-[data-theme="dark"] .contact-modal a img,
-[data-theme="dark"] .modal a img { 
-    filter: invert(1) !important; 
-}
+       
+        [data-theme="dark"] .social-links a svg { fill: var(--text-color); }
+        [data-theme="dark"] .social-links a img { filter: invert(1); }
 
-/* 1. СЕТКИ (Выравниваем карточки по высоте) */
-.media-grid, .video-grid, .works-container { 
-    gap: 10px !important; /* Делаем карточки плотнее друг к другу */
-    align-items: start !important; /* Заставляет карточки в одном ряду быть одинаковой высоты */
-}
+        [data-theme="dark"] .contact-modal a svg,
+        [data-theme="dark"] .modal a svg,
+        [data-theme="dark"] .social-icon { fill: var(--text-color) !important; 
+                                         }
+        [data-theme="dark"] .contact-modal a img,
+        [data-theme="dark"] .modal a img { filter: invert(1) !important; }
 
-/* 2. ГЛАВНАЯ КАРТОЧКА*/
-.video-card {
-    display: flex;
-    flex-direction: column;
-    height: auto !important; /* Тянется на всю высоту ячейки сетки */
-    background-color: var(--card-bg) !important;
-}
 
-/* 3. КОНТЕЙНЕРЫ ПЛЕЕРОВ (Верхняя часть) */
-.video-container {
-    position: relative !important;
-    padding-bottom: 56.25% !important; /* Намертво фиксирует 16:9 */
-    height: 0 !important;
-    flex-shrink: 0 !important; /* Запрещаем сетке сжимать плеер */
-    overflow: hidden;
-}
+        .media-grid, .video-grid, .works-container { gap: 10px !important; align-items: start !important; }
 
-.video-container iframe {
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    border: none !important;
-}
 
-#tab-spotify .media-grid, 
-#tab-spotify .video-grid, 
-#tab-spotify .works-container {
-    align-items: flex-start !important; 
-}
+        .video-card { display: flex; flex-direction: column; height: auto !important; background-color: var(--card-bg) !important; }
 
-/* Спец-фикс для Spotify */
-.audio-container.spotify {
-    height: 152px !important;
-    padding-bottom: 0 !important; /* Отключаем пропорции видео */
-    flex-shrink: 0 !important;
-    display: block !important;
-    border-radius: 12px;
-    overflow: hidden;
-}
 
-.video-card:has(.spotify) {
-    height: max-content !important; 
-    align-self: flex-start !important; /* Отцепляет карточку от растягивания в сетке */
-    background: transparent !important;
-}
+        .video-container { position: relative !important; padding-bottom: 56.25% !important; height: 0 !important; flex-shrink: 0 !important; overflow: hidden; }
 
-.audio-container.spotify iframe {
-    position: static !important;
-    width: 100% !important;
-    height: 100% !important;
-    border: none !important;
-}
+        .video-container iframe { position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; border: none !important; }
 
-/* Убираем лишний фон у карточек Spotify без текста */
-#tab-spotify .video-card {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-    height: 152px !important; /* Позволяем карточке обхватить плеер */
-}
+        #tab-spotify .media-grid, 
+        #tab-spotify .video-grid, 
+        #tab-spotify .works-container { align-items: flex-start !important; }
 
-/* 1. Блок описания: УМЕНЬШАЕМ ВЫСОТУ и ЦЕНТРИРУЕМ ТЕКСТ */
-.video-description {
-    padding: 20px !important;
-    background-color: var(--card-bg) !important;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1; /* МАГИЯ: заливает пустоту серым фоном до самого низа */
-    box-sizing: border-box;
-}
 
-/* 2. Заголовки: ИСПРАВЛЯЕМ ОШИБКУ С MARGIN */
-.video-description h4, .track-title {
-    font-size: 1.1rem;
-    color: var(--text-color);
-    margin: 0 0 1px 0 !important;
-    font-weight: 600;
-    font-family: sans-serif;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* Строго 2 строки для симметрии */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
+       .audio-container.spotify { height: 152px !important; padding-bottom: 0 !important; flex-shrink: 0 !important; display: block !important; border-radius: 12px; overflow: hidden; }
 
-/* Короткое превью текста */
-.desc-preview {
-    font-size: 0.9rem;
-    color: var(--text-muted) !important;
-    line-height: 1.5;
-    margin: 0 0 14px 0 !important;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* Строго 2 строки на всех устройствах */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
+       .video-card:has(.spotify) { height: max-content !important; align-self: flex-start !important; background: transparent !important; }
 
-/* 3. Кнопка "Read more": ЦЕНТРИРУЕМ ЕЁ */
-.read-more-btn {
-    font-size: 0.85rem;
-    color: var(--text-color);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    cursor: pointer;
-    align-self: flex-start;
-    margin: auto 0 0 0 !important; /* МАГИЯ 2: Прижимает кнопку к самому низу карточки */
-    padding: 0 !important;
-    background: none !important;
-    border: none !important;
-    transition: opacity 0.2s ease, color 0.2s ease;
-    opacity: 0.6;
-}
+       .audio-container.spotify iframe { position: static !important; width: 100% !important; height: 100% !important; border: none !important; }
 
-.read-more-btn:hover {
-    opacity: 1;
-    color: #00fff0;
-}
+       #tab-spotify .video-card { background: transparent !important; border: none !important; box-shadow: none !important; height: 152px !important; }
+
+
+       .video-description { padding: 20px !important; background-color: var(--card-bg) !important; display: flex; flex-direction: column; flex-grow: 1; box-sizing: border-box; }
+
+       .video-description h4, .track-title { font-size: 1.1rem; color: var(--text-color); margin: 0 0 1px 0 !important; font-weight: 600; font-family: sans-serif; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+       .desc-preview { font-size: 0.9rem; color: var(--text-muted) !important; line-height: 1.5; margin: 0 0 14px 0 !important; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+       .read-more-btn { font-size: 0.85rem; color: var(--text-color); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; align-self: flex-start; margin: auto 0 0 0 !important;
+                        padding: 0 !important; background: none !important; border: none !important; transition: opacity 0.2s ease, color 0.2s ease; opacity: 0.6; }
+
+       .read-more-btn:hover { opacity: 1; color: #00fff0; }
         
-        /* Унифицированные кнопки шапки - теперь одинакового размера */
-        .nav-btn {
-            font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 13px;
-            color: var(--btn-text); background-color: var(--btn-bg); text-decoration: none;
-            padding: 0 16px; height: 36px; border: 1px solid var(--btn-border); border-radius: 4px;
-            cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
-            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
-            box-sizing: border-box; white-space: nowrap;
-        }
-        .nav-btn:hover, .nav-btn.active { background-color: var(--btn-active-bg); color: var(--btn-active-text); border-color: var(--btn-active-bg); }
+       .nav-btn { font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 13px; color: var(--btn-text); background-color: var(--btn-bg); text-decoration: none;
+            padding: 0 16px; height: 36px; border: 1px solid var(--btn-border); border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, opacity 0.3s ease; box-sizing: border-box; white-space: nowrap; }
+       .nav-btn:hover, .nav-btn.active { background-color: var(--btn-active-bg); color: var(--btn-active-text); border-color: var(--btn-active-bg); }
 
-        .icon-btn {
-            background: none; border: none; color: var(--text-color); font-weight: 600; font-size: 16px; cursor: pointer;
-            display: inline-flex; align-items: center; justify-content: center; padding: 0; height: 24px;
-            transition: transform 0.2s ease, color 0.3s ease;
-        }
-        .icon-btn:hover { transform: scale(1.1); }
-        .icon-btn svg { width: 24px; height: 24px; }
+       .icon-btn { background: none; border: none; color: var(--text-color); font-weight: 600; font-size: 16px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; padding: 0; height: 24px;
+                   transition: transform 0.2s ease, color 0.3s ease; }
+       .icon-btn:hover { transform: scale(1.1); }
+       .icon-btn svg { width: 24px; height: 24px; }
         
-        .icon-moon { display: block; fill: currentColor; } 
-        .icon-sun { display: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-        [data-theme="dark"] .icon-moon { display: none; }
-        [data-theme="dark"] .icon-sun { display: block; }
+       .icon-moon { display: block; fill: currentColor; } 
+       .icon-sun { display: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+       [data-theme="dark"] .icon-moon { display: none; }
+       [data-theme="dark"] .icon-sun { display: block; }
 
-        .btn-group { display: flex; gap: 18px; }
+       .btn-group { display: flex; gap: 18px; }
 
-        /* Отодвигаем "Contacts" от "Showreel" и "Works" от "About" */
-header .nav-btn[href="#hero"], 
-header .nav-btn[href="#about"] {
-    margin-right: 15px;
-}
-
-        /* Логика обрезки текста для шторки */
-.text-content.collapsed {
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* Оставляем только 3 строки */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-.read-more-btn {
-    background: none; border: none; color: var(--text-muted); cursor: pointer; 
-    text-decoration: underline; margin-top: 10px; padding: 0; font-size: 1rem;
-}
-.read-more-btn:hover { color: var(--text-color); }
-
-        /* Заставляем все блоки с текстом внутри спойлеров уважать переносы строк */
-.text-content p {
-    white-space: pre-line !important;
-}
-
-/* Если кнопка spoiler-btn потеряла стили, унаследуй их от read-more-btn */
-.spoiler-btn {
-    font-size: 0.85rem;
-    color: var(--text-color);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 0;
-    opacity: 0.6;
-    transition: opacity 0.2s;
-}
-.spoiler-btn:hover {
-    opacity: 1;
-}
-
-        /* ЕДИНЫЙ КЛАСС ДЛЯ ВСЕХ МОДАЛЬНЫХ ОКОН (Фон и анимация) */
-.modal {
-    position: fixed;
-    z-index: -1; 
-    left: 0; 
-    top: 0; 
-    width: 100%; 
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); 
-    backdrop-filter: blur(8px);
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-    opacity: 0; 
-    transition: opacity 0.3s ease, z-index 0s linear 0.3s;
-}
-
-        /* Класс для открытия окон */
-.modal.show { 
-    opacity: 1;
-    z-index: 2000; 
-    transition: opacity 0.3s ease, z-index 0s; 
-}
-
-/* Контентная плашка внутри модалки */
-.modal-content { 
-    background: var(--bg-color); 
-    padding: 40px; 
-    border-radius: 12px; 
-    width: 90%; 
-    max-width: 650px;
-    position: relative; 
-    border: 1px solid var(--border-color);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-/* Кнопка закрытия (крестик) */
-.close-modal {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    font-size: 30px;
-    cursor: pointer;
-    color: var(--text-color, #000);
-}
         
-        /* --- МАГИЯ ПЛАВНОГО ИСЧЕЗНОВЕНИЯ SHOWREEL --- */
-        .showreel-btn {
-            transition: max-width 0.4s ease, opacity 0.4s ease, margin 0.4s ease, padding 0.4s ease, border-width 0.4s ease;
-            max-width: 150px; /* Ширина с запасом */
-            overflow: hidden;
-            opacity: 1;
-            white-space: nowrap;
-        }
-        body.is-subpage .showreel-btn {
-            max-width: 0;
-            padding-left: 0;
-            padding-right: 0;
-            border-width: 0;
-            opacity: 0;
-            margin-right: -6px; /* Компенсируем gap десктопа, чтобы Contact скользил идеально */
-            pointer-events: none;
-        }
+        header .nav-btn[href="#hero"], 
+        header .nav-btn[href="#about"] { margin-right: 15px; }
+
+        .text-content.collapsed { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .read-more-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; text-decoration: underline; margin-top: 10px; padding: 0; font-size: 1rem; }
+        .read-more-btn:hover { color: var(--text-color); }
+
+        .text-content p { white-space: pre-line !important; }
+
+        .spoiler-btn { font-size: 0.85rem; color: var(--text-color); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; background: none; border: none; padding: 0; opacity: 0.6; transition: opacity 0.2s; }
+        .spoiler-btn:hover { opacity: 1; }
+
+        .modal { position: fixed; z-index: -1; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; opacity: 0; 
+                 transition: opacity 0.3s ease, z-index 0s linear 0.3s; }
+
+        .modal.show { opacity: 1; z-index: 2000; transition: opacity 0.3s ease, z-index 0s; }
+
+        .modal-content { background: var(--bg-color); padding: 40px; border-radius: 12px; width: 90%; max-width: 650px; position: relative; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 30px; cursor: pointer; color: var(--text-color, #000); }
+        
+        .showreel-btn { transition: max-width 0.4s ease, opacity 0.4s ease, margin 0.4s ease, padding 0.4s ease, border-width 0.4s ease; max-width: 150px; overflow: hidden; opacity: 1; white-space: nowrap; }
+        body.is-subpage .showreel-btn { max-width: 0; padding-left: 0; padding-right: 0; border-width: 0; opacity: 0; margin-right: -6px; pointer-events: none; }
 
         .home-only-group { transition: opacity 0.4s ease, visibility 0.4s ease; opacity: 1; visibility: visible; }
         body.is-subpage .home-only-group { opacity: 0; visibility: hidden; pointer-events: none; }
 
-        /* --- КОНТЕНТ --- */
         section { margin-bottom: 60px; }
         .hero-section { margin-top: 50px; }
         
         .video-card { width: 100%; background-color: #000000; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; margin-bottom: 40px; }
-        /* Фон черный, чтобы не было белой полосы */
+       
         .video-container { position: relative; padding-bottom: 56.25%; height: 0; width: 100%; background-color: #000000; }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: block; }
         .video-description { padding: 20px 25px; border-top: 1px solid var(--border-color); background-color: var(--card-bg); }
@@ -417,7 +208,6 @@ header .nav-btn[href="#about"] {
 
         .subsection-title { font-size: 1.5rem; margin: 40px 0 20px 0; color: var(--text-color); }
 
-        /* --- ОБО МНЕ --- */
         .about-content::after { content: ""; display: table; clear: both; } 
         
         .about-photo-right { float: right; width: 300px; margin: 0 0 20px 40px; position: relative; top: 9.5px; }
@@ -429,13 +219,11 @@ header .nav-btn[href="#about"] {
         .inline-link { color: var(--text-color); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; transition: opacity 0.2s ease; cursor: pointer; }
         .inline-link:hover { opacity: 0.7; }
 
-        .inline-action-link {
-            color: var(--text-color); font-weight: 600; text-decoration: underline; text-underline-offset: 4px;
-            cursor: pointer; transition: opacity 0.2s ease; white-space: nowrap; /*margin-left: 5px;*/
-        }
+        .inline-action-link { color: var(--text-color); font-weight: 600; text-decoration: underline; text-underline-offset: 4px;
+                              cursor: pointer; transition: opacity 0.2s ease; white-space: nowrap; /*margin-left: 5px;*/
+    }
         .inline-action-link:hover { opacity: 0.7; }
 
-        /* Плавная кастомная шторка */
         .custom-accordion { margin-top: 35px; background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; width: 100%; clear: both; }
         .accordion-header { cursor: pointer; font-weight: 500; color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; display: flex; align-items: flex-start; }
         .accordion-header::before { content: '▶'; display: inline-block; margin-right: 10px; font-size: 0.8em; transition: transform 0.3s ease; margin-top: 4px; }
@@ -448,11 +236,9 @@ header .nav-btn[href="#about"] {
         .accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-in-out; }
         .accordion-content { color: var(--text-color); font-size: 1.05rem; line-height: 1.8; padding-top: 0; }
 
-        @media (max-width: 768px) {
-            .about-photo-right { float: none; width: 100%; margin: 0 0 30px 0; }
+        @media (max-width: 768px) { .about-photo-right { float: none; width: 100%; margin: 0 0 30px 0; }
         }
 
-        /* ОТЗЫВЫ */
         .testimonial-card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 40px; margin-top: 20px; }
         .testimonial-text { font-size: 1.1rem; line-height: 1.8; font-style: italic; margin-bottom: 30px; color: var(--text-color); }
         .testimonial-author { display: flex; align-items: center; gap: 15px; }
@@ -460,7 +246,6 @@ header .nav-btn[href="#about"] {
         .author-photo-placeholder img { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1; }
         .author-name { font-weight: 600; font-size: 1rem; color: var(--text-color); }
 
-        /* Аудио и Сетки */
         .media-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; }
         @media (max-width: 768px) { .media-grid { grid-template-columns: 1fr; } }
         
@@ -474,7 +259,6 @@ header .nav-btn[href="#about"] {
         .tab-content { display: none; opacity: 0; transition: opacity 0.3s ease; }
         .tab-content.active { display: block; opacity: 1; }
 
-        /* ПОДВАЛ */
         footer { border-top: 1px solid var(--border-color); margin-top: 60px; padding: 18px 0; transition: opacity 0.3s ease; }
         body.is-subpage footer { display: none; }
 
@@ -492,64 +276,23 @@ header .nav-btn[href="#about"] {
 
         @media (max-width: 768px) 
         {
-            footer {
-                padding: 8px 0;
-                margin-top: 30px;
-        }
-            .footer-container { 
-                display: flex; flex-direction: row; justify-content: space-between; flex-wrap: nowrap; align-items: center; 
-        }
-            .footer-center { 
-                gap: 20px; 
-        }
-            .social-link svg { 
-                width: 28px; height: 28px; 
-        }
+            footer { padding: 8px 0; margin-top: 30px; }
+            .footer-container { display: flex; flex-direction: row; justify-content: space-between; flex-wrap: nowrap; align-items: center; }
+            .footer-center { gap: 20px; }
+            .social-link svg { width: 28px; height: 28px; }
     }
-        /* ЕДИНЫЙ КЛАСС ДЛЯ ВСЕХ МОДАЛЬНЫХ ОКОН (Фон и анимация) */
-.modal {
-    position: fixed;
-    z-index: -1; 
-    left: 0; 
-    top: 0; 
-    width: 100%; 
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); 
-    backdrop-filter: blur(8px);
-    display: flex;
-    justify-content: center; 
-    align-items: center;
-    opacity: 0; 
-    transition: opacity 0.3s ease, z-index 0s linear 0.3s;
-}
-        /* Класс для открытия окон */
-.modal.show { 
-    opacity: 1;
-    z-index: 2000; 
-    transition: opacity 0.3s ease, z-index 0s; 
-}
-        .modal-content { 
-    background: var(--bg-color); 
-    padding: 40px; 
-    border-radius: 12px; 
-    width: 90%; 
-    max-width: 650px;
-    position: relative; 
-    border: 1px solid var(--border-color);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-        /* Фикс крестика: правильные отступы чтобы не налезал на иконки */
-        .close-modal { 
-            position: absolute; top: 15px; right: 15px; font-size: 32px; cursor: pointer; 
-            color: var(--text-color); transition: opacity 0.2s ease; line-height: 1; z-index: 10;
-            width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
-        }
+    
+        .modal { position: fixed; z-index: -1; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; opacity: 0; 
+                 transition: opacity 0.3s ease, z-index 0s linear 0.3s; }
+
+        .modal.show { opacity: 1; z-index: 2000; transition: opacity 0.3s ease, z-index 0s; }
+        .modal-content { background: var(--bg-color); padding: 40px; border-radius: 12px; width: 90%; max-width: 650px; position: relative; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    
+        .close-modal { position: absolute; top: 15px; right: 15px; font-size: 32px; cursor: pointer; color: var(--text-color); transition: opacity 0.2s ease; line-height: 1; z-index: 10;
+                       width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; }
         .close-modal:hover { opacity: 0.6; }
-        /* Отступ справа чтобы не пересекаться с крестиком */
-        .modal-header { 
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; 
-            border-bottom: 1px solid var(--border-color); padding-bottom: 15px; padding-right: 25px; 
-        }
+    
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; padding-right: 25px; }
         .modal-header h2 { font-size: 1.8rem; margin: 0; }
         .modal-socials { display: flex; gap: 15px; }
         .modal-socials .social-link svg { width: 24px; height: 24px; }
@@ -558,22 +301,12 @@ header .nav-btn[href="#about"] {
         .form-group { flex: 1; display: flex; flex-direction: column; }
         .form-group.full-width { width: 100%; }
         .form-group label { margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
-        .form-group input, .form-group textarea {
-            padding: 12px; background: transparent; border: 1px solid var(--border-color);
-            color: var(--text-color); border-radius: 6px; font-family: 'Manrope', sans-serif; font-size: 1rem;
-        }
+        .form-group input, .form-group textarea { padding: 12px; background: transparent; border: 1px solid var(--border-color); color: var(--text-color); border-radius: 6px; font-family: 'Manrope', sans-serif; font-size: 1rem; }
 
-        .form-group textarea {
-         min-height: 80px;
-         max-height: 80px;
-         resize: none;
-}
+        .form-group textarea { min-height: 80px; max-height: 80px; resize: none; }
 
         .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--text-color); }
-        .submit-btn {
-            margin-top: 20px; padding: 14px 28px; background: var(--text-color); color: var(--bg-color);
-            border: none; cursor: pointer; border-radius: 6px; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 1rem; width: 100%;
-        }
+        .submit-btn { margin-top: 20px; padding: 14px 28px; background: var(--text-color); color: var(--bg-color); border: none; cursor: pointer; border-radius: 6px; font-family: 'Manrope', sans-serif; font-weight: 600; font-size: 1rem; width: 100%; }
         .submit-btn:hover { opacity: 0.8; }
         .submit-status { margin-top: 10px; font-size: 0.9rem; font-weight: 600; text-align: center; display: none; }
 
@@ -584,115 +317,46 @@ header .nav-btn[href="#about"] {
             .close-modal { top: 10px; right: 10px; }
         }
 
-        .mobile-nav {
-    display: none;
+        .mobile-nav { display: none; }
+
+        .mobile-bottom-nav { display: none; }
+
+        @media (max-width: 768px) { .mobile-back-btn { display: none !important; }
+
+        body.is-subpage .mobile-back-btn { display: inline-flex !important; }
+
+       .title-back-btn { display: none !important; }
+
+       .nav-links-wrapper,
+       .desktop-only.home-only-group { display: none !important; }
+
+       .header-center h1 { font-size: 1.45rem; }
+
+       .header-center p { font-size: 0.95rem; }
+                                   
+       .mobile-bottom-nav { display: flex; position: fixed; left: 0; bottom: 0; padding-bottom: env(safe-area-inset-bottom); width: 100%; height: 80px; justify-content: center; gap: 18px; align-items:center;
+                            background-color: var(--header-bg); border-top: 1px solid var(--border-color); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 9000; transition: all .3s ease; }
+
+       .mobile-bottom-nav .nav-btn { margin: 0 !important; padding: 6px 12px !important; font-size: 0.85rem; transition: all .3s ease; transform: translateY(-4px); }
+
+       body { padding-bottom: 90px; }
+
+       body.is-subpage .mobile-bottom-nav .showreel-btn,
+       body.is-subpage .mobile-bottom-nav .about-btn,
+       body.is-subpage .mobile-bottom-nav .works-btn { display: none !important; }
+
+       body.is-subpage .mobile-bottom-nav .contact-modal-trigger,
+       body.is-subpage .mobile-bottom-nav .mobile-back-btn { display: inline-flex !important; min-width: 110px; justify-content: center; padding: 12px 28px !important; font-size: 0.95rem; }
+
+       body.is-subpage .mobile-bottom-nav { justify-content: space-evenly; }
 }
-
-        .mobile-bottom-nav {
-    display: none;
-}
-
-@media (max-width: 768px) {
-
-    .mobile-back-btn {
-    display: none !important;
-}
-
-    body.is-subpage .mobile-back-btn {
-    display: inline-flex !important;
-
-}
-
-    .title-back-btn {
-        display: none !important;
-    }
-
-    /* УБИРАЕМ НАВИГАЦИЮ ИЗ ШАПКИ */
-
-.nav-links-wrapper,
-.desktop-only.home-only-group {
-    display: none !important;
-}
-
-/* ЧУТЬ КОМПАКТНЕЕ ШАПКА */
-
-.header-center h1 {
-    font-size: 1.45rem;
-}
-
-.header-center p {
-    font-size: 0.95rem;
-}
-
-/* НИЖНЯЯ НАВИГАЦИЯ */
-
-.mobile-bottom-nav {
-
-    display: flex;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    padding-bottom: env(safe-area-inset-bottom);
-    width: 100%;
-    height: 80px;
-    justify-content: center;
-    gap: 18px;
-    align-items:center;
-
-    background-color: var(--header-bg);
-    border-top: 1px solid var(--border-color);
-
-    backdrop-filter: blur(12px);
-   -webkit-backdrop-filter: blur(12px);  
-    
-    z-index: 9000;
-    transition: all .3s ease;
-}
-
-.mobile-bottom-nav .nav-btn {
-
-    margin: 0 !important;
-    padding: 6px 12px !important;
-    font-size: 0.85rem;
-    transition: all .3s ease;
-    transform: translateY(-4px);
-}
-
-/* Чтобы контент не прятался за панель */
-
-body {
-    padding-bottom: 90px;
-}
-
-    body.is-subpage .mobile-bottom-nav .showreel-btn,
-    body.is-subpage .mobile-bottom-nav .about-btn,
-    body.is-subpage .mobile-bottom-nav .works-btn {
-    display: none !important;
-}
-
-    body.is-subpage .mobile-bottom-nav .contact-modal-trigger,
-    body.is-subpage .mobile-bottom-nav .mobile-back-btn {
-
-    display: inline-flex !important;
-
-    min-width: 110px;
-    justify-content: center;
-
-    padding: 12px 28px !important;
-    font-size: 0.95rem;
-}
-
-    body.is-subpage .mobile-bottom-nav {
-    justify-content: space-evenly;
-}
-}
-    </style>
-</head>
+      </style>
+   </head>
 <body>
 
     <header id="mainHeader">
-    <div class="container">
-        <div class="header-grid">
+     <div class="container">
+      <div class="header-grid">
             <div class="header-left">
                 <a href="#hero" class="logo" onclick="switchView('home', 'hero'); return false;">
                     <img src="NickPaulLogoAlpha.png" alt="Logo" id="siteLogo">
@@ -722,54 +386,24 @@ body {
             </div>
         </div>
 
-        <!-- МОБИЛЬНАЯ НАВИГАЦИЯ -->
-<div class="mobile-bottom-nav home-only">
+        <div class="mobile-bottom-nav home-only">
 
-    <a href="#hero"
-       class="nav-btn showreel-btn"
-       data-ru="Шоурил"
-       data-en="Showreel">
-       Showreel
-    </a>
+        <a href="#hero" class="nav-btn showreel-btn" data-ru="Шоурил" data-en="Showreel">Showreel</a>
 
-    <a href="#about"
-       class="nav-btn about-btn"
-       data-ru="Обо мне"
-       data-en="About">
-       About
-    </a>
+        <a href="#about" class="nav-btn about-btn" data-ru="Обо мне" data-en="About">About</a>
 
-    <a href="#works"
-       class="nav-btn works-btn"
-       data-ru="Работы"
-       data-en="Works">
-       Works
-    </a>
+        <a href="#works" class="nav-btn works-btn" data-ru="Работы" data-en="Works">Works</a>
 
-    <a href="#"
-       class="nav-btn contact-modal-trigger"
-       data-ru="Контакт"
-       data-en="Contact">
-       Contact
-    </a>
+        <a href="#" class="nav-btn contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
 
-    <button
-    class="nav-btn mobile-back-btn"
-    onclick="switchView('home', 'about')"
-    data-ru="Назад"
-    data-en="Back">
-    Back
-</button>
+        <button class="nav-btn mobile-back-btn" onclick="switchView('home', 'about')" data-ru="Назад" data-en="Back">Back</button>
     
 </div>
     </div>
 </header>
 
     <div class="main-wrapper">
-        
-        <!-- ================= ГЛАВНАЯ СТРАНИЦА ================= -->
         <main id="view-home" class="container page-view active">
-            
             <section class="hero-section" id="hero">
                 <div class="video-card hero-video">
                     <div class="video-container">
@@ -783,9 +417,7 @@ body {
 
             <section id="about">
                 <h2 class="section-title" data-ru="Обо мне" data-en="About Me">About Me</h2>
-                
                 <div class="about-content">
-                    
                     <div class="about-photo-right">
                         <div class="photo-placeholder">
                             <img src="SiteProfile.png" alt="Nick Paul" class="real-photo">
@@ -824,7 +456,6 @@ body {
                         <a href="#" class="inline-action-link contact-modal-trigger" data-ru="Контакт" data-en="Contact">Contact</a>
                     </p>
 
-                    <!-- Плавная шторка -->
                     <div class="custom-accordion">
                         <div class="accordion-header">
                             <span data-ru="Интерактивное аудио позволяет мне раскрыть себя как визионера, который способен управлять вниманием игрока" data-en="Interactive audio allows me to reveal myself as a visionary capable of guiding the player's attention">Interactive audio allows me to reveal myself as a visionary capable of guiding the player's attention</span>
@@ -835,13 +466,11 @@ body {
                             </div>
                         </div>
                     </div>
-
                 </div> 
             </section>
-
+            
             <section id="works">
                 <h2 class="section-title" data-ru="Избранное" data-en="Selected Works">Selected Works</h2>
-
                 <h3 class="subsection-title" data-ru="Игровое Аудио" data-en="Game Audio">Game Audio</h3>
                 <div class="media-grid">
                     <div class="video-card">
@@ -851,15 +480,12 @@ body {
         
         <div class="video-description"> 
             <h4 class="track-title">Game Audio Breakdown</h4>
-            
             <p class="desc-preview" 
                data-ru="Это комплексный персональный проект Никиты Матвиенко (Nick Paul), объединяющий саунд-дизайн, аудиоимплементацию и визуальное программирование..." 
                data-en="This is a comprehensive personal project by Nikita Matvienko (Nick Paul), combining sound design, audio implementation, and visual scripting...">
                This is a comprehensive personal project by Nikita Matvienko (Nick Paul), combining sound design, audio implementation, and visual scripting...
             </p>
-            
-            <span class="read-more-btn" data-ru="Подробнее" data-en="Read more">Подробнее</span>
-            
+            <span class="read-more-btn" data-ru="Подробнее" data-en="Read more">Подробнее</span> 
             <div class="desc-full" style="display: none;" 
                  data-ru="Это комплексный персональный проект Никиты Матвиенко (Nick Paul), объединяющий саунд-дизайн, аудиоимплементацию и визуальное программирование. 
                                                                                                    
@@ -883,15 +509,12 @@ body {
         
         <div class="video-description"> 
             <h4 class="track-title">Game Audio - Clean Gameplay</h4>
-            
             <p class="desc-preview" 
                data-ru="Чистый геймплей без озвучки и разборов — только игровой звук и музыка..." 
                data-en="Gameplay footage without commentary — just sound design, audio systems, and interactive music in context...">
                Gameplay footage without commentary — just sound design, audio systems, and interactive music in context...
             </p>
-            
             <span class="read-more-btn" data-ru="Подробнее" data-en="Read more">Подробнее</span>
-            
             <div class="desc-full" style="display: none;" 
                  data-ru="Чистый геймплей без озвучки и разборов — только игровой звук и музыка."
                  data-en="Gameplay footage without commentary — just sound design, audio systems, and interactive music in context.">
@@ -916,7 +539,6 @@ body {
                 </div>
             </section>
 
-            <!-- СЕКЦИЯ ОТЗЫВОВ -->
             <section id="testimonials">
                 <h2 class="section-title" data-ru="Рекомендации" data-en="Recommendations">Recommendations</h2>
                 
@@ -937,16 +559,14 @@ body {
             </section>
         </main>
 
-       <!-- ================= СТРАНИЦА МУЗЫКИ ================= -->
 <main id="view-music" class="container page-view">
     <section style="margin-top: 50px;">
         <div class="about-spoiler-block" style="margin-bottom: 40px; max-width: 800px;">
             
-            <!-- Ошибка с кавычкой исправлена: пробел перед data-ru на месте -->
             <h2 style="margin-bottom: 15px; font-size: 2rem;" data-ru="Немного о Oni Nillsen.." data-en="A little bit about Oni Nillsen..">A little bit about Oni Nillsen..</h2>
             
             <div id="music-about-text" class="text-content collapsed">
-                <!-- Добавлено свойство white-space: pre-line; чтобы переносы стали абзацами -->
+
                 <p style="color: var(--text-muted); line-height: 1.6; font-size: 1.1rem; white-space: pre-line;" 
                    data-ru="Oni Nillsen — молодой артист и продюсер, чей кинематографичный подход к электронной музыке постепенно привлекает всё больше внимания слушателей и представителей индустрии. Проект был основан в 2019 году и несколько лет развивался за кулисами, прежде чем состоялся его официальный дебют на лейбле ALL41 Records с выпуском собственного EP. 
         
@@ -964,7 +584,6 @@ Combining orchestral textures, atmospheric sound design, and emotionally driven 
 At just 23 years old, Oni Nillsen continues to refine a distinctive sound that bridges the worlds of orchestral and electronic music, establishing himself as a promising new voice in the genre.</p>
             </div>
             
-            <!-- Изменили класс на spoiler-btn, чтобы не ломать логику модалок -->
             <button class="spoiler-btn" onclick="toggleTextSpoiler('music-about-text', this)" data-ru="Read more" data-en="Read more">Read more</button>
         </div>
                 <div class="page-header-wrapper">
@@ -978,9 +597,7 @@ At just 23 years old, Oni Nillsen continues to refine a distinctive sound that b
                     <a href="https://www.youtube.com/@oninillsen"
        class="tab-btn youtube-tab"
        target="_blank"
-       rel="noopener noreferrer">
-       YouTube
-    </a>
+       rel="noopener noreferrer">YouTube</a>
 </div>
 
                 <div id="tab-soundcloud" class="tab-content active">
@@ -1248,7 +865,6 @@ At just 23 years old, Oni Nillsen continues to refine a distinctive sound that b
             </section>
         </main>
 
-        <!-- ================= СТРАНИЦА САУНД-ДИЗАЙНА ================= -->
         <main id="view-sound-design" class="container page-view">
             <section style="margin-top: 50px;">
                 <div class="about-spoiler-block" style="margin-bottom: 40px; max-width: 800px;">
@@ -1343,7 +959,6 @@ At just 23 years old, Oni Nillsen continues to refine a distinctive sound that b
         </main>
     </div>
 
-    <!-- ПОДВАЛ -->
     <footer id="footer">
         <div class="container footer-container">
             <div class="footer-left">
@@ -1366,7 +981,6 @@ At just 23 years old, Oni Nillsen continues to refine a distinctive sound that b
         </div>
     </footer>
 
-    <!-- МОДАЛЬНОЕ ОКНО CONTACTS -->
     <div id="contact-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal">×</span>
@@ -1410,7 +1024,7 @@ At just 23 years old, Oni Nillsen continues to refine a distinctive sound that b
     </div>
 
     <script>
-        // ТЕМА И ЯЗЫК
+        
         const themeToggleBtn = document.getElementById('themeToggle');
         const body = document.body;
 
@@ -1427,7 +1041,6 @@ At just 23 years old, Oni Nillsen continues to refine a distinctive sound that b
         const langToggle = document.getElementById('langToggle');
         let currentLang = localStorage.getItem('lang') || 'en';
 
-        // Идеальный fade-in / fade-out при смене языка
         function setLanguage(lang) {
             document.body.style.transition = 'opacity 0.3s ease';
             document.body.style.opacity = 0; 
@@ -1440,9 +1053,8 @@ At just 23 years old, Oni Nillsen continues to refine a distinctive sound that b
                 langToggle.textContent = lang.toUpperCase();
                 localStorage.setItem('lang', lang);
                 
-                // Возвращаем видимость после того, как текст поменялся
                 document.body.style.opacity = 1; 
-            }, 300); // Синхронизировано с анимацией в 300ms
+            }, 300);
         }
 
         setLanguage(currentLang);
@@ -1450,22 +1062,21 @@ At just 23 years old, Oni Nillsen continues to refine a distinctive sound that b
             currentLang = currentLang === 'en' ? 'ru' : 'en'; setLanguage(currentLang);
         });
 
-        // ПАМЯТЬ СКРОЛЛА И ЛОГИКА SPA 
        let savedScrollPosition = 0;
 
         function switchView(viewId, returnTargetId = null) {
             const currentView = document.querySelector('.page-view.active');
             const targetView = document.getElementById('view-' + viewId);
-            // Умная остановка аудио БЕЗ лагов и перезагрузок
+
 const activeView = document.querySelector('.page-view.active');
 if (activeView) {
     const iframes = activeView.querySelectorAll('iframe');
     iframes.forEach(iframe => {
-        // Элегантно ставим на паузу SoundCloud и Vimeo (без перезагрузки!)
+
         if (iframe.src.includes('soundcloud') || iframe.src.includes('vimeo')) {
             iframe.contentWindow.postMessage('{"method":"pause"}', '*');
         } 
-        // Spotify не понимает паузу извне, поэтому мягко перезагружаем ТОЛЬКО его
+    
         else if (iframe.src.includes('spotify')) {
             const currentSrc = iframe.src;
             iframe.src = '';
@@ -1495,7 +1106,7 @@ if (activeView) {
                 targetView.style.display = 'block';
 
                 if (viewId === 'home') {
-                    // Возвращаемся ровно на то же место
+                 
                     window.scrollTo({ top: savedScrollPosition, behavior: 'instant' });
                 } else {
                     window.scrollTo({ top: 0, behavior: 'instant' });
@@ -1511,18 +1122,17 @@ if (activeView) {
             const el = document.getElementById(targetId);
             if (el) {
                 isClickScrolling = true;
-                // Жесткий отступ шапки (одинаковый для ПК и мобилок для надежности)
+   
                 const headerOffset = 100;
                 const y = el.getBoundingClientRect().top + window.scrollY - headerOffset;
                 
-                // Возвращаем плавный скролл (smooth)
+          
                 window.scrollTo({ top: y, behavior: 'smooth' });
                 
                 setTimeout(() => { isClickScrolling = false; }, 800);
             }
         }
 
-        // ПЛАВНАЯ ШТОРКА (Accordion)
         const accordion = document.querySelector('.custom-accordion');
         const accHeader = document.querySelector('.accordion-header');
         const accBody = document.querySelector('.accordion-body');
@@ -1547,7 +1157,6 @@ if (activeView) {
     }
 }
 
-        // МОДАЛЬНОЕ ОКНО CONTACTS (Полностью новая логика)
         const modal = document.getElementById('contact-modal');
         const modalTriggers = document.querySelectorAll('.contact-modal-trigger');
         const closeModal = document.querySelector('.close-modal');
@@ -1564,10 +1173,8 @@ if (activeView) {
     if (modal) modal.classList.remove('show');
 }
 
-// Один главный слушатель на всю страницу
 document.addEventListener('click', function(event) {
     
-    // 1. ОТКРЫТИЕ МОДАЛКИ ОПИСАНИЯ ПЛЕЕРА
     if (event.target.classList.contains('read-more-btn')) {
         console.log("Открываем описание трека...");
         const parentBlock = event.target.closest('.video-description');
@@ -1586,7 +1193,6 @@ document.addEventListener('click', function(event) {
         modal.classList.add('show');
     }
 
-    // 2. ОТКРЫТИЕ МОДАЛКИ КОНТАКТОВ
     if (event.target.classList.contains('contact-modal-trigger')) {
         event.preventDefault();
         console.log("Открываем форму контактов...");
@@ -1596,8 +1202,6 @@ document.addEventListener('click', function(event) {
         }
     }
 
-    // 3. УНИВЕРСАЛЬНОЕ ЗАКРЫТИЕ ПО КЛИКУ НА КРЕСТИК
-    // Находим класс крестика и автоматически закрываем ту модалку, в которой он лежит
     if (event.target.classList.contains('close-modal')) {
         const modalToClose = event.target.closest('.modal');
         if (modalToClose) {
@@ -1606,15 +1210,12 @@ document.addEventListener('click', function(event) {
         }
     }
 
-    // 4. УНИВЕРСАЛЬНОЕ ЗАКРЫТИЕ ПО КЛИКУ НА ПУСТУЮ ОБЛАСТЬ (ФОН)
-    // Если кликнули строго по темной подложке модального окна
     if (event.target.classList.contains('modal')) {
         event.target.classList.remove('show');
         console.log("Модальное окно закрыто через клик по фону");
     }
 });
 
-        // ВКЛАДКИ ДЛЯ МУЗЫКИ
         function switchTab(tabId) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => { content.style.display = 'none'; content.classList.remove('active'); });
@@ -1632,19 +1233,14 @@ document.addEventListener('click', function(event) {
             }
         }
 
-        // Слушаем вообще все клики на странице
 document.addEventListener('click', function(event) {
     
-    // 1. ЛОГИКА ОТКРЫТИЯ ОКНА
-    // Если клик пришелся по элементу с классом 'read-more-btn'
     if (event.target.classList.contains('read-more-btn')) {
         console.log("Клик пойман через делегирование!");
 
-        // Находим родительский блок конкретно этой карточки
         const parentBlock = event.target.closest('.video-description');
         if (!parentBlock) return;
 
-        // Ищем заголовок и скрытый полный текст
         let titleEl = parentBlock.querySelector('.track-title') || parentBlock.querySelector('h4');
         const textEl = parentBlock.querySelector('.desc-full');
 
@@ -1659,17 +1255,12 @@ document.addEventListener('click', function(event) {
             return;
         }
 
-        // Заполняем модальное окно данными
-        // Берем innerHTML, чтобы подтянулся нужный язык, если он уже переключен
         document.getElementById('desc-modal-title').innerText = titleEl.innerText;
         document.getElementById('desc-modal-body').innerHTML = textEl.innerHTML;
 
-        // Показываем окно
         modal.style.display = 'flex';
     }
 
-    // 2. ЛОГИКА ЗАКРЫТИЯ ОКНА
-    // Если кликнули по крестику ИЛИ по темному фону вокруг самого окна
     if (event.target.classList.contains('close-modal') || event.target.id === 'desc-modal') {
         const modal = document.getElementById('desc-modal');
         if (modal) {
@@ -1678,7 +1269,6 @@ document.addEventListener('click', function(event) {
     }
 });
 
-        // СКРОЛЛ-ШПИОН ДЛЯ ЯКОРЕЙ (Финальный фикс залипания)
 const sections = document.querySelectorAll('#view-home section[id]');
 const navLinks = document.querySelectorAll('.nav-btn[href^="#"]:not(.contact-modal-trigger)');
 
@@ -1696,7 +1286,7 @@ navLinks.forEach(link => {
 
 const observerOptions = { root: null, rootMargin: '-20% 0px -60% 0px', threshold: 0 };
 const observer = new IntersectionObserver((entries) => {
-    // Если находимся на подстранице - просто ничего не делаем (не убивая логику)
+    
     if (document.body.classList.contains('is-subpage')) return; 
 
     entries.forEach(entry => {
@@ -1713,8 +1303,6 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 sections.forEach(section => observer.observe(section));
-
-        // ===== MOBILE BOTTOM NAV =====
 
 const footer = document.getElementById('footer');
 const mobileNav = document.querySelector('.mobile-bottom-nav');

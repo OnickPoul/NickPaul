@@ -19,10 +19,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;800&display=swap" rel="stylesheet">
     <link rel="canonical" href="https://nick-paul.com/">
 
+    <script src="https://app.termly.io/resource-blocker/91883c1a-38b7-4242-8c2f-a8a150f5f05a?autoBlock=on"></script>
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-H07S3PNH2G"></script>
     <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-H07S3PNH2G');</script>
-
-    <script src="https://app.termly.io/resource-blocker/91883c1a-38b7-4242-8c2f-a8a150f5f05a?autoBlock=on"></script>
 
     <style>
         @font-face { font-family: 'Germaine'; src: url('Germaine Regular.ttf') format('truetype'); font-weight: normal; font-style: normal; }
@@ -1013,7 +1013,7 @@ At just 23 years old, Oni Nillsen continues to refine a distinctive sound that b
         let savedScrollPosition = 0;
         function switchView(viewId, returnTargetId = null) {const currentView = document.querySelector('.page-view.active'); const targetView = document.getElementById('view-' + viewId);
                                                             
-        const activeView = document.querySelector('.page-view.active') if (activeView) { const iframes = activeView.querySelectorAll('iframe'); iframes.forEach(iframe => { if (iframe.src.includes('soundcloud') || iframe.src.includes('vimeo')) {
+        const activeView = document.querySelector('.page-view.active'); if (activeView) { const iframes = activeView.querySelectorAll('iframe'); iframes.forEach(iframe => { if (iframe.src.includes('soundcloud') || iframe.src.includes('vimeo')) {
                            iframe.contentWindow.postMessage('{"method":"pause"}', '*');} 
     
         else if (iframe.src.includes('spotify')) { const currentSrc = iframe.src; iframe.src = ''; setTimeout(() => { iframe.src = currentSrc; }, 50);}});}

@@ -19,57 +19,25 @@
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;800&display=swap" rel="stylesheet">
     <link rel="canonical" href="https://nick-paul.com/">
 
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-H07S3PNH2G"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H07S3PNH2G"></script>
+    <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-H07S3PNH2G');</script>
 
-  gtag('config', 'G-H07S3PNH2G');
-</script>
+    <script src="https://app.termly.io/resource-blocker/91883c1a-38b7-4242-8c2f-a8a150f5f05a?autoBlock=on"></script>
 
     <style>
-        @font-face {
-            font-family: 'Germaine';
-            src: url('Germaine Regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
+        @font-face { font-family: 'Germaine'; src: url('Germaine Regular.ttf') format('truetype'); font-weight: normal; font-style: normal; }
 
-        :root {
-            --bg-color: #ffffff;
-            --text-color: #000000;
-            --text-muted: #666666;
-            --header-bg: #ffffff;
-            --border-color: #cccccc; 
-            --card-bg: #f9f9f9;
-            --btn-bg: transparent;
-            --btn-text: #000000;
-            --btn-border: #cccccc;
-            --btn-active-bg: #000000;
-            --btn-active-text: #ffffff;
-        }
+        :root { --bg-color: #ffffff; --text-color: #000000; --text-muted: #666666; --header-bg: #ffffff; --border-color: #cccccc; --card-bg: #f9f9f9; --btn-bg: transparent; --btn-text: #000000; --btn-border: #cccccc;
+                --btn-active-bg: #000000; --btn-active-text: #ffffff; }
 
-        [data-theme="dark"] {
-            --bg-color: #121212;
-            --text-color: #ffffff;
-            --text-muted: #aaaaaa;
-            --header-bg: #121212;
-            --border-color: #333333;
-            --card-bg: #1a1a1a;
-            --btn-bg: transparent;
-            --btn-text: #ffffff;
-            --btn-border: #333333;
-            --btn-active-bg: #ffffff;
-            --btn-active-text: #000000;
-        }
+        [data-theme="dark"] { --bg-color: #121212; --text-color: #ffffff; --text-muted: #aaaaaa; --header-bg: #121212; --border-color: #333333; --card-bg: #1a1a1a; --btn-bg: transparent; --btn-text: #ffffff;
+                              --btn-border: #333333; --btn-active-bg: #ffffff; --btn-active-text: #000000; }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     
         html { scroll-behavior: auto; overflow-y: scroll; }
 
-        body, header, .video-card, .about-spoiler, .testimonial-card, input, textarea, .modal-content, hr, iframe {
-            transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, opacity 0.5s ease; }
+        body, header, .video-card, .about-spoiler, .testimonial-card, input, textarea, .modal-content, hr, iframe { transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease, opacity 0.5s ease; }
 
         #desc-modal-body, 
         .desc-preview,
@@ -318,12 +286,7 @@
         .submit-btn:hover { opacity: 0.8; }
         .submit-status { margin-top: 10px; font-size: 0.9rem; font-weight: 600; text-align: center; display: none; }
 
-        @media (max-width: 600px) {
-            .form-row { flex-direction: column; gap: 15px; }
-            .modal-content { padding: 30px 25px; }
-            .modal-header { flex-direction: column; align-items: flex-start; gap: 15px; padding-right: 0; }
-            .close-modal { top: 10px; right: 10px; }
-        }
+        @media (max-width: 600px) { .form-row { flex-direction: column; gap: 15px; } .modal-content { padding: 30px 25px; } .modal-header { flex-direction: column; align-items: flex-start; gap: 15px; padding-right: 0; } .close-modal { top: 10px; right: 10px; }}
 
         .mobile-nav { display: none; }
 
@@ -1038,309 +1001,106 @@ At just 23 years old, Oni Nillsen continues to refine a distinctive sound that b
 
         if (localStorage.getItem('theme') === 'dark') { body.setAttribute('data-theme', 'dark'); }
 
-        themeToggleBtn.addEventListener('click', () => {
-            if (body.hasAttribute('data-theme')) {
-                body.removeAttribute('data-theme'); localStorage.setItem('theme', 'light');
-            } else {
-                body.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark');
-            }
-        });
+        themeToggleBtn.addEventListener('click', () => { if (body.hasAttribute('data-theme')) { body.removeAttribute('data-theme'); localStorage.setItem('theme', 'light'); } else {
+                body.setAttribute('data-theme', 'dark'); localStorage.setItem('theme', 'dark'); }}); const langToggle = document.getElementById('langToggle'); let currentLang = localStorage.getItem('lang') || 'en';
+        function setLanguage(lang) { document.body.style.transition = 'opacity 0.3s ease'; document.body.style.opacity = 0; 
+         
+        setTimeout(() => { document.querySelectorAll('[data-ru], [data-en]').forEach(el => { if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = el.getAttribute(`data-${lang}`);
+                else el.innerHTML = el.getAttribute(`data-${lang}`);}); langToggle.textContent = lang.toUpperCase(); localStorage.setItem('lang', lang); document.body.style.opacity = 1; }, 300);}
 
-        const langToggle = document.getElementById('langToggle');
-        let currentLang = localStorage.getItem('lang') || 'en';
-
-        function setLanguage(lang) {
-            document.body.style.transition = 'opacity 0.3s ease';
-            document.body.style.opacity = 0; 
-            
-            setTimeout(() => {
-                document.querySelectorAll('[data-ru], [data-en]').forEach(el => {
-                    if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') el.placeholder = el.getAttribute(`data-${lang}`);
-                    else el.innerHTML = el.getAttribute(`data-${lang}`);
-                });
-                langToggle.textContent = lang.toUpperCase();
-                localStorage.setItem('lang', lang);
-                
-                document.body.style.opacity = 1; 
-            }, 300);
-        }
-
-        setLanguage(currentLang);
-        langToggle.addEventListener('click', () => {
-            currentLang = currentLang === 'en' ? 'ru' : 'en'; setLanguage(currentLang);
-        });
-
-       let savedScrollPosition = 0;
-
-        function switchView(viewId, returnTargetId = null) {
-            const currentView = document.querySelector('.page-view.active');
-            const targetView = document.getElementById('view-' + viewId);
-
-const activeView = document.querySelector('.page-view.active');
-if (activeView) {
-    const iframes = activeView.querySelectorAll('iframe');
-    iframes.forEach(iframe => {
-
-        if (iframe.src.includes('soundcloud') || iframe.src.includes('vimeo')) {
-            iframe.contentWindow.postMessage('{"method":"pause"}', '*');
-        } 
+        setLanguage(currentLang); langToggle.addEventListener('click', () => { currentLang = currentLang === 'en' ? 'ru' : 'en'; setLanguage(currentLang);});
+        
+        let savedScrollPosition = 0;
+        function switchView(viewId, returnTargetId = null) {const currentView = document.querySelector('.page-view.active'); const targetView = document.getElementById('view-' + viewId);
+                                                            
+        const activeView = document.querySelector('.page-view.active') if (activeView) { const iframes = activeView.querySelectorAll('iframe'); iframes.forEach(iframe => { if (iframe.src.includes('soundcloud') || iframe.src.includes('vimeo')) {
+                           iframe.contentWindow.postMessage('{"method":"pause"}', '*');} 
     
-        else if (iframe.src.includes('spotify')) {
-            const currentSrc = iframe.src;
-            iframe.src = '';
-            setTimeout(() => { iframe.src = currentSrc; }, 50);
-        }
-    });
-}
-            if (currentView === targetView) return;
-
-            if (currentView.id === 'view-home') {
-                savedScrollPosition = window.scrollY;
-            }
-
-            if (viewId === 'home') {
-                document.querySelectorAll('.home-only .nav-btn[href^="#"]').forEach(link => link.classList.remove('active'));
-                isClickScrolling = true; 
-            }
-
+        else if (iframe.src.includes('spotify')) { const currentSrc = iframe.src; iframe.src = ''; setTimeout(() => { iframe.src = currentSrc; }, 50);}});}
+            if (currentView === targetView) return; if (currentView.id === 'view-home') { savedScrollPosition = window.scrollY; } if (viewId === 'home') {
+                document.querySelectorAll('.home-only .nav-btn[href^="#"]').forEach(link => link.classList.remove('active')); isClickScrolling = true; }
             if (currentView) currentView.style.opacity = '0';
 
-            setTimeout(() => {
-                if (currentView) { currentView.style.display = 'none'; currentView.classList.remove('active'); }
+            setTimeout(() => { if (currentView) { currentView.style.display = 'none'; currentView.classList.remove('active'); }
+            if (viewId === 'home') { document.body.classList.remove('is-subpage'); } else { document.body.classList.add('is-subpage'); }
 
-                if (viewId === 'home') { document.body.classList.remove('is-subpage'); } 
-                else { document.body.classList.add('is-subpage'); }
+                targetView.style.display = 'block'; if (viewId === 'home') { window.scrollTo({ top: savedScrollPosition, behavior: 'instant' }); } else { window.scrollTo({ top: 0, behavior: 'instant' });}
 
-                targetView.style.display = 'block';
-
-                if (viewId === 'home') {
-                 
-                    window.scrollTo({ top: savedScrollPosition, behavior: 'instant' });
-                } else {
-                    window.scrollTo({ top: 0, behavior: 'instant' });
-                }
-
-                setTimeout(() => { targetView.style.opacity = '1'; targetView.classList.add('active'); }, 50);
-            }, 300);
-        }
+                setTimeout(() => { targetView.style.opacity = '1'; targetView.classList.add('active'); }, 50);}, 300);}
 
         let isClickScrolling = false;
 
-        function scrollToTarget(targetId) {
-            const el = document.getElementById(targetId);
-            if (el) {
-                isClickScrolling = true;
-   
-                const headerOffset = 100;
-                const y = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+        function scrollToTarget(targetId) { const el = document.getElementById(targetId); if (el) { isClickScrolling = true; const headerOffset = 100;
+                const y = el.getBoundingClientRect().top + window.scrollY - headerOffset; window.scrollTo({ top: y, behavior: 'smooth' });
                 
-          
-                window.scrollTo({ top: y, behavior: 'smooth' });
-                
-                setTimeout(() => { isClickScrolling = false; }, 800);
-            }
-        }
+        setTimeout(() => { isClickScrolling = false; }, 800);}}
 
-        const accordion = document.querySelector('.custom-accordion');
-        const accHeader = document.querySelector('.accordion-header');
-        const accBody = document.querySelector('.accordion-body');
+        const accordion = document.querySelector('.custom-accordion'); const accHeader = document.querySelector('.accordion-header');const accBody = document.querySelector('.accordion-body');
         
-        accHeader.addEventListener('click', () => {
-            accordion.classList.toggle('open');
-            if (accordion.classList.contains('open')) {
-                accBody.style.maxHeight = accBody.scrollHeight + "px";
-            } else {
-                accBody.style.maxHeight = 0;
-            }
-        });
+        accHeader.addEventListener('click', () => { accordion.classList.toggle('open'); if (accordion.classList.contains('open')) { accBody.style.maxHeight = accBody.scrollHeight + "px"; } else { accBody.style.maxHeight = 0;}});
 
-        function toggleTextSpoiler(textId, btn) {
-    const textBlock = document.getElementById(textId);
-    if (textBlock.classList.contains('collapsed')) {
-        textBlock.classList.remove('collapsed');
-        btn.innerText = 'Show less';
-    } else {
-        textBlock.classList.add('collapsed');
-        btn.innerText = 'Read more';
-    }
-}
+        function toggleTextSpoiler(textId, btn) { const textBlock = document.getElementById(textId); if (textBlock.classList.contains('collapsed')) { textBlock.classList.remove('collapsed'); btn.innerText = 'Show less'; } else {
+                 textBlock.classList.add('collapsed'); btn.innerText = 'Read more';}}
 
-        const modal = document.getElementById('contact-modal');
-        const modalTriggers = document.querySelectorAll('.contact-modal-trigger');
-        const closeModal = document.querySelector('.close-modal');
+        const modal = document.getElementById('contact-modal'); const modalTriggers = document.querySelectorAll('.contact-modal-trigger'); const closeModal = document.querySelector('.close-modal');
 
-        modalTriggers.forEach(trigger => {
-            trigger.addEventListener('click', (e) => {
-                e.preventDefault();
-                modal.classList.add('show');
-            });
-        });
+        modalTriggers.forEach(trigger => { trigger.addEventListener('click', (e) => { e.preventDefault(); modal.classList.add('show');});});
 
-        function closeDescModal() {
-    const modal = document.getElementById('desc-modal');
-    if (modal) modal.classList.remove('show');
-}
+        function closeDescModal() { const modal = document.getElementById('desc-modal'); if (modal) modal.classList.remove('show');}
 
-document.addEventListener('click', function(event) {
-    
-    if (event.target.classList.contains('read-more-btn')) {
-        console.log("Открываем описание трека...");
-        const parentBlock = event.target.closest('.video-description');
-        if (!parentBlock) return;
+        document.addEventListener('click', function(event) { if (event.target.classList.contains('read-more-btn')) { console.log("Открываем описание трека..."); const parentBlock = event.target.closest('.video-description');
+                if (!parentBlock) return; const titleEl = parentBlock.querySelector('.track-title') || parentBlock.querySelector('h4'); const textEl = parentBlock.querySelector('.desc-full'); if (!textEl) return;
 
-        const titleEl = parentBlock.querySelector('.track-title') || parentBlock.querySelector('h4');
-        const textEl = parentBlock.querySelector('.desc-full');
-        if (!textEl) return;
+        const modal = document.getElementById('desc-modal'); if (!modal) return; document.getElementById('desc-modal-title').innerText = titleEl ? titleEl.innerText : "Description";
+        document.getElementById('desc-modal-body').innerHTML = textEl.innerHTML; modal.classList.add('show');}
 
-        const modal = document.getElementById('desc-modal');
-        if (!modal) return;
+        if (event.target.classList.contains('contact-modal-trigger')) { event.preventDefault(); console.log("Открываем форму контактов..."); const contactModal = document.getElementById('contact-modal');
+        if (contactModal) { contactModal.classList.add('show');}}
 
-        document.getElementById('desc-modal-title').innerText = titleEl ? titleEl.innerText : "Description";
-        document.getElementById('desc-modal-body').innerHTML = textEl.innerHTML;
+        if (event.target.classList.contains('close-modal')) { const modalToClose = event.target.closest('.modal'); if (modalToClose) { modalToClose.classList.remove('show'); console.log("Модальное окно закрыто через крестик");}}
 
-        modal.classList.add('show');
-    }
+        if (event.target.classList.contains('modal')) { event.target.classList.remove('show'); console.log("Модальное окно закрыто через клик по фону");}});
 
-    if (event.target.classList.contains('contact-modal-trigger')) {
-        event.preventDefault();
-        console.log("Открываем форму контактов...");
-        const contactModal = document.getElementById('contact-modal');
-        if (contactModal) {
-            contactModal.classList.add('show');
-        }
-    }
-
-    if (event.target.classList.contains('close-modal')) {
-        const modalToClose = event.target.closest('.modal');
-        if (modalToClose) {
-            modalToClose.classList.remove('show');
-            console.log("Модальное окно закрыто через крестик");
-        }
-    }
-
-    if (event.target.classList.contains('modal')) {
-        event.target.classList.remove('show');
-        console.log("Модальное окно закрыто через клик по фону");
-    }
-});
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        function switchTab(tabId) { document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(content => { content.style.display = 'none'; content.classList.remove('active'); });
 
-            const activeBtn = document.querySelector(`.tab-btn[onclick="switchTab('${tabId}')"]`);
-            if (activeBtn) activeBtn.classList.add('active');
+            const activeBtn = document.querySelector(`.tab-btn[onclick="switchTab('${tabId}')"]`); if (activeBtn) activeBtn.classList.add('active');
 
-            const activeContent = document.getElementById('tab-' + tabId);
-            if (activeContent) {
-                activeContent.style.display = 'block';
-                activeContent.style.opacity = 0;
-                void activeContent.offsetWidth;
-                activeContent.style.opacity = 1;
-                activeContent.classList.add('active');
-            }
-        }
+            const activeContent = document.getElementById('tab-' + tabId); if (activeContent) { activeContent.style.display = 'block'; activeContent.style.opacity = 0; void activeContent.offsetWidth;
+                activeContent.style.opacity = 1; activeContent.classList.add('active');}}
 
-document.addEventListener('click', function(event) {
-    
-    if (event.target.classList.contains('read-more-btn')) {
-        console.log("Клик пойман через делегирование!");
+        document.addEventListener('click', function(event) { if (event.target.classList.contains('read-more-btn')) { console.log("Клик пойман через делегирование!");
 
-        const parentBlock = event.target.closest('.video-description');
-        if (!parentBlock) return;
+        const parentBlock = event.target.closest('.video-description'); if (!parentBlock) return;
 
-        let titleEl = parentBlock.querySelector('.track-title') || parentBlock.querySelector('h4');
-        const textEl = parentBlock.querySelector('.desc-full');
+        let titleEl = parentBlock.querySelector('.track-title') || parentBlock.querySelector('h4'); const textEl = parentBlock.querySelector('.desc-full');
 
-        if (!titleEl || !textEl) {
-            console.error("Ошибка: Не найден заголовок или блок .desc-full");
-            return;
-        }
+        if (!titleEl || !textEl) { console.error("Ошибка: Не найден заголовок или блок .desc-full"); return;}
 
-        const modal = document.getElementById('desc-modal');
-        if (!modal) {
-            console.error("Ошибка: В HTML нет контейнера #desc-modal");
-            return;
-        }
+        const modal = document.getElementById('desc-modal'); if (!modal) { console.error("Ошибка: В HTML нет контейнера #desc-modal"); return;}
 
-        document.getElementById('desc-modal-title').innerText = titleEl.innerText;
-        document.getElementById('desc-modal-body').innerHTML = textEl.innerHTML;
+        document.getElementById('desc-modal-title').innerText = titleEl.innerText; document.getElementById('desc-modal-body').innerHTML = textEl.innerHTML; modal.style.display = 'flex';}
 
-        modal.style.display = 'flex';
-    }
+        if (event.target.classList.contains('close-modal') || event.target.id === 'desc-modal') { const modal = document.getElementById('desc-modal'); if (modal) { modal.style.display = 'none';}}});
 
-    if (event.target.classList.contains('close-modal') || event.target.id === 'desc-modal') {
-        const modal = document.getElementById('desc-modal');
-        if (modal) {
-            modal.style.display = 'none';
-        }
-    }
-});
+        const sections = document.querySelectorAll('#view-home section[id]'); const navLinks = document.querySelectorAll('.nav-btn[href^="#"]:not(.contact-modal-trigger)');
 
-const sections = document.querySelectorAll('#view-home section[id]');
-const navLinks = document.querySelectorAll('.nav-btn[href^="#"]:not(.contact-modal-trigger)');
+        navLinks.forEach(link => { link.addEventListener('click', (e) => { const targetHref = link.getAttribute('href'); if(targetHref.startsWith('#')) { e.preventDefault();
+            navLinks.forEach(l => l.classList.remove('active')); document.querySelectorAll(`.nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active')); scrollToTarget(targetHref.substring(1));}});});
 
-navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-        const targetHref = link.getAttribute('href');
-        if(targetHref.startsWith('#')) {
-            e.preventDefault();
-            navLinks.forEach(l => l.classList.remove('active'));
-            document.querySelectorAll(`.nav-btn[href="${targetHref}"]`).forEach(el => el.classList.add('active'));
-            scrollToTarget(targetHref.substring(1));
-        }
-    });
-});
+        const observerOptions = { root: null, rootMargin: '-20% 0px -60% 0px', threshold: 0 };
+        const observer = new IntersectionObserver((entries) => { if (document.body.classList.contains('is-subpage')) return; 
 
-const observerOptions = { root: null, rootMargin: '-20% 0px -60% 0px', threshold: 0 };
-const observer = new IntersectionObserver((entries) => {
-    
-    if (document.body.classList.contains('is-subpage')) return; 
+        entries.forEach(entry => { if (entry.isIntersecting) { const id = entry.target.getAttribute('id'); navLinks.forEach(link => link.classList.remove('active')); const activeLink = document.querySelector(`.nav-btn[href="#${id}"]`);
+            if (activeLink) { activeLink.classList.add('active');}}});}, observerOptions); sections.forEach(section => observer.observe(section));
 
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('id');
-            navLinks.forEach(link => link.classList.remove('active'));
-            
-            const activeLink = document.querySelector(`.nav-btn[href="#${id}"]`);
-            if (activeLink) {
-                activeLink.classList.add('active');
-            }
-        }
-    });
-}, observerOptions);
+        const footer = document.getElementById('footer'); const mobileNav = document.querySelector('.mobile-bottom-nav');
 
-sections.forEach(section => observer.observe(section));
-
-const footer = document.getElementById('footer');
-const mobileNav = document.querySelector('.mobile-bottom-nav');
-
-if (footer && mobileNav) {
-
-    const footerObserver = new IntersectionObserver(
-        (entries) => {
-
-            if (entries[0].isIntersecting) {
-                mobileNav.style.transform = 'translateY(100%)';
-            } else {
-                mobileNav.style.transform = 'translateY(0)';
-            }
-
-        },
-        {
-            threshold: 0
-        }
-    );
-
-    footerObserver.observe(footer);
-}
+        if (footer && mobileNav) { const footerObserver = new IntersectionObserver( (entries) => { if (entries[0].isIntersecting) { mobileNav.style.transform = 'translateY(100%)';} else { mobileNav.style.transform = 'translateY(0)';}},{threshold: 0}); footerObserver.observe(footer);}
     </script>
-                            <div id="desc-modal" class="modal" onclick="closeDescModal()">
-    <div class="modal-content" onclick="event.stopPropagation()" style="max-width: 600px;">
-        <span class="close-modal" onclick="closeDescModal()">&times;</span>
-        <h3 id="desc-modal-title" style="margin-bottom: 15px;"></h3>
-        <div id="desc-modal-body" style="color: var(--text-muted); line-height: 1.6;"></div>
+    
+                            <div id="desc-modal" class="modal" onclick="closeDescModal()"><div class="modal-content" onclick="event.stopPropagation()" style="max-width: 600px;"><span class="close-modal" onclick="closeDescModal()">&times;</span>
+        <h3 id="desc-modal-title" style="margin-bottom: 15px;"></h3><div id="desc-modal-body" style="color: var(--text-muted); line-height: 1.6;"></div></div>
     </div>
-</div>
-</body>
+  </body>
 </html>
